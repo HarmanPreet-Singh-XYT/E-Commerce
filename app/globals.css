@@ -5,7 +5,8 @@
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 ::-webkit-scrollbar{
-  width: 10px;
+  min-width: 1px;
+  max-width: 10px;
   height: 5px;
 }
 ::-webkit-scrollbar-track{

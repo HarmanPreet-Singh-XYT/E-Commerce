@@ -12,7 +12,7 @@ const Trends = () => {
                             <img className='w-[25px] h-[25px] m-[10px]' src={Cat.imgLink}/>
                         </div>
                             <div className='ml-4'>
-                                <p className='text-[14px] font-bold tracking-[1px]'>{Cat.name}</p>
+                                <p className='text-[14px] font-bold text-gray-800 tracking-[1px]'>{Cat.name}</p>
                                 <a href={Cat.showLink} className='text-[14px] font-semibold tracking-[0.5px] text-[#ff91a4]'>Show All</a>
                             </div>
                         </div>

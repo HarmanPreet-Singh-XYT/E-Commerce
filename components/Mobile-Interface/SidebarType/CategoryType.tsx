@@ -1,8 +1,8 @@
 import React from 'react'
-import { navBtns } from '@/app/data'
 import { useAppDispatch } from '@/app/hooks';
 import { closeSidebar } from '@/features/UIUpdates/UISlice';
 import { bestSell, leftStatus } from '@/app/data'
+import ReactStars from 'react-stars';
 const CategoryType = () => {
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
     const dispatch = useAppDispatch();
@@ -33,7 +33,10 @@ const CategoryType = () => {
                             <a href={each.productLink}><img className='w-[75px] h-[75px] rounded-md' src={each.imgLink}/></a>
                             <div className='ml-5'>
                                 <a href={each.productLink}><p className='tracking-[1px]'>{each.title}</p></a>
-                                <div></div>
+                                <div className='flex items-center gap-2'>
+                                        <ReactStars count={5} value={each.stars} size={15} edit={false} color2={'#ffd700'} />
+                                        {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
+                                </div>
                                 <div className='flex items-center'>
                                     <p className='text-sm line-through'>${each.basePrice}</p>
                                     <p className='text-lg font-bold ml-4'>${each.discountPrice}</p>

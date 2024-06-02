@@ -19,7 +19,8 @@ const config: Config = {
         "davysilver":"hsl(0, 0%, 33%)",
         "cultured": "hsl(0, 0%, 93%)",
         "white": "hsl(0, 100%, 100%)",
-        "onyx": "hsl(0, 0%, 27%)"
+        "onyx": "hsl(0, 0%, 27%)",
+        "eblack":"hsl(0, 0%, 13%)"
     },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

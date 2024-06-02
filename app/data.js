@@ -281,6 +281,7 @@ const trendings = {
                 title:"Relaxed Short Full Sleeves",
                 category:"Clothes",
                 imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-1.jpg",
+                productLink:"",
                 catLink:"",
                 discountPrice:12.00,
                 basePrice:45.00,
@@ -832,4 +833,50 @@ const cards = [
         categoryLink:""
     }
 ];
-export {topCat, navBtns, leftStatus, bestSell, trendings, footerCategories, footerSections, products, featuresSec, currentEvent, testimonial, cards};
+const deals = [
+    {
+        productLink:"",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shampoo.jpg",
+        stars:3,
+        title:"SHAMPOO, CONDITIONER & FACEWASH PACKS",
+        description:"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor dolor sit amet consectetur Lorem ipsum dolor",
+        price:{basePrice:200.00,discountPrice:150.00},
+        availability:{sold:20,avilable:40},
+        endTime:{date:5,month:10,year:2024,time:12,minute:0}
+    },
+    {
+        productLink:"",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jewellery-1.jpg",
+        stars:3,
+        title:"ROSE GOLD DIAMONDS EARRING",
+        description:"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor dolor sit amet consectetur Lorem ipsum dolor",
+        price:{basePrice:1990.00,discountPrice:2000.00},
+        availability:{sold:15,avilable:40},
+        endTime:{date:5,month:10,year:2024,time:12,minute:0}
+    }
+];
+const cartProducts = [
+  {
+    id: 1,
+    name: 'Throwback Hip Bag',
+    href: '#',
+    color: 'Salmon',
+    price: '$90.00',
+    quantity: 1,
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
+    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+  },
+  {
+    id: 2,
+    name: 'Medium Stuff Satchel',
+    href: '#',
+    color: 'Blue',
+    price: '$32.00',
+    quantity: 1,
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+    imageAlt:
+      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+  },
+  // More products...
+]
+export {topCat, navBtns, leftStatus, bestSell, trendings, footerCategories, footerSections, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

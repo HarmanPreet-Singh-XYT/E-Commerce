@@ -4,17 +4,17 @@ import ReactStars from 'react-stars';
 const Products = () => {
   return (
     <div className='sm:ml-4 ml-auto p-2 mr-auto mt-10 pb-8 max-w-[980px] flex flex-col flex-1'>
-      <p className='border-b-[1px] leading-[50px] tracking-[1.5px] font-bold text-[20px]'>New Products</p>
+      <p className='border-b-[1px] leading-[50px] tracking-wide font-semibold text-lg'>New Products</p>
       <div className='flex flex-wrap mt-8 gap-5 justify-center max-w-[980px] flex-1'>
         {products.map((each, index) =>
           <div key={index} className='relative flex flex-col border-[1px] rounded-xl sm:max-w-[220px] p-1 overflow-hidden'>
-            {each.params.isSale && <div className="absolute top-2 -left-8 bg-black text-white px-10 py-1 z-10 rotate-[320deg] text-sm font-bold uppercase rounded">
+            {each.params.isSale && <div className="absolute top-2 -left-8 bg-black text-white px-10 py-1 z-10 rotate-[320deg] text-[12px] uppercase rounded">
               SALE
             </div>}
-            {each.params.isNew && <div className="absolute top-2 -left-8 bg-salmon text-white px-10 py-1 z-10 rotate-[320deg] text-sm font-bold uppercase rounded">
+            {each.params.isNew && <div className="absolute top-2 -left-8 bg-salmon text-white px-10 py-1 z-10 rotate-[320deg] text-[12px] uppercase rounded">
               New
             </div>}
-            {each.params.isDiscount && <div className="absolute top-2 left-2 bg-green-500 text-white px-2 text-md font-bold uppercase rounded">
+            {each.params.isDiscount && <div className="absolute top-2 left-2 bg-green-500 text-white px-2 text-md uppercase rounded">
               {each.discount}%
             </div>}
             <div>
