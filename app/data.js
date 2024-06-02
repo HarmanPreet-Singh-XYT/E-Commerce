@@ -1036,4 +1036,25 @@ const products = [
         ]
     }
 ]
-export {topCat, navBtns, leftStatus, bestSell, trendings, footerCategories, footerSections, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const defaultData = {
+    imgLink: "",
+    secImglink: "",
+    imgCollection:[],
+    imgAlt:"",
+    productID: "",
+    discount: 0,
+    category: "",
+    title: "",
+    ratingCount: 0,
+    stars: 0,
+    price: { basePrice: 0, discountPrice: 0 },
+    params: { isSale: false, isNew: false, isDiscount: false },
+    colors: [
+        { name: "", class: "", selectedClass: "" },
+    ],
+    isSizeAvailable: false,
+    sizes: [
+        { name: "Default", inStock: true },
+    ]
+}
+export {topCat, navBtns, leftStatus, bestSell, trendings, footerCategories, footerSections, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

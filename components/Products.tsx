@@ -2,6 +2,7 @@ import { products } from '@/app/data';
 import React, { useState } from 'react';
 import ReactStars from 'react-stars';
 import Quickview from './ProductUi/Quickview';
+import { defaultData } from '@/app/data';
 interface Color {
   name: string;
   class: string;
@@ -43,7 +44,7 @@ interface Product {
 }
 const ProductCard = ({ product }:{ product: Product }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [productData, setproductData] = useState({});
+  const [productData, setproductData] = useState(defaultData);
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -51,7 +52,7 @@ const ProductCard = ({ product }:{ product: Product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {open && <Quickview open={open} setOpen={setOpen} product={productData} />}
+      <Quickview open={open} setOpen={setOpen} product={productData} />
       {product.params.isSale && (
         <div className="absolute top-2 -left-8 bg-black text-white px-10 py-1 z-10 rotate-[320deg] text-[12px] uppercase rounded">
           SALE
