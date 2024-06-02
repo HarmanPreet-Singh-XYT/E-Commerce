@@ -738,7 +738,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-4.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S342",
         discount: 15,
@@ -764,7 +764,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shirt-2.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34134",
         discount: 20,
@@ -790,7 +790,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-6.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34245",
         discount: 10,
@@ -816,7 +816,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-4.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34134",
         discount: 28.57,
@@ -841,7 +841,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-2_1.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34345",
         discount: 5.71,
@@ -867,7 +867,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-4.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S342435",
         discount: 11.76,
@@ -889,7 +889,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-2.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34123",
         discount: 16.67,
@@ -911,7 +911,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/party-wear-2.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S344325",
         discount: 16.67,
@@ -937,7 +937,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-2.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34324",
         discount: 28.89,
@@ -963,7 +963,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-4.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S3445",
         discount: 9.38,
@@ -989,7 +989,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-1_1.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S342345",
         discount: 23.08,
@@ -1015,7 +1015,7 @@ const products = [
     {
         imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shorts-2.jpg",
         secImglink: "",
-        imgCollection:[],
+        imgCollection:[""],
         imgAlt:"",
         productID: "i34S34345",
         discount: 8.24,
@@ -1039,7 +1039,7 @@ const products = [
 const defaultData = {
     imgLink: "",
     secImglink: "",
-    imgCollection:[],
+    imgCollection:[""],
     imgAlt:"",
     productID: "",
     discount: 0,
