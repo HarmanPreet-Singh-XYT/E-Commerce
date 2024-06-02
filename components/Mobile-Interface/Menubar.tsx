@@ -3,6 +3,7 @@ import { useAppDispatch,useAppSelector } from '@/app/hooks';
 import { openSidebar } from '@/features/UIUpdates/UISlice';
 import { menuSidebar, categorySidebar } from '@/features/UIUpdates/SidebarType';
 import { openCart } from '@/features/UIUpdates/CartUI';
+import { openFav } from '@/features/UIUpdates/FavouriteUI';
 import Sidebar from './Sidebar';
 const Menubar = () => {
   const state = useAppSelector((state:any) => state.sidebar.value)
@@ -14,7 +15,7 @@ const Menubar = () => {
         <button onClick={()=>{dispatch(openSidebar());dispatch(menuSidebar())}}><i className="fa-solid fa-bars fa-xl"></i></button>
         <button onClick={()=>{dispatch(openSidebar());dispatch(categorySidebar())}}><i className="fa-solid fa-layer-group fa-xl"></i></button>
         <button><i className="fa-solid fa-house-chimney fa-xl"></i></button>
-        <button><i className="fa-regular fa-heart fa-xl"></i></button>
+        <button onClick={()=>{dispatch(openFav())}}><i className="fa-regular fa-heart fa-xl"></i></button>
         <button onClick={()=>{dispatch(openCart())}}><i className="fa-solid fa-bag-shopping fa-xl"></i></button>
       </div>
     </>

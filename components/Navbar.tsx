@@ -3,6 +3,8 @@ import React from 'react'
 import { navBtns } from '@/app/data'
 import { openCart } from '@/features/UIUpdates/CartUI';
 import { useAppDispatch } from '@/app/hooks';
+import { openFav } from '@/features/UIUpdates/FavouriteUI';
+import Account from './DropdownMenu/Account';
 const Navbar = () => {
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
     const dispatch = useAppDispatch();
@@ -32,9 +34,10 @@ const Navbar = () => {
                     <button className='text-[16px] mr-2'><i className="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <div className='gap-5 text-davysilver hidden sm:flex'>
-                    <button><i className="fa-regular fa-user fa-xl"></i></button>
-                    <button><i className="fa-regular fa-heart fa-xl"></i></button>
-                    <button onClick={()=>dispatch(openCart())}><i className="fa-solid fa-bag-shopping fa-xl"></i></button>
+                    {/* <button><i className="fa-regular fa-user fa-xl"></i></button> */}
+                    <Account/>
+                    <button onClick={()=>{dispatch(openFav())}}><i className="fa-regular fa-heart fa-xl"></i></button>
+                    <button onClick={()=>{dispatch(openCart())}}><i className="fa-solid fa-bag-shopping fa-xl"></i></button>
                 </div>
             </div>
         </div>

@@ -2,12 +2,14 @@ import React from 'react'
 import { navBtns } from '@/app/data'
 import { useAppDispatch } from '@/app/hooks';
 import { closeSidebar } from '@/features/UIUpdates/UISlice';
+import { useAppSelector } from '@/app/hooks';
 const MenuType = () => {
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
+    const state = useAppSelector((state) => state.sidebar.value)
     const dispatch = useAppDispatch();
   return (
     <>
-            <div className='flex w-[90%] items-center justify-between border-b-[1px] pb-4'>
+            <div className='flex w-[90%] items-center justify-between border-b-[1px] pb-4 -left-96'>
                 <p className='text-salmon font-bold text-xl tracking-wide'>Menu</p>
                 <button  onClick={()=>{dispatch(closeSidebar())}}><i className="fa-solid fa-xmark fa-xl"></i></button>
             </div>

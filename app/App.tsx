@@ -8,10 +8,12 @@ import Tabs from '@/components/Tabs'
 import Menubar from '@/components/Mobile-Interface/Menubar'
 import Sidebar from '@/components/Mobile-Interface/Sidebar'
 import Cart from '@/components/ProductUi/Cart'
+import Favourite from '@/components/ProductUi/Favourite'
 const App = () => {
   return (
     <main className='h-screen w-screen flex items-center flex-col overflow-x-hidden'>
         <Cart/>
+        <Favourite/>
         <Menubar/>
         <Navbar/>
         <Trends/>

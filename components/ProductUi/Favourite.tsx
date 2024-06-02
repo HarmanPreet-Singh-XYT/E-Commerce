@@ -2,13 +2,13 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { cartProducts as products } from '@/app/data'
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { closeCart } from '@/features/UIUpdates/CartUI';
-export default function Cart() {
-  const state = useAppSelector((state) => state.cart.value)
+import { closeFav } from '@/features/UIUpdates/FavouriteUI';
+export default function Favourite() {
+  const state = useAppSelector((state) => state.FavUI.value)
   const dispatch = useAppDispatch();
   return (
     <Transition show={state}>
-      <Dialog className="relative z-50" onClose={()=>dispatch(closeCart())}>
+      <Dialog className="relative z-50" onClose={()=>dispatch(closeFav())}>
         <TransitionChild
           enter="ease-in-out duration-500"
           enterFrom="opacity-0"
@@ -35,12 +35,12 @@ export default function Cart() {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <DialogTitle className="text-lg font-medium text-gray-900">Shopping cart</DialogTitle>
+                        <DialogTitle className="text-lg font-medium text-gray-900">Favourites</DialogTitle>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
                             className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={()=>dispatch(closeCart())}
+                            onClick={()=>dispatch(closeFav())}
                           >
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Close panel</span>
@@ -75,7 +75,13 @@ export default function Cart() {
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">Qty {product.quantity}</p>
 
-                                    <div className="flex">
+                                    <div className="flex gap-5">
+                                        <button
+                                        type="button"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        Add to Cart
+                                      </button>
                                       <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -93,17 +99,17 @@ export default function Cart() {
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-gray-900">
+                      {/* <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
                         <p>$262.00</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p> */}
                       <div className="mt-6">
                         <a
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
-                          Checkout
+                          Add All to Cart
                         </a>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
@@ -112,7 +118,7 @@ export default function Cart() {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={()=>dispatch(closeCart())}
+                            onClick={()=>dispatch(closeFav())}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>

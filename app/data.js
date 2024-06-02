@@ -602,153 +602,6 @@ const footerSections = [
         ]
     }
 ];
-
-const products = [
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-4.jpg",
-        secImglink: "",
-        productID:"i34S342",
-        discount: 15,
-        category: "JACKET",
-        title: "Mens Winter Leathers Jackets",
-        ratingCount: 56,
-        stars: 3,
-        price: { basePrice: 75.00, discountPrice: 48.00 },
-        params: { isSale: false, isNew: false, isDiscount: true }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shirt-2.jpg",
-        secImglink: "",
-        productID:"i34S34134",
-        discount: 20,
-        category: "SHIRT",
-        title: "Pure Garment Dyed Cotton Shirt",
-        ratingCount: 34,
-        stars: 4,
-        price: { basePrice: 56.00, discountPrice: 45.00 },
-        params: { isSale: true, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-6.jpg",
-        secImglink: "",
-        productID:"i34S34245",
-        discount: 10,
-        category: "JACKET",
-        title: "MEN Yarn Fleece Full-Zip Jacket",
-        ratingCount: 22,
-        stars: 4.5,
-        price: { basePrice: 65.00, discountPrice: 58.00 },
-        params: { isSale: false, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-4.jpg",
-        secImglink: "",
-        productID:"i34S34134",
-        discount: 28.57,
-        category: "SKIRT",
-        title: "Black Floral Wrap Midi Skirt",
-        ratingCount: 47,
-        stars: 4,
-        price: { basePrice: 35.00, discountPrice: 25.00 },
-        params: { isSale: false, isNew: true, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-2_1.jpg",
-        secImglink: "",
-        productID:"i34S34345",
-        discount: 5.71,
-        category: "CASUAL",
-        title: "Casual Men's Brown Shoes",
-        ratingCount: 63,
-        stars: 2,
-        price: { basePrice: 105.00, discountPrice: 99.00 },
-        params: { isSale: false, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-4.jpg",
-        secImglink: "",
-        productID:"i34S342435",
-        discount: 11.76,
-        category: "WATCHES",
-        title: "Pocket Watch Leather Pouch",
-        ratingCount: 29,
-        stars: 4,
-        price: { basePrice: 170.00, discountPrice: 150.00 },
-        params: { isSale: true, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-2.jpg",
-        secImglink: "",
-        productID:"i34S34123",
-        discount: 16.67,
-        category: "WATCHES",
-        title: "Smart Watche Vital Plus",
-        ratingCount: 52,
-        stars: 5,
-        price: { basePrice: 120.00, discountPrice: 100.00 },
-        params: { isSale: false, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/party-wear-2.jpg",
-        secImglink: "",
-        productID:"i34S344325",
-        discount: 16.67,
-        category: "PARTY WEAR",
-        title: "Womens Party Wear Shoes",
-        ratingCount: 37,
-        stars: 4,
-        price: { basePrice: 30.00, discountPrice: 25.00 },
-        params: { isSale: true, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-2.jpg",
-        secImglink: "",
-        productID:"i34S34324",
-        discount: 28.89,
-        category: "JACKET",
-        title: "Mens Winter Leathers Jackets",
-        ratingCount: 48,
-        stars: 3,
-        price: { basePrice: 45.00, discountPrice: 32.00 },
-        params: { isSale: false, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-4.jpg",
-        secImglink: "",
-        productID:"i34S3445",
-        discount: 9.38,
-        category: "SPORTS",
-        title: "Trekking & Running Shoes - Black",
-        ratingCount: 41,
-        stars: 5,
-        price: { basePrice: 64.00, discountPrice: 58.00 },
-        params: { isSale: true, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-1_1.jpg",
-        secImglink: "",
-        productID:"i34S342345",
-        discount: 23.08,
-        category: "FORMAL",
-        title: "Men's Leather Formal Wear Shoes",
-        ratingCount: 53,
-        stars: 4,
-        price: { basePrice: 65.00, discountPrice: 50.00 },
-        params: { isSale: false, isNew: false, isDiscount: false }
-    },
-    {
-        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shorts-2.jpg",
-        secImglink: "",
-        productID:"i34S34345",
-        discount: 8.24,
-        category: "SHORTS",
-        title: "Better Basics French Terry Sweatshorts",
-        ratingCount: 39,
-        stars: 4,
-        price: { basePrice: 85.00, discountPrice: 78.00 },
-        params: { isSale: true, isNew: false, isDiscount: false }
-    }
-];
 const featuresSec = [
     {
         title: "Worldwide Delivery",
@@ -838,6 +691,7 @@ const deals = [
         productLink:"",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shampoo.jpg",
         stars:3,
+        ratingCount:56,
         title:"SHAMPOO, CONDITIONER & FACEWASH PACKS",
         description:"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor dolor sit amet consectetur Lorem ipsum dolor",
         price:{basePrice:200.00,discountPrice:150.00},
@@ -848,6 +702,7 @@ const deals = [
         productLink:"",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jewellery-1.jpg",
         stars:3,
+        ratingCount:26,
         title:"ROSE GOLD DIAMONDS EARRING",
         description:"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor dolor sit amet consectetur Lorem ipsum dolor",
         price:{basePrice:1990.00,discountPrice:2000.00},
@@ -878,5 +733,307 @@ const cartProducts = [
       'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
   },
   // More products...
+]
+const products = [
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-4.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S342",
+        discount: 15,
+        category: "JACKET",
+        title: "Mens Winter Leathers Jackets",
+        ratingCount: 56,
+        stars: 3,
+        price: { basePrice: 75.00, discountPrice: 48.00 },
+        params: { isSale: false, isNew: false, isDiscount: true },
+        colors: [
+            { name: "Brown", class: "bg-brown-500", selectedClass: "ring-brown-700" },
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "S", inStock: true },
+            { name: "M", inStock: true },
+            { name: "L", inStock: true },
+            { name: "XL", inStock: true },
+            { name: "XXL", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shirt-2.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34134",
+        discount: 20,
+        category: "SHIRT",
+        title: "Pure Garment Dyed Cotton Shirt",
+        ratingCount: 34,
+        stars: 4,
+        price: { basePrice: 56.00, discountPrice: 45.00 },
+        params: { isSale: true, isNew: false, isDiscount: false },
+        colors: [
+            { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+            { name: "Blue", class: "bg-blue-500", selectedClass: "ring-blue-700" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "S", inStock: true },
+            { name: "M", inStock: true },
+            { name: "L", inStock: true },
+            { name: "XL", inStock: true },
+            { name: "XXL", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-6.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34245",
+        discount: 10,
+        category: "JACKET",
+        title: "MEN Yarn Fleece Full-Zip Jacket",
+        ratingCount: 22,
+        stars: 4.5,
+        price: { basePrice: 65.00, discountPrice: 58.00 },
+        params: { isSale: false, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Gray", class: "bg-gray-500", selectedClass: "ring-gray-700" },
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "S", inStock: true },
+            { name: "M", inStock: true },
+            { name: "L", inStock: true },
+            { name: "XL", inStock: true },
+            { name: "XXL", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-4.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34134",
+        discount: 28.57,
+        category: "SKIRT",
+        title: "Black Floral Wrap Midi Skirt",
+        ratingCount: 47,
+        stars: 4,
+        price: { basePrice: 35.00, discountPrice: 25.00 },
+        params: { isSale: false, isNew: true, isDiscount: false },
+        colors: [
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" },
+            { name: "Floral", class: "bg-floral", selectedClass: "ring-floral" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "S", inStock: true },
+            { name: "M", inStock: true },
+            { name: "L", inStock: true },
+            { name: "XL", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-2_1.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34345",
+        discount: 5.71,
+        category: "CASUAL",
+        title: "Casual Men's Brown Shoes",
+        ratingCount: 63,
+        stars: 2,
+        price: { basePrice: 105.00, discountPrice: 99.00 },
+        params: { isSale: false, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Brown", class: "bg-brown-500", selectedClass: "ring-brown-700" },
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "6", inStock: true },
+            { name: "7", inStock: true },
+            { name: "8", inStock: true },
+            { name: "9", inStock: true },
+            { name: "10", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-4.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S342435",
+        discount: 11.76,
+        category: "WATCHES",
+        title: "Pocket Watch Leather Pouch",
+        ratingCount: 29,
+        stars: 4,
+        price: { basePrice: 170.00, discountPrice: 150.00 },
+        params: { isSale: true, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" },
+            { name: "Brown", class: "bg-brown-500", selectedClass: "ring-brown-700" }
+        ],
+        isSizeAvailable: false,
+        sizes: [
+            { name: "Default", inStock: true },
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-2.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34123",
+        discount: 16.67,
+        category: "WATCHES",
+        title: "Smart Watch Vital Plus",
+        ratingCount: 52,
+        stars: 5,
+        price: { basePrice: 120.00, discountPrice: 100.00 },
+        params: { isSale: false, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" },
+            { name: "Silver", class: "bg-silver-500", selectedClass: "ring-silver-700" }
+        ],
+        isSizeAvailable: false,
+        sizes: [
+            { name: "Default", inStock: true },
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/party-wear-2.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S344325",
+        discount: 16.67,
+        category: "PARTY WEAR",
+        title: "Womens Party Wear Shoes",
+        ratingCount: 37,
+        stars: 4,
+        price: { basePrice: 30.00, discountPrice: 25.00 },
+        params: { isSale: true, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Red", class: "bg-red-500", selectedClass: "ring-red-700" },
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "6", inStock: true },
+            { name: "7", inStock: true },
+            { name: "8", inStock: true },
+            { name: "9", inStock: true },
+            { name: "10", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-2.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34324",
+        discount: 28.89,
+        category: "JACKET",
+        title: "Mens Winter Leathers Jackets",
+        ratingCount: 48,
+        stars: 3,
+        price: { basePrice: 45.00, discountPrice: 32.00 },
+        params: { isSale: false, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Brown", class: "bg-brown-500", selectedClass: "ring-brown-700" },
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "S", inStock: true },
+            { name: "M", inStock: true },
+            { name: "L", inStock: true },
+            { name: "XL", inStock: true },
+            { name: "XXL", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-4.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S3445",
+        discount: 9.38,
+        category: "SPORTS",
+        title: "Trekking & Running Shoes - Black",
+        ratingCount: 41,
+        stars: 5,
+        price: { basePrice: 64.00, discountPrice: 58.00 },
+        params: { isSale: true, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" },
+            { name: "Gray", class: "bg-gray-500", selectedClass: "ring-gray-700" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "6", inStock: true },
+            { name: "7", inStock: true },
+            { name: "8", inStock: true },
+            { name: "9", inStock: true },
+            { name: "10", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-1_1.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S342345",
+        discount: 23.08,
+        category: "FORMAL",
+        title: "Men's Leather Formal Wear Shoes",
+        ratingCount: 53,
+        stars: 4,
+        price: { basePrice: 65.00, discountPrice: 50.00 },
+        params: { isSale: false, isNew: false, isDiscount: false },
+        colors: [
+            { name: "Black", class: "bg-black", selectedClass: "ring-black" },
+            { name: "Brown", class: "bg-brown-500", selectedClass: "ring-brown-700" }
+        ],
+        isSizeAvailable: true,
+        sizes: [
+            { name: "6", inStock: true },
+            { name: "7", inStock: true },
+            { name: "8", inStock: true },
+            { name: "9", inStock: true },
+            { name: "10", inStock: false }
+        ]
+    },
+    {
+        imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shorts-2.jpg",
+        secImglink: "",
+        imgCollection:[],
+        imgAlt:"",
+        productID: "i34S34345",
+        discount: 8.24,
+        category: "SHORTS",
+        title: "Better Basics French Terry Sweatshorts",
+        ratingCount: 39,
+        stars: 4,
+        price: { basePrice: 85.00, discountPrice: 78.00 },
+        params: { isSale: true, isNew: false, isDiscount: false },
+        colors: [
+            { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+            { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
+            { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" }
+        ],
+        isSizeAvailable: false,
+        sizes: [
+            { name: "Default", inStock: true },
+        ]
+    }
 ]
 export {topCat, navBtns, leftStatus, bestSell, trendings, footerCategories, footerSections, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
