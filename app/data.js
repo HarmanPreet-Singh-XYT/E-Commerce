@@ -44,12 +44,80 @@ const topCat = [{
 const navBtns = [
     {name:"Home",isExtendable:false,extendables:[]},
     {name:"Categories",isExtendable:true,extendables:[],catLink:''},
-    {name:"Men's",isExtendable:true,extendables:[],catLink:''},
-    {name:"Women's",isExtendable:true,extendables:[],catLink:''},
-    {name:"Jewelry",isExtendable:true,extendables:[],catLink:''},
-    {name:"Perfume",isExtendable:true,extendables:[],catLink:''},
-    {name:"Blog",isExtendable:true,extendables:[],catLink:''},
-    {name:"Hot Offers",isExtendable:true,extendables:[],catLink:''}
+    {name:"Men's",isExtendable:true,extendables:[
+        {
+          title: "Shirt",
+          link: "",
+        },
+        {
+          title: "Shorts & Jeans",
+          link: "",
+        },
+        {
+          title: "Safety Shoes",
+          link: "",
+        },
+        {
+          title: "Wallet",
+          link: "",
+        },
+      ],catLink:''},
+    {name:"Women's",isExtendable:true,extendables:[
+        {
+            title: "Dress & Frock", // Combined Dress and Frock
+            link: "",
+          },
+          {
+            title: "Earrings",
+            link: "",
+          },
+          {
+            title: "Necklace",
+            link:"",
+          },
+          {
+            title: "Makeup Kit",
+            link: "",
+          },
+    ],catLink:''},
+    {name:"Jewelry",isExtendable:true,extendables:[
+        {
+            title: "Necklace",
+            link: "",
+          },
+          {
+            title: "Earrings",
+            link: "",
+          },
+          {
+            title: "Couple Rings",
+            link: "",
+          },
+          {
+            title: "Bracelets",
+            link: "",
+          },
+    ],catLink:''},
+    {name:"Perfume",isExtendable:true,extendables:[
+          {
+            title: "Clothes Perfume",
+            link: "",
+          },
+          {
+            title: "Deodorant",
+            link: "",
+          },
+          {
+            title: "Flower Fragrance",
+            link: "",
+          },
+          {
+            title: "Air Freshener",
+            link: "",
+          },
+    ],catLink:''},
+    {name:"Blog",isExtendable:false,extendables:[],catLink:''},
+    {name:"Hot Offers",isExtendable:false,extendables:[],catLink:''}
 ];
 const leftStatus = [
     {

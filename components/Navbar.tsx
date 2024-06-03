@@ -1,11 +1,14 @@
 import Link from 'next/link'
-import React from 'react'
+import React,{useState} from 'react'
 import { navBtns } from '@/app/data'
 import Account from './DropdownMenu/Account';
 import { useMenu } from '@/Helpers/MenuContext';
+import Product from './DropdownMenu/Product';
 const Navbar = () => {
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
     const { toggleCart, toggleFav } = useMenu();
+    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
+    const [selectIndex, setselectIndex] = useState<number | null>(null);
     return (
     <nav className='w-full h-auto flex flex-col items-center'>
         <div className='h-[50px] w-[100%] justify-evenly items-center border-b-[1px] hidden sm:flex'>
@@ -41,7 +44,14 @@ const Navbar = () => {
         </div>
         <div className='h-[50px] w-[100%] mt-2 justify-center items-center hidden sm:flex'>
             <div className='flex'>
-                {navBtns.map((btn,index)=><button key={index} className='m-6 text-[16px] text-gray-800 font-semibold tracking-wide'>{btn.name.toUpperCase()}</button>)}
+                {navBtns.map((btn,index)=>
+                <div onMouseEnter={()=>{setDropdownVisible(true);setselectIndex(index)}} onMouseLeave={()=>{setDropdownVisible(false);setselectIndex(null)}} className="relative items-center">
+                <button key={index} className='button-with-border text-[16px] m-6 text-gray-700 font-semibold tracking-wide hover:text-salmon'>{btn.name.toUpperCase()}</button>
+                {selectIndex === index && btn.isExtendable && isDropdownVisible && (
+                <Product options={btn.extendables} />
+                )}
+                </div>
+                )}
             </div>
         </div>
     </nav>

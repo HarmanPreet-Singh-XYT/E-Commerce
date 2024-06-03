@@ -18,3 +18,27 @@
 }
 
 
+
+
+.button-with-border {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+  overflow: hidden;
+}
+
+.button-with-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor; /* Use the button's text color */
+  transform: translateX(-100%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.button-with-border:hover::after {
+  transform: translateX(0);
+}

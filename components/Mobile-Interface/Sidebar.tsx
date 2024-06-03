@@ -8,7 +8,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         if (menu.sidebar) {
-            // After 300ms, change the overlay color to black
+            // After 100ms, change the overlay color to black
             const timer = setTimeout(() => {
                 setOverlayColor('rgba(0, 0, 0, 0.5)'); // Change color to semi-transparent black
             }, 100);

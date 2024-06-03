@@ -5,11 +5,9 @@ import Stars from '../ProductUi/Stars';
 
 const SidebarS = () => {
     const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
-
     const handleToggle = (index: number) => {
         setCollapsedIndex((prevIndex) => (prevIndex === index ? null : index));
     };
-
     return (
         <>
             <div className='hidden lg:flex-col lg:flex ml-auto'>
@@ -19,7 +17,7 @@ const SidebarS = () => {
                         <div key={index}>
                             <div
                                 className={`flex text-base mb-4 cursor-pointer ${collapsedIndex === index ? 'border-b-[1px]' : ''}`}
-                                onClick={() => handleToggle(index)}
+                                onClick={() => {handleToggle(index)}}
                             >
                                 <div className='flex justify-between items-center w-[100%] text-[20px]'>
                                     <div className='flex justify-center items-center'>
@@ -29,16 +27,22 @@ const SidebarS = () => {
                                     <p className='text-silver'>{collapsedIndex === index ? '-' : '+'}</p>
                                 </div>
                             </div>
-                            {collapsedIndex === index && (
-                                <div className='border-b-[1px] pb-2'>
-                                    {stat.links.map((each, linkIndex) =>
-                                        <div key={linkIndex} className='flex justify-between mt-1 items-center'>
-                                            <p className='tracking-[1px] text-silver'>{each.title}</p>
-                                            <p className='text-[17px] text-silver'>{each.quantity}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+                            <div
+                                className={`transition-[max-height] duration-[400ms] ease-linear overflow-hidden ${
+                                    collapsedIndex === index ? 'max-h-[160px]' : 'max-h-0'
+                                }`}
+                            >
+                                {(
+                                    <div className='border-b-[1px] pb-2'>
+                                        {stat.links.map((link, linkIndex) =>
+                                            <a href={link.link} key={linkIndex} className='flex justify-between mt-1 items-center text-silver hover:text-black'>
+                                                <p className='tracking-[1px]'>{link.title}</p>
+                                                <p className='text-[17px]'>{link.quantity}</p>
+                                            </a>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -52,7 +56,7 @@ const SidebarS = () => {
                                 </a>
                                 <div className='ml-5'>
                                     <a href={each.productLink}>
-                                        <p className='tracking-[1px] text-[16px] text-davysilver'>{each.title}</p>
+                                        <p className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>{each.title}</p>
                                     </a>
                                     <div className='flex items-center gap-2'>
                                         <Stars stars={each.stars}/>
