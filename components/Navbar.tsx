@@ -19,7 +19,7 @@ const Navbar = () => {
                 
             </div>
             <div>
-                <p className='text-[15px] text-silver'>FREE SHIPPING THIS WEEK ORDER OVER - $55</p>
+                <p className='text-sm text-silver'>FREE SHIPPING THIS WEEK ORDER OVER - $55</p>
             </div>
             <div>
                 <button className='text-[18px] mr-5 hidden sm:block'>Newsletter Email</button>
@@ -34,22 +34,22 @@ const Navbar = () => {
                     <input placeholder='Enter your product name...' type='text' className='outline-0 ml-5 text-[20px] w-[90%] placeholder:text-base placeholder:text-silver'/>
                     <button className='text-[16px] mr-2'><i className="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <div className='gap-5 text-davysilver hidden sm:flex'>
+                <div className='gap-5 text-davysilver my-8 hidden sm:flex'>
                     {/* <button><i className="fa-regular fa-user fa-xl"></i></button> */}
                     <Account/>
-                    <button onClick={toggleFav}><i className="fa-regular fa-heart fa-xl"></i></button>
-                    <button onClick={toggleCart}><i className="fa-solid fa-bag-shopping fa-xl"></i></button>
+                    <button onClick={toggleFav}><i className="fa-regular fa-heart fa-2xl"></i></button>
+                    <button onClick={toggleCart}><i className="fa-solid fa-bag-shopping fa-2xl"></i></button>
                 </div>
             </div>
         </div>
         <div className='h-[50px] w-[100%] mt-2 justify-center items-center hidden sm:flex'>
             <div className='flex'>
                 {navBtns.map((btn,index)=>
-                <div onMouseEnter={()=>{setDropdownVisible(true);setselectIndex(index)}} onMouseLeave={()=>{setDropdownVisible(false);setselectIndex(null)}} className="relative items-center">
-                <button key={index} className='button-with-border text-[16px] m-6 text-gray-700 font-semibold tracking-wide hover:text-salmon'>{btn.name.toUpperCase()}</button>
-                {selectIndex === index && btn.isExtendable && isDropdownVisible && (
-                <Product options={btn.extendables} />
-                )}
+                <div key={index} onMouseEnter={()=>{setDropdownVisible(true);setselectIndex(index)}} onMouseLeave={()=>{setDropdownVisible(false);setselectIndex(null)}} className="relative items-center">
+                    <button key={index} className='button-with-border text-[16px] m-6 text-gray-700 font-semibold tracking-wide hover:text-salmon'>{btn.name.toUpperCase()}</button>
+                    {selectIndex === index && btn.isExtendable && isDropdownVisible && (
+                    <Product options={btn.extendables} />
+                    )}
                 </div>
                 )}
             </div>

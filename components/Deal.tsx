@@ -24,7 +24,7 @@ const Deal = () => {
                         <p className='text-2xl font-bold text-salmon'>${each.price.basePrice}</p>
                         <p className='text-xl line-through ml-4 text-silver'>${each.price.discountPrice}</p>
                     </div>
-                    <button className='bg-salmon p-2 rounded-2xl w-[175px] h-[45px] text-white font-bold text-xl'>ADD TO CART</button>
+                    <button className='bg-salmon p-2 rounded-xl w-[165px] h-[45px] text-white font-bold text-lg hover:bg-black hover:text-white transition-colors duration-200'>ADD TO CART</button>
                     <div className='flex justify-between'>
                         <p className='text-sm'>ALREADY SOLD: <span className='font-bold'>{each.availability.sold}</span></p>
                         <p className='text-sm'>AVAILABLE: <span className='font-bold'>{each.availability.avilable}</span></p>

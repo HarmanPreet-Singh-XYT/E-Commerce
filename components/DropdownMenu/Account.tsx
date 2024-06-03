@@ -10,7 +10,7 @@ const Account = () => {
   return (
     <div className="relative items-center">
       <button onClick={toggleDropdown}>
-        <i className="fa-regular fa-user fa-xl"></i>
+        <i className="fa-regular fa-user fa-2xl"></i>
       </button>
       {isDropdownVisible && (
         <div id="dropdownAvatar" className="z-10 bg-white divide-y divide-gray-100 rounded-lg absolute shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
