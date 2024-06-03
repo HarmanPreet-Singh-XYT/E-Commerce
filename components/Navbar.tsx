@@ -1,14 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 import { navBtns } from '@/app/data'
-import { openCart } from '@/features/UIUpdates/CartUI';
-import { useAppDispatch } from '@/app/hooks';
-import { openFav } from '@/features/UIUpdates/FavouriteUI';
 import Account from './DropdownMenu/Account';
+import { useMenu } from '@/Helpers/MenuContext';
 const Navbar = () => {
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
-    const dispatch = useAppDispatch();
-  return (
+    const { toggleCart, toggleFav } = useMenu();
+    return (
     <nav className='w-full h-auto flex flex-col items-center'>
         <div className='h-[50px] w-[100%] justify-evenly items-center border-b-[1px] hidden sm:flex'>
             <div className='flex gap-2'>
@@ -36,8 +34,8 @@ const Navbar = () => {
                 <div className='gap-5 text-davysilver hidden sm:flex'>
                     {/* <button><i className="fa-regular fa-user fa-xl"></i></button> */}
                     <Account/>
-                    <button onClick={()=>{dispatch(openFav())}}><i className="fa-regular fa-heart fa-xl"></i></button>
-                    <button onClick={()=>{dispatch(openCart())}}><i className="fa-solid fa-bag-shopping fa-xl"></i></button>
+                    <button onClick={toggleFav}><i className="fa-regular fa-heart fa-xl"></i></button>
+                    <button onClick={toggleCart}><i className="fa-solid fa-bag-shopping fa-xl"></i></button>
                 </div>
             </div>
         </div>

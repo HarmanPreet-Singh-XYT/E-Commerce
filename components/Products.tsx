@@ -1,8 +1,8 @@
 import { products } from '@/app/data';
 import React, { useState } from 'react';
-import ReactStars from 'react-stars';
 import Quickview from './ProductUi/Quickview';
 import { defaultData } from '@/app/data';
+import Stars from './ProductUi/Stars';
 interface Color {
   name: string;
   class: string;
@@ -82,7 +82,7 @@ const ProductCard = ({ product }:{ product: Product }) => {
         <a href=''><p className='text-[14px] text-salmon'>{product.category}</p></a>
         <a href=''><p className='tracking-[1px] text-silver hover:text-davysilver'>{product.title}</p></a>
         <div className='flex items-center gap-2'>
-          <ReactStars count={5} value={product.stars} size={20} edit={false} color2={'#ffd700'} />
+          <Stars stars={product.stars}/>
           {product.ratingCount > 0 && <p className=' text-silver'>{product.ratingCount}</p>}
         </div>
         <div className='flex mb-5 items-center gap-4'>

@@ -1,14 +1,12 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { cartProducts as products } from '@/app/data'
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { closeCart } from '@/features/UIUpdates/CartUI';
+import { useMenu } from '@/Helpers/MenuContext';
 export default function Cart() {
-  const state = useAppSelector((state) => state.cart.value)
-  const dispatch = useAppDispatch();
+  const { menu,toggleCart } = useMenu();
   return (
-    <Transition show={state}>
-      <Dialog className="relative z-50" onClose={()=>dispatch(closeCart())}>
+    <Transition show={menu.cart}>
+      <Dialog className="relative z-50" onClose={toggleCart}>
         <TransitionChild
           enter="ease-in-out duration-500"
           enterFrom="opacity-0"
@@ -40,7 +38,7 @@ export default function Cart() {
                           <button
                             type="button"
                             className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={()=>dispatch(closeCart())}
+                            onClick={toggleCart}
                           >
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Close panel</span>
@@ -112,7 +110,7 @@ export default function Cart() {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={()=>dispatch(closeCart())}
+                            onClick={toggleCart}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>

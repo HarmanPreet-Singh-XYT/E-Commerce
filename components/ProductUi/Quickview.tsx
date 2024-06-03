@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Dialog, DialogPanel, Radio, RadioGroup, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { StarIcon } from '@heroicons/react/20/solid'
+import Stars from './Stars'
 function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
@@ -107,18 +107,7 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                         <div className="mt-6">
                           <h4 className="sr-only">Reviews</h4>
                           <div className="flex items-center">
-                            <div className="flex items-center">
-                              {[0, 1, 2, 3, 4].map((rating) => (
-                                <StarIcon
-                                  key={rating}
-                                  className={classNames(
-                                    product.stars > rating ? 'text-orange-400' : 'text-gray-200',
-                                    'h-5 w-5 flex-shrink-0'
-                                  )}
-                                  aria-hidden="true"
-                                />
-                              ))}
-                            </div>
+                            <Stars stars={product.stars}/>
                             <p className="sr-only">{product.stars} out of 5 stars</p>
                             <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                               {product.ratingCount} reviews

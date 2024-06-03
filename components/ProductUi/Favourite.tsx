@@ -1,14 +1,12 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { cartProducts as products } from '@/app/data'
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { closeFav } from '@/features/UIUpdates/FavouriteUI';
+import { useMenu } from '@/Helpers/MenuContext'
 export default function Favourite() {
-  const state = useAppSelector((state) => state.FavUI.value)
-  const dispatch = useAppDispatch();
+  const { menu,toggleFav } = useMenu();
   return (
-    <Transition show={state}>
-      <Dialog className="relative z-50" onClose={()=>dispatch(closeFav())}>
+    <Transition show={menu.fav}>
+      <Dialog className="relative z-50" onClose={toggleFav}>
         <TransitionChild
           enter="ease-in-out duration-500"
           enterFrom="opacity-0"
@@ -40,7 +38,7 @@ export default function Favourite() {
                           <button
                             type="button"
                             className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={()=>dispatch(closeFav())}
+                            onClick={toggleFav}
                           >
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Close panel</span>
@@ -118,7 +116,7 @@ export default function Favourite() {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={()=>dispatch(closeFav())}
+                            onClick={toggleFav}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>

@@ -1,16 +1,11 @@
-import UISliceReducer from '@/features/UIUpdates/UISlice'
-import SidebarType from '@/features/UIUpdates/SidebarType'
+
 import CartUI from '@/features/UIUpdates/CartUI'
 import { configureStore } from '@reduxjs/toolkit'
-import FavouriteUI from '@/features/UIUpdates/FavouriteUI'
 // ...
 
 export const store = configureStore({
   reducer: {
-    sidebar:UISliceReducer,
-    sidebarType:SidebarType,
     cart:CartUI,
-    FavUI:FavouriteUI,
   },
 })
 

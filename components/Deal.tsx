@@ -1,8 +1,8 @@
 import React from 'react'
 import { deals } from '@/app/data'
-import ReactStars from 'react-stars';
 import DealTime from './DealTime';
 import ProgressBar from './ProgressBar';
+import Stars from './ProductUi/Stars';
 const Deal = () => {
   return (
     
@@ -13,7 +13,7 @@ const Deal = () => {
                 <a href={each.productLink}><img className='w-[100%] h-[100%] min-w-[200px] rounded-md' src={each.imgLink}/></a>
                 <div className='flex flex-col gap-4'>
                     <div className='flex items-center gap-2'>
-                        <ReactStars count={5} value={each.stars} size={15} edit={false} color2={'#ffd700'} />
+                        <Stars stars={each.stars}/>
                         {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
                     </div>
                     <a href="">

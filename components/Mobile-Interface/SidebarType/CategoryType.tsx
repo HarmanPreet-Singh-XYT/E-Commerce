@@ -1,16 +1,14 @@
 import React from 'react'
-import { useAppDispatch } from '@/app/hooks';
-import { closeSidebar } from '@/features/UIUpdates/UISlice';
 import { bestSell, leftStatus } from '@/app/data'
-import ReactStars from 'react-stars';
+import { useMenu } from '@/Helpers/MenuContext';
+import Stars from '@/components/ProductUi/Stars';
 const CategoryType = () => {
-    const socialMedia = ['facebook','twitter','instagram','linkedin'];
-    const dispatch = useAppDispatch();
+    const { toggleSidebar } = useMenu();
     return (
         <>
                 <div className='flex w-[90%] items-center mt-5 justify-between'>
                     <p className='text-salmon font-bold text-lg tracking-[2px]'>CATEGORY</p>
-                    <button  onClick={()=>{dispatch(closeSidebar())}}><i className="fa-solid fa-xmark fa-xl"></i></button>
+                    <button  onClick={toggleSidebar}><i className="fa-solid fa-xmark fa-xl"></i></button>
                 </div>
                 <div className='w-[90%]'>
                     {leftStatus.map((each,index)=>
@@ -34,7 +32,7 @@ const CategoryType = () => {
                             <div className='ml-5'>
                                 <a href={each.productLink}><p className='tracking-[1px]'>{each.title}</p></a>
                                 <div className='flex items-center gap-2'>
-                                        <ReactStars count={5} value={each.stars} size={15} edit={false} color2={'#ffd700'} />
+                                        <Stars stars={each.stars}/>
                                         {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
                                 </div>
                                 <div className='flex items-center'>

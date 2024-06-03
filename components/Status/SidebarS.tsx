@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { bestSell, leftStatus } from '@/app/data';
-import ReactStars from 'react-stars';
+import Stars from '../ProductUi/Stars';
 
 const SidebarS = () => {
     const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
@@ -55,7 +55,7 @@ const SidebarS = () => {
                                         <p className='tracking-[1px] text-[16px] text-davysilver'>{each.title}</p>
                                     </a>
                                     <div className='flex items-center gap-2'>
-                                        <ReactStars count={5} value={each.stars} size={15} edit={false} color2={'#ffd700'} />
+                                        <Stars stars={each.stars}/>
                                         {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
                                     </div>
                                     <div className='flex items-center'>
