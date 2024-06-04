@@ -19,7 +19,7 @@ const TrendingPrimary = (props:DataPattern) => {
       {props.data.map((each, index) => (
         <div
           key={index}
-          className={`flex mt-5 ${!props.isSecondary && 'mr-5'} static border-[1px] rounded-xl min-w-[310px] max-w-[310px] h-[110px] items-center`}
+          className={`flex mt-5 ${!props.isSecondary && 'mr-5'} static border-[1px] rounded-xl mb-2 min-w-[310px] max-w-[310px] h-[110px] items-center`}
         >
           <a href={each.productLink}>
             <img

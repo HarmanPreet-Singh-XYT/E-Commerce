@@ -25,7 +25,7 @@ const Product = ({ options }:{options:option[]}) => {
         opacity: opacity,
         transition: 'margin-top 0.2s ease-in-out, opacity 0.3s ease-in-out'
       }}
-      className="z-10 bg-white divide-y divide-gray-100 rounded-lg absolute shadow drop-shadow-xl w-52 py-4 px-2"
+      className="z-30 bg-white divide-y divide-gray-100 rounded-lg absolute shadow drop-shadow-xl w-52 py-4 px-2"
     >
       <ul className="py-0 text-sm" aria-labelledby="dropdownUserAvatarButton">
         {options.map((each, index) => (

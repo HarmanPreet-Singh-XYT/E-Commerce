@@ -43,7 +43,7 @@ const topCat = [{
 }];
 const navBtns = [
     {name:"Home",isExtendable:false,extendables:[]},
-    {name:"Categories",isExtendable:true,extendables:[],catLink:''},
+    {name:"Categories",isExtendable:false,extendables:[],catLink:''},
     {name:"Men's",isExtendable:true,extendables:[
         {
           title: "Shirt",
@@ -1125,4 +1125,148 @@ const defaultData = {
         { name: "Default", inStock: true },
     ]
 }
-export {topCat, navBtns, leftStatus, bestSell, trendings, footerCategories, footerSections, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const banners = [
+    {
+        topTitle:"Trending Item",
+        middleTitle:"Women's Latest Fashion Sale",
+        bottomTitle:"starting at $",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/banner-1.jpg",
+        startPrice:20.00,
+        buttonTitle:"Shop Now"
+    },
+    {
+        topTitle:"Trending Accesssories",
+        middleTitle:"Modern Sunglasses",
+        bottomTitle:"starting at $",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/banner-2.jpg",
+        startPrice:15.00,
+        buttonTitle:"Shop Now"
+    },
+    {
+        topTitle:"Sale Offer",
+        middleTitle:"New Fashion Summer Sale",
+        bottomTitle:"starting at $",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/banner-3.jpg",
+        startPrice:29.99,
+        buttonTitle:"Shop Now"
+    }
+]
+const categoryDropDown = [
+    {
+        title:'Electronics',
+        catLink:"",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/electronics-banner-1.jpg",
+        imgAlt:"",
+        imgRedirectLink:"",
+        subCategories:[
+            {
+                title:"Desktop",
+                link:"",
+            },
+            {
+                title:"Laptop",
+                link:"",
+            },
+            {
+                title:"Camera",
+                link:"",
+            },
+            {
+                title:"Tablet",
+                link:"",
+            },
+            {
+                title:"Headphone",
+                link:"",
+            },
+        ]
+    },
+    {
+        title:"Men's",
+        catLink:"",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/mens-banner.jpg",
+        imgAlt:"",
+        imgRedirectLink:"",
+        subCategories:[
+            {
+                title:"Formal",
+                link:"",
+            },
+            {
+                title:"Casual",
+                link:"",
+            },
+            {
+                title:"Sports",
+                link:"", 
+            },
+            {
+                title:"Jacket",
+                link:"",
+            },
+            {
+                title:"Sunglasses",
+                link:"",
+            },
+        ]
+    },
+    {
+        title:"Women's",
+        catLink:"",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/womens-banner.jpg",
+        imgAlt:"",
+        imgRedirectLink:"",
+        subCategories:[
+            {
+                title:"Formal",
+                link:"",
+            },
+            {
+                title:"Casual",
+                link:"", 
+            },
+            {
+                title:"Perfume",
+                link:"",
+            },
+            {
+                title:"Cosmetics",
+                link:"",
+            },
+            {
+                title:"Bags",
+                link:"",
+            },
+        ]
+    },
+    {
+        title:'Electronics',
+        catLink:"",
+        imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/electronics-banner-2.jpg",
+        imgAlt:"",
+        imgRedirectLink:"",
+        subCategories:[
+            {
+                title:"Smart Watch",
+                link:"",
+            },
+            {
+                title:"Smart TV",
+                link:"",
+            },
+            {
+                title:"Keyboard",
+                link:"",
+            },
+            {
+                title:"Mouse",
+                link:"",
+            },
+            {
+                title:"Microphone",
+                link:"",
+            },
+        ]
+    },
+]
+export {topCat, navBtns, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

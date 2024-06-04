@@ -3,7 +3,7 @@ import { trendings } from '@/app/data'
 import TrendingPrimary from './TrendingSec'
 const TrendSection = () => {
   return (
-    <div className='flex-wrap flex justify-center'>
+    <div className='flex-wrap xl:w-[100%] w-auto flex justify-center'>
             <div className='sm:ml-4'>
                     <p className='border-b-[1px] font-semibold text-lg leading-[50px] '>New Arrivals</p>
                     <div className='flex max-w-[310px] overflow-x-auto snap-x snap-mandatory'>
@@ -28,7 +28,7 @@ const TrendSection = () => {
             </div>
             <div className='sm:ml-4 font-semibold text-[18px]'>
                     <p className='border-b-[1px] leading-[50px] '>Top Rated</p>
-                    <div className='flex max-w-[310px] overflow-x-auto snap-x snap-mandatory'>
+                    <div className='flex max-w-[310px]  overflow-x-auto snap-x snap-mandatory'>
                         <div className='snap-center'>
                             <TrendingPrimary data={trendings.topRated.primary} isSecondary={false}/>
                         </div>

@@ -6,10 +6,10 @@ import Stars from './ProductUi/Stars';
 const Deal = () => {
   return (
     
-    <div className=' mt-10 sm:ml-4 ml-auto mr-auto max-w-[350px] sm:max-w-[1000px] flex flex-col justify-center'>
+    <div className=' mt-10 sm:ml-4 ml-auto mr-auto max-w-[350px] md:max-w-[800px] xl:max-w-[1000px] flex flex-col justify-center'>
         <p className='border-b-[1px] leading-[50px] tracking-[1.5px] font-semibold text-[18px]'> Deal of The Day</p>
         <div className='p-[30px] border-[1px] mt-8 rounded-xl overflow-auto snap-x snap-proximity flex gap-20'>
-            {deals.map((each,index)=><div key={index} className='flex flex-col rounded-xl min-w-full gap-5 h-auto items-center sm:pl-10 snap-center sm:flex-row'>
+            {deals.map((each,index)=><div key={index} className='flex flex-col rounded-xl min-w-full gap-5 h-auto items-center lg:pl-10 snap-center lg:flex-row'>
                 <a href={each.productLink}><img className='w-[100%] h-[100%] min-w-[200px] rounded-md' src={each.imgLink}/></a>
                 <div className='flex flex-col gap-4'>
                     <div className='flex items-center gap-2'>

@@ -3,17 +3,13 @@ import React, { useState } from 'react';
 const Account = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!isDropdownVisible);
-  };
-
   return (
-    <div className="relative items-center">
-      <button onClick={toggleDropdown}>
+    <div onMouseEnter={()=>setDropdownVisible(true)} onMouseLeave={()=>setDropdownVisible(false)} className="relative items-center">
+      <button className='mb-2'>
         <i className="fa-regular fa-user fa-2xl"></i>
       </button>
       {isDropdownVisible && (
-        <div id="dropdownAvatar" className="z-10 bg-white divide-y divide-gray-100 rounded-lg absolute shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        <div id="dropdownAvatar" className="z-30 bg-white divide-y divide-gray-100 rounded-lg absolute shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
           <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
             <div>Bonnie Green</div>
             <div className="font-medium truncate">name@flowbite.com</div>

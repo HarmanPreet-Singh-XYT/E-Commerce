@@ -68,7 +68,7 @@ const ProductCard = ({ product }:{ product: Product }) => {
           {product.discount}%
         </div>
       )}
-      <div className='relative transition-transform duration-300 hover:scale-105'>
+      <div className={`relative transition-transform mb-1 duration-300 ${isHovered && 'scale-105'}`}>
         <img className='min-w-[200px] min-h-[210px]' src={product.imgLink} alt={product.title} />
         {isHovered && (
           <button

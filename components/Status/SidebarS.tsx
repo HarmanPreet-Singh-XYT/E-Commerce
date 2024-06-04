@@ -11,14 +11,13 @@ const SidebarS = () => {
     return (
         <>
             <div className='hidden lg:flex-col lg:flex ml-auto'>
-                <div className='border-[1px] rounded-xl h-auto w-[320px] p-[15px]'>
+                <div className='border-[1px] rounded-xl h-auto w-[220px] xl:w-[320px] p-[15px]'>
                     <p className='tracking-[2px] font-semibold text-davysilver mb-4'>CATEGORY</p>
                     {leftStatus.map((stat, index) =>
                         <div key={index}>
                             <div
                                 className={`flex text-base mb-4 cursor-pointer ${collapsedIndex === index ? 'border-b-[1px]' : ''}`}
-                                onClick={() => {handleToggle(index)}}
-                            >
+                                onClick={() => {handleToggle(index)}}>
                                 <div className='flex justify-between items-center w-[100%] text-[20px]'>
                                     <div className='flex justify-center items-center'>
                                         <img className='h-[20px] w-[20px] mr-2' src={stat.imgLink} alt={stat.title} />

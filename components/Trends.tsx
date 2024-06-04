@@ -6,7 +6,7 @@ const Trends = () => {
     <div className='w-[80%] min-w-[300px] h-auto gap-5 m-5 flex justify-center'>
         <div className='flex overflow-x-auto gap-5 snap-proximity snap-x'>
             {topCat.map((Cat,index)=>
-                <div key={index} className='min-w-[300px] min-h-[80px] rounded-[10px] border-[1px] flex justify-between items-center snap-center'>
+                <div key={index} className='min-w-[300px] mb-2 min-h-[80px] rounded-[10px] border-[1px] flex justify-between items-center snap-center'>
                     <div className='flex flex-row ml-2 items-center justify-center'>
                         <div className='p-[4px] rounded-[10px] bg-gray-100'>
                             <img className='w-[25px] h-[25px] m-[10px]' src={Cat.imgLink}/>

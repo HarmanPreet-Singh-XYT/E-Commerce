@@ -10,6 +10,8 @@ import Sidebar from '@/components/Mobile-Interface/Sidebar'
 import Cart from '@/components/ProductUi/Cart'
 import Favourite from '@/components/ProductUi/Favourite'
 import { MenuProvider } from '@/Helpers/MenuContext'
+import Banner from '@/components/Banner'
+import Category from '@/components/DropdownMenu/Category'
 const App = () => {
   return (
     <MenuProvider>
@@ -18,6 +20,7 @@ const App = () => {
           <Favourite/>
           <Menubar/>
           <Navbar/>
+          <Banner/>
           <Trends/>
           <Status/>
           <Details/>
