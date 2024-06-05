@@ -689,7 +689,7 @@ const footerSections = [
             },
             {
                 title: "Contact Us",
-                link: "#"
+                link: "/contact"
             },
             {
                 title: "Sitemap",
@@ -740,7 +740,7 @@ const featuresSec = [
     },
     {
         title: "Next Day Delivery",
-        description: "UK Orders Only",
+        description: "Tier-1 City Orders Only",
         siteLink:"",
         icon:'fa-solid fa-rocket fa-2xl',
     },

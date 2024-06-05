@@ -3,6 +3,7 @@ import Stars from './Stars'
 import { ShoppingCartIcon, ReceiptRefundIcon, HeartIcon, CurrencyRupeeIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { products } from '@/app/data'
+import ReviewSection from './Product/ReviewSection'
 function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
@@ -209,6 +210,7 @@ const ProductPage = () => {
                 
             </div>
         </div>
+        <ReviewSection/>
     </div>
   )
 }

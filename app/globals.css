@@ -16,9 +16,9 @@
   background-color: rgb(216, 214, 214);
   border-radius: 50px;
 }
-
-
-
+.background-image-contact{
+  background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)), url('../public/support.jpg');
+}
 
 .button-with-border {
   position: relative;

@@ -26,4 +26,4 @@ We're always looking to improve. If you have any feedback, suggestions, or bug r
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Attribution-NonCommercial 4.0 International - see the [LICENSE](LICENSE) file for details.
