@@ -19,14 +19,14 @@ const Footer = () => {
                 )}
             </div>
         </div>
-        <div className='relative flex flex-row pb-14 gap-10 flex-wrap border-b-[1px] justify-center border-b-silver'>
+        <div className='relative flex flex-row pb-14 gap-10 flex-wrap border-b-[1px] justify-evenly border-b-silver'>
             {footerSections.map((each,index)=>
                 <div key={index} className='flex flex-col'>
                     <p className='text-white mt-16 font-bold text-md tracking-wide mb-1'>{each.sectionName}</p>
                     <span className='border-b-[1px] w-16 border-b-salmon mb-6'></span>
                     <div className='gap-2 flex flex-col'>
                         {each.items.map((each1,index)=>
-                            <p key={index} className='text-silver'>{each1}</p>
+                            <a href={each1.link} key={index} className='text-silver hover:text-gray-400'>{each1.title}</a>
                         )}
                     </div>
                 </div>
@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
         <div className='w-[100%] h-50  gap-2 flex flex-col items-center mt-4'>
             <img height={50} src='https://codewithsadee.github.io/anon-ecommerce-website/assets/images/payment.png'/>
-            <p className='text-silver font-semibold tracking-[2px] pb-16'>Copyright &copy; Anon All Rights Reserved.</p>
+            <p className='text-silver font-semibold tracking-[2px] lg:pb-0'>Copyright &copy; Anon All Rights Reserved.</p>
         </div>
     </div>
   )

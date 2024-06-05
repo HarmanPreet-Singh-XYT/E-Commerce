@@ -1,3 +1,5 @@
+import { title } from "process";
+
 const topCat = [{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/dress.svg',
     name:"DRESS & FROCK",
@@ -646,27 +648,86 @@ const footerCategories = [
 ];
 const footerSections = [
     {
-        sectionName: 'Popular Categories',
-        items: ['Fashion', 'Electronic', 'Cosmetic', 'Health', 'Watches']
+        sectionName: "Popular Categories",
+        items: [
+            {
+                title: "Fashion",
+                link: "#"
+            },
+            {
+                title: "Electronic",
+                link: "#"
+            },
+            {
+                title: "Cosmetic",
+                link: "#"
+            },
+            {
+                title: "Health",
+                link: "#"
+            },
+            {
+                title: "Watches",
+                link: "#"
+            }
+        ]
     },
     {
-        sectionName: 'Products',
-        items: ['Prices Drop', 'New Products', 'Best Sales', 'Contact Us', 'Sitemap']
+        sectionName: "Products",
+        items: [
+            {
+                title: "Prices Drop",
+                link: "#"
+            },
+            {
+                title: "New Products",
+                link: "#"
+            },
+            {
+                title: "Best Sales",
+                link: "#"
+            },
+            {
+                title: "Contact Us",
+                link: "#"
+            },
+            {
+                title: "Sitemap",
+                link: "#"
+            }
+        ]
     },
     {
-        sectionName: 'Our Company',
-        items: ['Delivery', 'Legal Notice', 'Terms And Conditions', 'About Us', 'Secure Payment']
-    },
-    {
-        sectionName: 'Services',
-        items: ['Prices Drop', 'New Products', 'Best Sales', 'Contact Us', 'Sitemap']
+        sectionName: "Our Company",
+        items: [
+            {
+                title: "About Us",
+                link: "/about"
+            },
+            {
+                title: "Privacy Policy",
+                link: "/policy/privacypolicy"
+            },
+            {
+                title: "Secure Payment",
+                link: "/securepayment"
+            },
+            {
+                title: "Terms And Conditions",
+                link: "/policy/terms&conditions"
+            },
+            {
+                title: "Refund & Cancellation",
+                link: "/policy/refund&cancellation"
+            }
+        ]
     },
     {
         sectionName: 'Contact',
         items: [
-            '419 State 414 Rte Beaver Dams, New York(NY), 14812, USA',
-            '(607) 936-8058',
-            'Example@Gmail.Com'
+            {title:'419 State 414 Rte Beaver Dams, New York(NY), 14812, USA',link:"#"},
+            {title:'(607) 936-8058',link:"#"},
+            {title:'Example@Gmail.Com',link:"#"}
         ]
     }
 ];
@@ -1268,5 +1329,102 @@ const categoryDropDown = [
             },
         ]
     },
+];
+const paymentSecure = [
+    {
+        title:'Secure Payment',
+        description:"We prioritize the security of your payment information. We understand the importance of ensuring that every transaction you make with us is safe and protected. That's why we have implemented robust security measures to safeguard your payment details and provide you with peace of mind throughout your shopping experience.",
+        imgLink:'securepayment.jpg',
+        imgAlt:'',
+    },
+    {
+        title:'Cutting-Edge Encryption Technology',
+        description:"We utilize cutting-edge encryption technology to protect your sensitive payment information. Our secure sockets layer (SSL) encryption ensures that all data transmitted between your browser and our servers remains encrypted and confidential. This means that your credit card details, personal information, and transaction data are shielded from unauthorized access by third parties.",
+        imgLink:'securepayment-1.jpg',
+        imgAlt:'',
+    },
+    {
+        title:'PCI Compliance',
+        description:"We are fully compliant with Payment Card Industry Data Security Standard (PCI DSS) requirements. This industry-standard framework sets forth stringent guidelines for securely handling credit card information during payment transactions. By adhering to PCI DSS standards, we maintain a secure environment for processing payment information, reducing the risk of data breaches and fraud.",
+        imgLink:'securepayment-2.jpg',
+        imgAlt:'',
+    },
+    {
+        title:'Trusted Payment Partners',
+        description:"We partner with trusted payment service providers that adhere to the highest security standards in the industry. Whether you choose to pay by credit card, debit card, or alternative payment methods, rest assured that your transaction is processed securely and efficiently.",
+        imgLink:'securepayment-3.jpg',
+        imgAlt:'',
+    },
+    {
+        title:'Continuous Monitoring and Assessment',
+        description:"Our dedicated security team continuously monitors and assesses our payment systems to identify and mitigate any potential vulnerabilities or threats. We stay vigilant against emerging security risks and implement proactive measures to ensure the ongoing security of your payment information.",
+        imgLink:'securepayment-4.jpg',
+        imgAlt:'',
+    },
+    {
+        title:'Your Peace of Mind is Our Priority',
+        description:"We are committed to providing you with a seamless and secure payment experience. Your peace of mind is our top priority, and we spare no effort in upholding the highest standards of security to protect your valuable information. Shop with confidence knowing that your payment details are in safe hands.",
+        imgLink:'securepayment-5.jpg',
+        imgAlt:'',
+    },
 ]
-export {topCat, navBtns, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const aboutUS= {
+    section1:[
+        {
+            title:"About Us",
+            description:"Welcome to [Your E-commerce Site Name], your ultimate destination for all things [your niche or industry]. Founded [year], we are passionate about delivering exceptional products and unparalleled shopping experiences to our customers worldwide.",
+            imgLink:"about.jpg",
+            imgAlt:""
+        },
+        {
+            title:"Our Story",
+            description:"At [Your E-commerce Site Name], our journey began with a simple yet powerful vision: to redefine the online shopping experience. What started as a small venture has grown into a thriving e-commerce platform, serving customers across the globe with a diverse range of high-quality products.",
+            imgLink:"about-1.jpg",
+            imgAlt:""
+        },
+        {
+            title:"Our Mission",
+            description:"Our mission is to empower individuals and communities by providing access to top-notch products that enhance their lives. We strive to create a seamless and enjoyable shopping environment where customers can discover new trends, find their favorite brands, and make informed purchasing decisions.",
+            imgLink:"about-2.jpg",
+            imgAlt:""
+        },
+        {
+            title:"What Sets Us Apart",
+            description:"What sets us apart is our unwavering commitment to excellence in every aspect of our business. From curating the finest selection of products to ensuring prompt and reliable delivery, we go above and beyond to exceed our customers' expectations.",
+            imgLink:"about-3.jpg",
+            imgAlt:""
+        }
+
+    ],
+    section2:{
+        title:"Our Values",
+        imgLink:"about-5.jpg",
+        imgAlt:"",
+        listPoints:[
+            {
+                title:"Customer Satisfaction",
+                description:"Your satisfaction is our top priority. We are dedicated to providing exceptional customer service and personalized support to ensure a smooth and enjoyable shopping experience."
+            },
+            {
+                title:"Quality Assurance",
+                description:"We stand behind the quality and authenticity of every product we offer. Each item undergoes rigorous quality control checks to meet our stringent standards of excellence."
+            },
+            {
+                title:"Innovation",
+                description:"We embrace innovation and continuously seek new ways to enhance our platform and elevate the shopping experience for our customers."
+            },
+            {
+                title:"Sustainability",
+                description:"We are committed to promoting sustainability and ethical practices throughout our supply chain. We prioritize eco-friendly products and strive to minimize our environmental footprint."
+            }
+        ],
+    },
+    section3:{
+        title:"Get in Touch",
+        description:[
+            "We value transparency and open communication with our customers. If you have any questions, feedback, or inquiries, we encourage you to reach out to our dedicated customer support team. We are here to assist you every step of the way.",
+            "Thank you for choosing [Your E-commerce Site Name]. We look forward to serving you and helping you discover the joy of shopping online."
+        ]
+    }
+}
+export {topCat, navBtns, aboutUS, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

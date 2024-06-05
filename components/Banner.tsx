@@ -3,7 +3,7 @@ import React from 'react'
 
 const Banner = () => {
   return (
-    <div className='flex rounded-xl flex-row min-h-[460px] max-w-[82%] overflow-x-auto gap-2 snap-mandatory snap-x mt-4'>
+    <div className='flex rounded-xl flex-row min-h-[460px] max-w-[1300px] overflow-x-auto gap-2 snap-mandatory snap-x mt-4'>
     {banners.map((each,index)=>
     <div key={index} className='flex-shrink-0 snap-center'>
         <div className='relative'>

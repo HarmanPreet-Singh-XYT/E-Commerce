@@ -6,8 +6,8 @@ import Products from './Products';
 const Status = () => {
     
   return (
-    <div className='w-[100%] h-auto flex justify-center'>
-        <SidebarS/>
+    <div className='w-[100%] h-auto flex justify-center relative'>
+        <SidebarS />
         <div className='flex flex-col mr-auto justify-center'>
           <TrendSection/>
           <Deal/>

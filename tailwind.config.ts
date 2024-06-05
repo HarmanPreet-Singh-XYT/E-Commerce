@@ -20,12 +20,17 @@ const config: Config = {
         "cultured": "hsl(0, 0%, 93%)",
         "white": "hsl(0, 100%, 100%)",
         "onyx": "hsl(0, 0%, 27%)",
-        "eblack":"hsl(0, 0%, 13%)"
-    },
+        "eblack":"hsl(0, 0%, 13%)",
+        "blueIn":"rgb(2, 86, 176)",
+        "blueAc":"rgb(0, 123, 255)",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      dropShadow: {
+        'custom-xl': '0 0 5px rgba(0, 0, 0, 0.25)', // Example values, adjust as needed
       },
     },
   },
