@@ -1,17 +1,11 @@
 "use client"
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import Common from '@/components/CommonPage/Common'
 import RefundCancellation from '@/components/PolicyPage/RefundCancellation'
-import { MenuProvider } from '@/Helpers/MenuContext'
 import React from 'react'
 
 const page = () => {
   return (
-    <MenuProvider>
-        <Navbar/>
-        <RefundCancellation/>
-        <Footer/>
-    </MenuProvider>
+    <Common Component={RefundCancellation}/>
   )
 }
 

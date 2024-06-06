@@ -23,6 +23,7 @@ const config: Config = {
         "eblack":"hsl(0, 0%, 13%)",
         "blueIn":"rgb(2, 86, 176)",
         "blueAc":"rgb(0, 123, 255)",
+        "btnpurple":"rgb(79, 70, 229)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

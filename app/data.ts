@@ -44,7 +44,7 @@ const topCat = [{
     showLink:""
 }];
 const navBtns = [
-    {name:"Home",isExtendable:false,extendables:[]},
+    {name:"Home",isExtendable:false,extendables:[],catLink:'/'},
     {name:"Categories",isExtendable:false,extendables:[],catLink:''},
     {name:"Men's",isExtendable:true,extendables:[
         {
@@ -1427,4 +1427,87 @@ const aboutUS= {
         ]
     }
 }
-export {topCat, navBtns, aboutUS, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const orders = [
+  {
+    orderNumber: "WU88191111",
+    datePlaced: "July 6, 2021",
+    totalAmount: 160.00,
+    isDelivered:true,
+    item: 
+      {
+        name: "Micro Backpack",
+        imgLink:"https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg",
+        type: "Fashion",
+        price: 70.00,
+        description: "Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day use.",
+        deliveryDate: "July 12, 2021"
+      },
+    links: {
+      productLink: "#",
+      buyLink: "#",
+      orderLink: "#",
+      invoiceLink: "#"
+    }
+  },
+  {
+    orderNumber: "WU12345678",
+    datePlaced: "March 15, 2021",
+    totalAmount: 120.00,
+    isDelivered: false,
+    item: {
+      name: "Compact Leather Wallet",
+      imgLink: "https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-02.jpg",
+      type: "Accessories",
+      price: 40.00,
+      description: "A sleek and minimalist leather wallet that fits perfectly in your pocket. It has multiple compartments for cards and cash.",
+      deliveryDate: "March 20, 2021"
+    },
+    links: {
+      productLink: "#",
+      buyLink: "#",
+      orderLink: "#",
+      invoiceLink: "#"
+    }
+  },
+  {
+    orderNumber: "WU98765432",
+    datePlaced: "May 10, 2021",
+    totalAmount: 250.00,
+    isDelivered: true,
+    item: {
+      name: "Wireless Earbuds",
+      imgLink: "https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-03.jpg",
+      type: "Electronics",
+      price: 100.00,
+      description: "High-quality wireless earbuds with noise cancellation and long battery life. Perfect for music lovers on the go.",
+      deliveryDate: "May 15, 2021"
+    },
+    links: {
+      productLink: "#",
+      buyLink: "#",
+      orderLink: "#",
+      invoiceLink: "#"
+    }
+  },
+  {
+    orderNumber: "WU11112222",
+    datePlaced: "February 20, 2021",
+    totalAmount: 180.00,
+    isDelivered: true,
+    item: {
+      name: "Stainless Steel Water Bottle",
+      imgLink: "https://ezahk.com/cdn/shop/products/31nP68i4GeL.jpg?v=1669706120",
+      type: "Home & Kitchen",
+      price: 30.00,
+      description: "A durable stainless steel water bottle with double-wall insulation to keep your drinks cold or hot for hours.",
+      deliveryDate: "February 25, 2021"
+    },
+    links: {
+      productLink: "#",
+      buyLink: "#",
+      orderLink: "#",
+      invoiceLink: "#"
+    }
+  }
+];
+export {topCat, navBtns, orders, aboutUS, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

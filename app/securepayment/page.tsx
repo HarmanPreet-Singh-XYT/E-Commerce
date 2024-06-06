@@ -1,19 +1,11 @@
 "use client"
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import Common from '@/components/CommonPage/Common'
 import Secure from '@/components/SecurePayment/Secure'
-import { MenuProvider } from '@/Helpers/MenuContext'
 import React from 'react'
 
 const page = () => {
   return (
-    <div className='overflow-x-hidden'>
-    <MenuProvider>
-        <Navbar/>
-        <Secure/>
-        <Footer/>
-    </MenuProvider>
-    </div>
+    <Common Component={Secure}/>
   )
 }
 

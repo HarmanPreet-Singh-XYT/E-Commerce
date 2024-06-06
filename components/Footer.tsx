@@ -1,5 +1,6 @@
 import React from 'react'
 import { footerCategories, footerSections } from '@/app/data'
+import Link from 'next/link'
 const Footer = () => {
   return (
     <div className='bg-footerblack  w-screen flex flex-col'>
@@ -11,7 +12,7 @@ const Footer = () => {
                         <p className='text-footergray font-semibold'>{each.name} :</p>
                                 {each.subcategories.map((each1,index)=>
                                     <div key={index} className='flex'>
-                                        <a href={each1.subcatLink} className='text-silver tracking-wide ml-2 hover:text-gray-300'>{each1.name}</a>
+                                        <Link href={each1.subcatLink} className='text-silver tracking-wide ml-2 hover:text-gray-300'>{each1.name}</Link>
                                         <span className='bg-silver w-[1px] ml-2 h-[20px]'></span>
                                     </div>
                                 )}
@@ -26,7 +27,7 @@ const Footer = () => {
                     <span className='border-b-[1px] w-16 border-b-salmon mb-6'></span>
                     <div className='gap-2 flex flex-col'>
                         {each.items.map((each1,index)=>
-                            <a href={each1.link} key={index} className='text-silver hover:text-gray-400'>{each1.title}</a>
+                            <Link href={each1.link} key={index} className='text-silver hover:text-gray-400'>{each1.title}</Link>
                         )}
                     </div>
                 </div>

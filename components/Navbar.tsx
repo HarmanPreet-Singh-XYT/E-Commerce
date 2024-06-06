@@ -5,7 +5,9 @@ import Account from './DropdownMenu/Account';
 import { useMenu } from '@/Helpers/MenuContext';
 import Product from './DropdownMenu/Product';
 import Category from './DropdownMenu/Category';
+import { useRouter } from 'next/navigation'
 const Navbar = () => {
+    const router = useRouter()
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
     const { toggleCart, toggleFav } = useMenu();
     const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
@@ -24,7 +26,7 @@ const Navbar = () => {
                     <p className='text-sm text-silver'>FREE SHIPPING THIS WEEK ORDER OVER - $55</p>
                 </div>
                 <div>
-                    <button className='text-[18px] hidden sm:block'>Newsletter Email</button>
+                    <button className='text-[18px] hidden sm:block text-sm font-medium'>Become a Seller</button>
                 </div>
             </div>
         </div>
@@ -51,7 +53,7 @@ const Navbar = () => {
             <div className='flex'>
                 {navBtns.map((btn,index)=>
                 <div key={index} onMouseEnter={()=>{setDropdownVisible(true);setselectIndex(index)}} onMouseLeave={()=>{setDropdownVisible(false);setselectIndex(null)}} className="relative items-center">
-                    <button key={index} className='button-with-border text-[16px] m-6 text-gray-700 font-semibold tracking-wide hover:text-salmon'>{btn.name.toUpperCase()}</button>
+                    <button onClick={() => router.push(btn.catLink)} key={index} className='button-with-border text-[16px] m-6 text-gray-700 font-semibold tracking-wide hover:text-salmon'>{btn.name.toUpperCase()}</button>
                     {selectIndex === index && isDropdownVisible && btn.name==='Categories' && (<Category/>)}
                     {selectIndex === index && btn.isExtendable && isDropdownVisible && (
                     <Product options={btn.extendables} />
