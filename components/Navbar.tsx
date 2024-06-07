@@ -6,6 +6,7 @@ import { useMenu } from '@/Helpers/MenuContext';
 import Product from './DropdownMenu/Product';
 import Category from './DropdownMenu/Category';
 import { useRouter } from 'next/navigation'
+import { HeartIcon,ShoppingBagIcon } from '@heroicons/react/24/outline';
 const Navbar = () => {
     const router = useRouter()
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
@@ -40,11 +41,11 @@ const Navbar = () => {
                         <input placeholder='Enter your product name...' type='text' className='outline-0 ml-5 text-[20px] w-[90%] placeholder:text-base placeholder:text-silver'/>
                         <button className='text-[16px] mr-2'><i className="fa-solid fa-magnifying-glass"></i></button>
                     </div>
-                    <div className='gap-5 text-davysilver my-8 hidden sm:flex'>
+                    <div className='gap-5 text-davysilver my-8 hidden sm:flex sm:items-center'>
                         {/* <button><i className="fa-regular fa-user fa-xl"></i></button> */}
                         <Account/>
-                        <button onClick={toggleFav}><i className="fa-regular fa-heart fa-2xl"></i></button>
-                        <button onClick={toggleCart}><i className="fa-solid fa-bag-shopping fa-2xl"></i></button>
+                        <button onClick={toggleFav}><HeartIcon width={40}/></button>
+                        <button onClick={toggleCart}><ShoppingBagIcon width={40}/></button>
                     </div>
                 </div>
             </div>

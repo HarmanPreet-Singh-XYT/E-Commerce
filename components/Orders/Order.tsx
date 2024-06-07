@@ -21,7 +21,7 @@ const Order = () => {
   return (
     <div className='flex flex-col gap-10'>
         <section className='border-t-[1px]'></section>
-        <section className='w-[80%] mx-auto flex flex-col gap-2'>
+        <section className='w-[95%] mx-auto flex flex-col gap-2'>
             <p className='font-semibold text-3xl'>Order history</p>
             <p className='text-silver text-sm'>Check the status of recent orders, manage returns, and discover similar products.</p>
         </section>
@@ -70,14 +70,14 @@ const Order = () => {
                     </div>
                     <div className='flex justify-between flex-col sm:flex-row items-end pt-2'>
                         {order.isDelivered ? 
-                            <div className='flex items-center gap-2'>
+                            <div className='flex items-center gap-2 mx-auto sm:mx-0'>
                                 <div className='rounded-full w-6 bg-green-400 px-1 py-1 text-white'>
                                     <CheckIcon/>
                                 </div>
                                 <p className='text-sm font-medium'>Delivered on {order.item.deliveryDate}</p>
                             </div>
                         :
-                            <div className='flex items-center gap-2'>
+                            <div className='flex items-center gap-2 mx-auto sm:mx-0'>
                                 <div className='rounded-full w-6 bg-yellow-400 px-1 py-1 text-white'>
                                     <ShoppingCartIcon/>
                                 </div>

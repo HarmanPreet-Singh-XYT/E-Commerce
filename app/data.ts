@@ -153,22 +153,22 @@ const leftStatus = [
         title:"Footwear",
         links:[
             {
-                title:"Shirt",
+                title:"Sports",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Shorts & Jeans",
+                title:"Formal",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Jacket",
+                title:"Casual",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Dress & Frock",
+                title:"Safety Shoes",
                 link:"",
                 quantity:50,
             }
@@ -179,22 +179,17 @@ const leftStatus = [
         title:"Jewelry",
         links:[
             {
-                title:"Shirt",
+                title:"Earrings",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Shorts & Jeans",
+                title:"Couple Rings",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Jacket",
-                link:"",
-                quantity:50,
-            },
-            {
-                title:"Dress & Frock",
+                title:"Necklace",
                 link:"",
                 quantity:50,
             }
@@ -205,12 +200,12 @@ const leftStatus = [
         title:"Perfume",
         links:[
             {
-                title:"Shirt",
+                title:"Clothes Perfume",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Shorts & Jeans",
+                title:"Deodorant",
                 link:"",
                 quantity:50,
             },
@@ -219,11 +214,6 @@ const leftStatus = [
                 link:"",
                 quantity:50,
             },
-            {
-                title:"Dress & Frock",
-                link:"",
-                quantity:50,
-            }
         ]
     },
     {
@@ -231,22 +221,22 @@ const leftStatus = [
         title:"Cosmetics",
         links:[
             {
-                title:"Shirt",
+                title:"Shampoo",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Shorts & Jeans",
+                title:"Sunscreen",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Jacket",
+                title:"Body Wash",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Dress & Frock",
+                title:"Makeup Kit",
                 link:"",
                 quantity:50,
             }
@@ -257,22 +247,12 @@ const leftStatus = [
         title:"Glasses",
         links:[
             {
-                title:"Shirt",
+                title:"Sunglasses",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Shorts & Jeans",
-                link:"",
-                quantity:50,
-            },
-            {
-                title:"Jacket",
-                link:"",
-                quantity:50,
-            },
-            {
-                title:"Dress & Frock",
+                title:"Lenses",
                 link:"",
                 quantity:50,
             }
@@ -283,22 +263,22 @@ const leftStatus = [
         title:"Bags",
         links:[
             {
-                title:"Shirt",
+                title:"Shopping Bag",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Shorts & Jeans",
+                title:"Gym Backpack",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Jacket",
+                title:"Purse",
                 link:"",
                 quantity:50,
             },
             {
-                title:"Dress & Frock",
+                title:"Wallet",
                 link:"",
                 quantity:50,
             }
@@ -652,23 +632,23 @@ const footerSections = [
         items: [
             {
                 title: "Fashion",
-                link: "#"
+                link: "/categories/fashion"
             },
             {
                 title: "Electronic",
-                link: "#"
+                link: "/categories/electronic"
             },
             {
                 title: "Cosmetic",
-                link: "#"
+                link: "/categories/cosmetic"
             },
             {
                 title: "Health",
-                link: "#"
+                link: "/categories/health"
             },
             {
                 title: "Watches",
-                link: "#"
+                link: "/categories/watches"
             }
         ]
     },
@@ -677,15 +657,15 @@ const footerSections = [
         items: [
             {
                 title: "Prices Drop",
-                link: "#"
+                link: "products/price-drop"
             },
             {
                 title: "New Products",
-                link: "#"
+                link: "products/new-products"
             },
             {
                 title: "Best Sales",
-                link: "#"
+                link: "products/best-sales"
             },
             {
                 title: "Contact Us",
@@ -1510,4 +1490,114 @@ const orders = [
     }
   }
 ];
-export {topCat, navBtns, orders, aboutUS, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const availableCategories = [
+    {
+        title: 'fashion',
+        subcategories: [
+            { title: 'T-Shirt', link: '/t-shirts' },
+            { title: 'Shirts', link: '/shirts' },
+            { title: 'Shorts & Jeans', link: '/shorts-jeans' },
+            { title: 'Jacket', link: '/jackets' },
+            { title: 'Dress & Frock', link: '/dresses-frocks' },
+            { title: 'Innerwear', link: '/innerwear' },
+            { title: 'Hosiery', link: '/hosiery' },
+        ]
+    },
+    {
+        title: 'footwear',
+        subcategories: [
+            { title: 'Sport', link: '/sport-footwear' },
+            { title: 'Formal', link: '/formal-footwear' },
+            { title: 'Boots', link: '/boots' },
+            { title: 'Casual', link: '/casual-footwear' },
+            { title: 'Cowboy Shoes', link: '/cowboy-shoes' },
+            { title: 'Safety Shoes', link: '/safety-shoes' },
+            { title: 'Party Wear Shoes', link: '/party-wear-shoes' },
+            { title: 'Branded', link: '/branded-footwear' },
+            { title: 'Firstcopy', link: '/firstcopy-footwear' },
+            { title: 'Long Shoes', link: '/long-shoes' },
+        ]
+    },
+    {
+        title: 'jewellery',
+        subcategories: [
+            { title: 'Necklace', link: '/necklace' },
+            { title: 'Earrings', link: '/earrings' },
+            { title: 'Couple Rings', link: '/couple-rings' },
+            { title: 'Pendants', link: '/pendants' },
+            { title: 'Crystal', link: '/crystal' },
+            { title: 'Bangles', link: '/bangles' },
+            { title: 'Bracelets', link: '/bracelets' },
+            { title: 'Nosepin', link: '/nosepin' },
+            { title: 'Chain', link: '/chain' },
+            { title: 'Earrings', link: '/earrings' },
+            { title: 'Couple Rings', link: '/couple-rings' },
+        ]
+    },
+    {
+        title: 'cosmetics',
+        subcategories: [
+            { title: 'Shampoo', link: '/shampoo' },
+            { title: 'Bodywash', link: '/bodywash' },
+            { title: 'Facewash', link: '/facewash' },
+            { title: 'Makeup Kit', link: '/makeup-kit' },
+            { title: 'Liner', link: '/liner' },
+            { title: 'Lipstick', link: '/lipstick' },
+            { title: 'Perfume', link: '/perfume' },
+            { title: 'Body Soap', link: '/body-soap' },
+            { title: 'Scrub', link: '/scrub' },
+            { title: 'Hair Gel', link: '/hair-gel' },
+            { title: 'Hair Colors', link: '/hair-colors' },
+            { title: 'Hair Dye', link: '/hair-dye' },
+            { title: 'Sunscreen', link: '/sunscreen' },
+            { title: 'Skin Lotion', link: '/skin-lotion' },
+            { title: 'Liner', link: '/liner' },
+            { title: 'Lipstick', link: '/lipstick' },
+        ]
+    },
+    {
+        title: 'electronics',
+        subcategories: [
+            { title: 'Mobile Phones', link: '/mobile-phones' },
+            { title: 'Laptops', link: '/laptops' },
+            { title: 'Tablets', link: '/tablets' },
+            { title: 'Headphones', link: '/headphones' },
+            { title: 'Cameras', link: '/cameras' },
+            { title: 'Smartwatches', link: '/smartwatches' },
+            { title: 'Televisions', link: '/televisions' },
+            { title: 'Speakers', link: '/speakers' },
+            { title: 'Gaming Consoles', link: '/gaming-consoles' },
+            { title: 'Wearable Tech', link: '/wearable-tech' },
+        ]
+    },
+    {
+        title: 'health',
+        subcategories: [
+            { title: 'Vitamins & Supplements', link: '/vitamins-supplements' },
+            { title: 'Personal Care', link: '/personal-care' },
+            { title: 'Fitness Equipment', link: '/fitness-equipment' },
+            { title: 'Health Monitors', link: '/health-monitors' },
+            { title: 'First Aid', link: '/first-aid' },
+            { title: 'Health Drinks', link: '/health-drinks' },
+            { title: 'Protein & Nutrition', link: '/protein-nutrition' },
+            { title: 'Yoga & Meditation', link: '/yoga-meditation' },
+            { title: 'Medical Devices', link: '/medical-devices' },
+        ]
+    },
+    {
+        title: 'watches',
+        subcategories: [
+            { title: 'Analog Watches', link: '/analog-watches' },
+            { title: 'Digital Watches', link: '/digital-watches' },
+            { title: 'Smartwatches', link: '/smartwatches' },
+            { title: 'Fitness Trackers', link: '/fitness-trackers' },
+            { title: 'Luxury Watches', link: '/luxury-watches' },
+            { title: 'Chronograph Watches', link: '/chronograph-watches' },
+            { title: 'Diving Watches', link: '/diving-watches' },
+            { title: 'Quartz Watches', link: '/quartz-watches' },
+            { title: 'Mechanical Watches', link: '/mechanical-watches' },
+            { title: 'Dress Watches', link: '/dress-watches' },
+        ]
+    }
+];
+export {topCat, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
