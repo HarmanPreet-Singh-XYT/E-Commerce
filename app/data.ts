@@ -293,7 +293,7 @@ const bestSell = [
         discountPrice:4.00,
         ratingCount:56,
         stars:5,
-        productLink:"",
+        productID:"dfsg453",
     },
     {
         title:"Men's Hoodies T-Shirt",
@@ -302,7 +302,7 @@ const bestSell = [
         discountPrice:4.00,
         ratingCount:32,
         stars:4.5,
-        productLink:"",
+        productID:"sdfg4325",
     },
     {
         title:"Girls T-Shirt",
@@ -311,7 +311,7 @@ const bestSell = [
         discountPrice:4.00,
         ratingCount:65,
         stars:4.5,
-        productLink:"",
+        productID:"sdfg45",
     },
     {
         title:"Woolen Hat For Men",
@@ -320,7 +320,7 @@ const bestSell = [
         discountPrice:4.00,
         ratingCount:123,
         stars:5,
-        productLink:"",
+        productID:"sdfg245",
     }
 ];
 const trendings = {
@@ -331,7 +331,7 @@ const trendings = {
                 title:"Relaxed Short Full Sleeves",
                 category:"Clothes",
                 imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-1.jpg",
-                productLink:"",
+                productID:"xcvbb2435",
                 catLink:"",
                 discountPrice:12.00,
                 basePrice:45.00,
@@ -340,7 +340,7 @@ const trendings = {
                 title: "Girls Pink Embro Design Top",
                 category: "Clothes",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-2.jpg",
-                productLink:"",
+                productID:"sdfg2345",
                 catLink: "",
                 discountPrice: 9.00,
                 basePrice: 61.00
@@ -349,7 +349,7 @@ const trendings = {
                 title: "Black Floral Wrap Midi Skirt",
                 category: "Clothes",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-3.jpg",
-                productLink:"",
+                productID:"fdgh253",
                 catLink: "",
                 discountPrice: 25.00,
                 basePrice: 76.00
@@ -358,7 +358,7 @@ const trendings = {
                 title: "Pure Garment Dyed Cotton Shirt",
                 category: "Mens Fashion",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shirt-1.jpg",
-                productLink:"",
+                productID:"asdfgs524",
                 catLink: "",
                 discountPrice: 31.00,
                 basePrice: 68.00
@@ -369,7 +369,7 @@ const trendings = {
                 title: "MEN Yarn Fleece Full-Zip Jacket",
                 category: "Winter Wear",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-5.jpg",
-                productLink:"",
+                productID:"sadgf124",
                 catLink: "",
                 discountPrice: 11.00,
                 basePrice: 61.00
@@ -378,7 +378,7 @@ const trendings = {
                 title: "Mens Winter Leathers Jackets",
                 category: "Winter Wear",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-1.jpg",
-                productLink:"",
+                productID:"sagsdf1234",
                 catLink: "",
                 discountPrice: 20.00,
                 basePrice: 32.00
@@ -387,7 +387,7 @@ const trendings = {
                 title: "Mens Winter Leathers Jackets",
                 category: "Jackets",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-3.jpg",
-                productLink:"",
+                productID:"sadfg124",
                 catLink: "",
                 discountPrice: 25.00,
                 basePrice: 50.00
@@ -396,7 +396,7 @@ const trendings = {
                 title: "Better Basics French Terry Sweatshorts",
                 category: "Shorts",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shorts-1.jpg",
-                productLink:"",
+                productID:"sdaf213",
                 catLink: "",
                 discountPrice: 10.00,
                 basePrice: 20.00
@@ -409,7 +409,7 @@ const trendings = {
                 title: "Running & Trekking Shoes - White",
                 category: "Sports",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-1.jpg",
-                productLink:"",
+                productID:"sdfghvcx1234",
                 catLink: "",
                 discountPrice: 15.00,
                 basePrice: 49.00
@@ -418,7 +418,7 @@ const trendings = {
                 title: "Trekking & Running Shoes - Black",
                 category: "Sports",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-2.jpg",
-                productLink:"",
+                productID:"dfshg124",
                 catLink: "",
                 discountPrice: 36.00,
                 basePrice: 78.00
@@ -427,7 +427,7 @@ const trendings = {
                 title: "Womens Party Wear Shoes",
                 category: "Party Wear",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/party-wear-1.jpg",
-                productLink:"",
+                productID:"asd2143",
                 catLink: "",
                 discountPrice: 42.00,
                 basePrice: 94.00
@@ -436,7 +436,7 @@ const trendings = {
                 title: "Sports Claw Women's Shoes",
                 category: "Sports",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-3.jpg",
-                productLink:"",
+                productID:"asfdas1243",
                 catLink: "",
                 discountPrice: 65.00,
                 basePrice: 54.00
@@ -447,7 +447,7 @@ const trendings = {
                 title: "Air Trekking Shoes - White",
                 category: "Sports",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/sports-6.jpg",
-                productLink:"",
+                productID:"asfzcvx134",
                 catLink: "",
                 discountPrice: 55.00,
                 basePrice: 52.00
@@ -456,7 +456,7 @@ const trendings = {
                 title: "Boot With Suede Detail",
                 category: "Boots",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-3.jpg",
-                productLink:"",
+                productID:"asd2134",
                 catLink: "",
                 discountPrice: 30.00,
                 basePrice: 20.00
@@ -465,7 +465,7 @@ const trendings = {
                 title: "Men's Leather Formal Wear Shoes",
                 category: "Formal",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-1.jpg",
-                productLink:"",
+                productID:"12443asd",
                 catLink: "",
                 discountPrice: 78.00,
                 basePrice: 56.00
@@ -474,7 +474,7 @@ const trendings = {
                 title: "Casual Men's Brown Shoes",
                 category: "Casual",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-2.jpg",
-                productLink:"",
+                productID:"23452345t",
                 catLink: "",
                 discountPrice: 55.00,
                 basePrice: 50.00
@@ -487,7 +487,7 @@ const trendings = {
                 title: "Pocket Watch Leather Pouch",
                 category: "Watches",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-3.jpg",
-                productLink:"",
+                productID:"2341y",
                 catLink: "",
                 discountPrice: 34.00,
                 basePrice: 50.00
@@ -496,7 +496,7 @@ const trendings = {
                 title: "Silver Deer Heart Necklace",
                 category: "Jewellery",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jewellery-3.jpg",
-                productLink:"",
+                productID:"123421yu",
                 catLink: "",
                 discountPrice: 30.00,
                 basePrice: 84.00
@@ -505,7 +505,7 @@ const trendings = {
                 title: "Titan 100 Ml Womens Perfume",
                 category: "Perfume",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/perfume.jpg",
-                productLink:"",
+                productID:"213423",
                 catLink: "",
                 discountPrice: 10.00,
                 basePrice: 42.00
@@ -514,7 +514,7 @@ const trendings = {
                 title: "Men's Leather Reversible Belt",
                 category: "Belt",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/belt.jpg",
-                productLink:"",
+                productID:"2134234",
                 catLink: "",
                 discountPrice: 10.00,
                 basePrice: 24.00
@@ -525,7 +525,7 @@ const trendings = {
                 title: "Platinum Zircon Classic Ring",
                 category: "Jewellery",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jewellery-2.jpg",
-                productLink:"",
+                productID:"2134231",
                 catLink: "",
                 discountPrice: 65.00,
                 basePrice: 62.00
@@ -534,7 +534,7 @@ const trendings = {
                 title: "Smart Watche Vital Plus",
                 category: "Watches",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/watch-1.jpg",
-                productLink:"",
+                productID:"23412",
                 catLink: "",
                 discountPrice: 78.00,
                 basePrice: 56.00
@@ -543,7 +543,7 @@ const trendings = {
                 title: "Shampoo Conditioner Packs",
                 category: "Cosmetics",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shampoo.jpg",
-                productLink:"",
+                productID:"4235",
                 catLink: "",
                 discountPrice: 30.00,
                 basePrice: 20.00
@@ -552,7 +552,7 @@ const trendings = {
                 title: "Rose Gold Peacock Earrings",
                 category: "Jewellery",
                 imgLink: "https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jewellery-1.jpg",
-                productLink:"",
+                productID:"23434",
                 catLink: "",
                 discountPrice: 30.00,
                 basePrice: 20.00
@@ -636,11 +636,11 @@ const footerSections = [
             },
             {
                 title: "Electronic",
-                link: "/categories/electronic"
+                link: "/categories/electronics"
             },
             {
                 title: "Cosmetic",
-                link: "/categories/cosmetic"
+                link: "/categories/cosmetics"
             },
             {
                 title: "Health",
@@ -797,7 +797,7 @@ const cards = [
 ];
 const deals = [
     {
-        productLink:"",
+        productID:"134",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shampoo.jpg",
         stars:3,
         ratingCount:56,
@@ -808,7 +808,7 @@ const deals = [
         endTime:{date:5,month:10,year:2024,time:12,minute:0}
     },
     {
-        productLink:"",
+        productID:"245",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jewellery-1.jpg",
         stars:3,
         ratingCount:26,
@@ -1150,7 +1150,7 @@ const defaultData = {
     secImglink: "",
     imgCollection:[""],
     imgAlt:"",
-    productID: "",
+    productID: "dsf34",
     discount: 0,
     category: "",
     title: "",
@@ -1423,7 +1423,7 @@ const orders = [
         deliveryDate: "July 12, 2021"
       },
     links: {
-      productLink: "#",
+      productID: "sdfg34",
       buyLink: "#",
       orderLink: "#",
       invoiceLink: "#"
@@ -1443,7 +1443,7 @@ const orders = [
       deliveryDate: "March 20, 2021"
     },
     links: {
-      productLink: "#",
+      productID: "dfsg54",
       buyLink: "#",
       orderLink: "#",
       invoiceLink: "#"
@@ -1463,7 +1463,7 @@ const orders = [
       deliveryDate: "May 15, 2021"
     },
     links: {
-      productLink: "#",
+      productID: "dsfg345",
       buyLink: "#",
       orderLink: "#",
       invoiceLink: "#"
@@ -1483,7 +1483,7 @@ const orders = [
       deliveryDate: "February 25, 2021"
     },
     links: {
-      productLink: "#",
+      productID: "sdfg2435",
       buyLink: "#",
       orderLink: "#",
       invoiceLink: "#"
@@ -1493,6 +1493,7 @@ const orders = [
 const availableCategories = [
     {
         title: 'fashion',
+        banners:["https://i.pinimg.com/736x/71/c0/90/71c090c1ee401a79f7b84c086fa04063.jpg","https://www.apetogentleman.com/wp-content/uploads/2022/05/FALL-WINTER-TRENDS.jpg","https://assets.vogue.com/photos/614a24383c6a255bbac856d8/master/w_2560%2Cc_limit/00_story.jpg"],
         subcategories: [
             { title: 'T-Shirt', link: '/t-shirts' },
             { title: 'Shirts', link: '/shirts' },
@@ -1505,6 +1506,7 @@ const availableCategories = [
     },
     {
         title: 'footwear',
+        banners:["https://www.india.com/wp-content/uploads/2017/08/footwear.jpg","https://images.moneycontrol.com/static-mcnews/2020/04/footwear-28042020.jpg?impolicy=website&width=1600&height=900","https://www.airwavesf.com/wp-content/uploads/2022/06/79589-645-collecting-sneakers-and-photography-a-collection-of-limited-editions-and-exclusive-models-combination_t20_Op1ydp.jpg"],
         subcategories: [
             { title: 'Sport', link: '/sport-footwear' },
             { title: 'Formal', link: '/formal-footwear' },
@@ -1520,6 +1522,7 @@ const availableCategories = [
     },
     {
         title: 'jewellery',
+        banners:["https://www.mygoldguide.in/sites/default/files/Indo-wester_%20look_Cocktail_parties_01.jpg","https://kiyajewellery.in/cdn/shop/files/351494422_600067025526915_1828569725887026248_n_copy.jpg?v=1713783276&width=3840","https://www.truesilver.co.in/cdn/shop/articles/6_Stunning_Jewellery_for_Western_Wear.jpg?v=1695726468"],
         subcategories: [
             { title: 'Necklace', link: '/necklace' },
             { title: 'Earrings', link: '/earrings' },
@@ -1536,6 +1539,7 @@ const availableCategories = [
     },
     {
         title: 'cosmetics',
+        banners:["https://www.cosmeticsdesign.com/var/wrbm_gb_food_pharma/storage/images/media/images/news-photogalleries/786041/color-cosmetics/15607895-1-eng-GB/Color-cosmetics.jpg","https://img.etimg.com/thumb/width-1600,height-900,imgsize-55008,resizemode-75,msid-102292994/industry/cons-products/fashion-/-cosmetics-/-jewellery/indians-spent-over-rs-5000-cr-on-cosmetics-sector-may-gain-as-more-women-go-to-work-study.jpg","https://lh3.googleusercontent.com/proxy/9nWZ4LOknTOPQgXzTZ0Q9VT6_WzLd8dmLgIkfZYiQgWuuOWXc7Gk6cfdzfjdUpbpiwPD6nIdy6jlIas_EUBibRUWWwxlvZxrNMJmFcSqdF1YB943"],
         subcategories: [
             { title: 'Shampoo', link: '/shampoo' },
             { title: 'Bodywash', link: '/bodywash' },
@@ -1557,6 +1561,7 @@ const availableCategories = [
     },
     {
         title: 'electronics',
+        banners:["https://i.pinimg.com/originals/d2/b9/40/d2b940959caadeaf591041c70ab7a0ab.png","https://d1csarkz8obe9u.cloudfront.net/posterpreviews/gaming-computer-banner-sale-design-template-4eee9f783ef62e0f7122e9ae7828bec1_screen.jpg?ts=1659604125","https://d1csarkz8obe9u.cloudfront.net/posterpreviews/computer-accessories-template-design-129534fcc8ab7b353cd7627bac2ec34e_screen.jpg?ts=1659516861"],
         subcategories: [
             { title: 'Mobile Phones', link: '/mobile-phones' },
             { title: 'Laptops', link: '/laptops' },
@@ -1572,6 +1577,7 @@ const availableCategories = [
     },
     {
         title: 'health',
+        banners:["https://www.proquestnutrition.com/blog/wp-content/uploads/2023/12/Best-Bodybuilding-Supplements.jpg","https://www.shutterstock.com/image-vector/minimalistic-ad-banner-vitamin-d3-260nw-2260391737.jpg","https://png.pngtree.com/thumb_back/fw800/background/20230902/pngtree-healthy-drink-recipe-for-fruit-juices-image_13157966.jpg"],
         subcategories: [
             { title: 'Vitamins & Supplements', link: '/vitamins-supplements' },
             { title: 'Personal Care', link: '/personal-care' },
@@ -1586,6 +1592,8 @@ const availableCategories = [
     },
     {
         title: 'watches',
+        banners:["https://d1csarkz8obe9u.cloudfront.net/posterpreviews/smart-watch-banner-design-template-1c7faa8b6c6f040f15486ac8464e6f9f_screen.jpg?ts=1665736035","https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fe213f37352801.573d3df297da5.jpg","https://cytwatch.my/resources/link/20211022/1634891530/banner001_2.jpg"],
+        
         subcategories: [
             { title: 'Analog Watches', link: '/analog-watches' },
             { title: 'Digital Watches', link: '/digital-watches' },
@@ -1600,4 +1608,26 @@ const availableCategories = [
         ]
     }
 ];
-export {topCat, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const loginFeatures = [
+    {
+        title: 'Track Your Orders',
+        description: 'Keep tabs on your purchases with real-time order tracking and updates.',
+        iconType: 'search',
+    },
+    {
+        title: 'Personalized Recommendations',
+        description: 'Log in to receive product suggestions tailored to your shopping preferences.',
+        iconType: 'star',
+    },
+    {
+        title: 'Wishlist Management',
+        description: 'Save your favorite items to your wishlist for quick and easy future purchases.',
+        iconType: 'heart',
+    },
+    {
+        title: 'Secure Checkout',
+        description: 'Enjoy a fast, secure, and hassle-free checkout process every time you shop with us.',
+        iconType: 'lock',
+    },
+];
+export {topCat, loginFeatures, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

@@ -1,7 +1,8 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Dialog, DialogPanel, Radio, RadioGroup, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Stars from './Stars'
+import Link from 'next/link'
 function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
@@ -226,6 +227,11 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                           >
                             Add to bag
                           </button>
+                          <div className='w-full flex justify-center mt-2'>
+                          <Link href={`/product/${product.productID}`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                              Go to Product Site
+                          </Link>
+                          </div>
                         </form>
                       </section>
                     </div>

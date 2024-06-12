@@ -16,6 +16,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react-redux": "^7.1.33",
     "@types/react-stars": "^2.2.4",
+    "framer-motion": "^11.2.10",
     "next": "14.2.3",
     "prop-types": "^15.8.1",
     "react": "^18",

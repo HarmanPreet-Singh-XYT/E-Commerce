@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from 'react';
-import { bestSell, leftStatus, availableCategories } from '@/app/data';
+import React from 'react';
+import { bestSell, availableCategories } from '@/app/data';
 import Stars from '../ProductUi/Stars';
 import Link from 'next/link';
 
@@ -14,14 +14,9 @@ interface CategoryType {
     subcategories: SubcategoryType[];
 }
 const CategorySidebar = ({category}:{category:string[] | string}) => {
-    const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
-    const handleToggle = (index: number) => {
-        setCollapsedIndex((prevIndex) => (prevIndex === index ? null : index));
-    };
-    const selectedCategory:CategoryType | undefined = availableCategories.find(cat => cat.title === category);
     return (
         <>
-            <div className='hidden lg:flex-col lg:flex ml-auto'>
+            <div className='hidden lg:flex-col lg:flex ml-auto mb-5'>
                 <div className='border-[1px] rounded-xl h-auto w-[220px] xl:w-[220px] p-[15px]'>
                     <p className='tracking-[2px] font-semibold text-davysilver mb-4'>CATEGORIES</p>
                         {availableCategories.map((each)=> 
@@ -39,34 +34,6 @@ const CategorySidebar = ({category}:{category:string[] | string}) => {
                                 </div>
                             )
                         )}
-                            
-                        
-                    
-                </div>
-                <div className='h-[500px] mt-10'>
-                    <p className='font-semibold text-gray-700 tracking-wider text-[17px]'>BEST SELLERS</p>
-                    <div className='flex flex-col'>
-                        {bestSell.map((each, index) =>
-                            <div key={index} className='flex mt-5'>
-                                <a href={each.productLink}>
-                                    <img className='w-[80px] h-[80px] rounded-md' src={each.imgLink} alt={each.title} />
-                                </a>
-                                <div className='ml-5'>
-                                    <a href={each.productLink}>
-                                        <p className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>{each.title}</p>
-                                    </a>
-                                    <div className='flex items-center gap-2'>
-                                        <Stars stars={each.stars}/>
-                                        {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
-                                    </div>
-                                    <div className='flex items-center'>
-                                        <p className='text-sm line-through text-silver'>${each.basePrice.toFixed(2)}</p>
-                                        <p className='text-base font-semibold ml-4 text-davysilver'>${each.discountPrice.toFixed(2)}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
         </>

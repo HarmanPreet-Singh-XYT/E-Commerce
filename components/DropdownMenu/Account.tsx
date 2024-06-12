@@ -15,10 +15,7 @@ const Account = () => {
           </div>
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
             <li>
-              <a href="/account" className="block px-4 py-2 hover:bg-gray-100 text-gray-500">Account</a>
-            </li>
-            <li>
-              <a href="/settings" className="block px-4 py-2 hover:bg-gray-100 text-gray-500">Settings</a>
+              <a href="/account-settings" className="block px-4 py-2 hover:bg-gray-100 text-gray-500">Settings</a>
             </li>
             <li>
               <a href="/orders" className="block px-4 py-2 hover:bg-gray-100 text-gray-500">Orders</a>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Quickview from './ProductUi/Quickview';
 import { defaultData } from '@/app/data';
 import Stars from './ProductUi/Stars';
+import Link from 'next/link';
 interface Color {
   name: string;
   class: string;
@@ -80,7 +81,7 @@ const ProductCard = ({ product }:{ product: Product }) => {
       </div>
       <div className='pl-4 pr-4 flex flex-col gap-2'>
         <a href=''><p className='text-[14px] text-salmon'>{product.category}</p></a>
-        <a href=''><p className='tracking-[1px] text-silver hover:text-davysilver'>{product.title}</p></a>
+        <Link href={`/product/${product.productID}`}><p className='tracking-[1px] text-silver hover:text-davysilver'>{product.title}</p></Link>
         <div className='flex items-center gap-2'>
           <Stars stars={product.stars}/>
           {product.ratingCount > 0 && <p className=' text-silver'>{product.ratingCount}</p>}
