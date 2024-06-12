@@ -4,8 +4,8 @@
 /node_modules
 /backend/node_modules
 
-# Allow tracking of the backend .env file
-!/backend/.env
+# Ignore the backend .env file
+/backend/.env
 
 # Ignore other env files
 /.pnp
