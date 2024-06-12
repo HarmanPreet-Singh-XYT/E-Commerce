@@ -3,8 +3,9 @@
 # dependencies
 /node_modules
 
-# Ignore the backend .env file
-!/.env
+# Ignore the .env file in the root directory
+/.env
+
 # Ignore other env files
 /.pnp
 .pnp.js
