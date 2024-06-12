@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { bestSell, leftStatus } from '@/app/data';
 import Stars from '../ProductUi/Stars';
-
+import Link from 'next/link';
 const SidebarS = () => {
     const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
     const handleToggle = (index: number) => {
@@ -50,13 +50,13 @@ const SidebarS = () => {
                     <div className='flex flex-col'>
                         {bestSell.map((each, index) =>
                             <div key={index} className='flex mt-5'>
-                                <a href={each.productLink}>
+                                <Link href={`/best-sales/${each.productID}`}>
                                     <img className='w-[80px] h-[80px] rounded-md' src={each.imgLink} alt={each.title} />
-                                </a>
+                                </Link>
                                 <div className='ml-5'>
-                                    <a href={each.productLink}>
-                                        <p className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>{each.title}</p>
-                                    </a>
+                                    <Link href={`/best-sales/${each.productID}`} className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>
+                                        {each.title}
+                                    </Link>
                                     <div className='flex items-center gap-2'>
                                         <Stars stars={each.stars}/>
                                         {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}

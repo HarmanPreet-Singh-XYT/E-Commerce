@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { bestSell, leftStatus } from '@/app/data'
 import { useMenu } from '@/Helpers/MenuContext';
 import Stars from '@/components/ProductUi/Stars';
+import Link from 'next/link';
 const CategoryType = () => {
     const { toggleSidebar } = useMenu();
     const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
@@ -51,9 +52,9 @@ const CategoryType = () => {
                 <div className='flex flex-col'>
                     {bestSell.map((each,index)=>
                         <div key={index} className='flex mt-5'>
-                            <a href={each.productLink}><img className='w-[75px] h-[75px] rounded-md' src={each.imgLink}/></a>
+                            <Link href={`/best-sales/${each.productID}`}><img className='w-[75px] h-[75px] rounded-md' src={each.imgLink}/></Link>
                             <div className='ml-5'>
-                                <a href={each.productLink}><p className='tracking-[1px]'>{each.title}</p></a>
+                                <Link href={`/best-sales/${each.productID}`} className='tracking-[1px]'>{each.title}</Link>
                                 <div className='flex items-center gap-2'>
                                         <Stars stars={each.stars}/>
                                         {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
