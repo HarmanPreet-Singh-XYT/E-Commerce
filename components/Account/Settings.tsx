@@ -2,6 +2,8 @@ import { BookOpenIcon, CreditCardIcon, EnvelopeIcon, GiftIcon, ListBulletIcon, Q
 import React from 'react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import ProfileInfo from './ProfileInfo'
+import Addresses from './Addresses'
+import GiftCards from './GiftCards'
 const Settings = () => {
   return (
     <div className='w-screen h-screen flex justify-center bg-white'>
@@ -52,7 +54,9 @@ const Settings = () => {
                 </div>
             </div>
             <div className='bg-white w-[600px] h-full drop-shadow-custom-xl rounded-xl flex-col flex items-center'>
-                <ProfileInfo/>
+                {/* <ProfileInfo/> */}
+                {/* <Addresses/> */}
+                <GiftCards/>
             </div>
         </div>
     </div>

@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+./backend/node_modules
+./backend/.env*.local
 /.pnp
 .pnp.js
 .yarn/install-state.gz

@@ -1630,4 +1630,81 @@ const loginFeatures = [
         iconType: 'lock',
     },
 ];
-export {topCat, loginFeatures, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const addresses = [
+    {
+        addressType: 'HOME',  // 'HOME' or 'OFFICE' or other types
+        userName: 'Random User',
+        contactNumber: '3429524795',
+        addressLine1: 'Random House',
+        addressLine2: 'Washington DC',  // Optional field, can be left empty if not needed
+        city: 'Washington',
+        state: 'DC',
+        country: 'United States of America',
+        postalCode: '123123',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    },
+    {
+        addressType: 'HOME',  // 'HOME' or 'OFFICE' or other types
+        userName: 'Random User',
+        contactNumber: '3429524795',
+        addressLine1: 'Random House',
+        addressLine2: 'Washington DC',  // Optional field, can be left empty if not needed
+        city: 'Washington',
+        state: 'DC',
+        country: 'United States of America',
+        postalCode: '123123',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    },
+    {
+        addressType: 'HOME',  // 'HOME' or 'OFFICE' or other types
+        userName: 'Random User',
+        contactNumber: '3429524795',
+        addressLine1: 'Random House',
+        addressLine2: 'Washington DC',  // Optional field, can be left empty if not needed
+        city: 'Washington',
+        state: 'DC',
+        country: 'United States of America',
+        postalCode: '123123',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    }
+];
+const giftCards = [
+    {
+        cardID: 'gc001',
+        cardName: 'Birthday Gift Card',
+        cardCode: 'BIRTHDAY2024',
+        description: 'A special gift card for birthdays, valid for one year.',
+        balance: 100.00,
+        currency: 'USD',
+        expiryDate: '2025-06-08',
+        recipientName: 'John Doe',
+        recipientEmail: 'john.doe@example.com',
+        senderName: 'Jane Smith',
+        senderEmail: 'jane.smith@example.com',
+        message: 'Happy Birthday, John! Enjoy your special day!',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        status: 'Active',  // Other possible statuses: 'Used', 'Expired', 'Cancelled'
+    },
+    {
+        cardID: 'gc001',
+        cardName: 'Birthday Gift Card',
+        cardCode: 'BIRTHDAY2024',
+        description: 'A special gift card for birthdays, valid for one year.',
+        balance: 100.00,
+        currency: 'USD',
+        expiryDate: '2025-06-08',
+        recipientName: 'John Doe',
+        recipientEmail: 'john.doe@example.com',
+        senderName: 'Jane Smith',
+        senderEmail: 'jane.smith@example.com',
+        message: 'Happy Birthday, John! Enjoy your special day!',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        status: 'Active',  // Other possible statuses: 'Used', 'Expired', 'Cancelled'
+    }
+]
+export {topCat, giftCards, loginFeatures, addresses, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

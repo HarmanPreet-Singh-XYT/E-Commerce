@@ -26,7 +26,20 @@
   padding-bottom: 10px;
   overflow: hidden;
 }
-
+.bg-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('https://cdn.shoplightspeed.com/shops/648197/files/34557421/1652x1652x2/gift-cards-red-present.jpg'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1; /* Adjust the opacity as needed */
+  z-index: -1;
+  border-radius: inherit; /* Maintain border radius */
+}
 .button-with-border::after {
   content: '';
   position: absolute;
