@@ -1,7 +1,19 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import { giftCards } from '@/app/data'
-const GiftCards = () => {
+interface GiftCard {
+  cardID:number;
+  cardName:string;
+  cardCode:string;
+  description:string;
+  balance:number;
+  currency:string;
+  expiryDate:string;
+  senderName:string;
+  message:string;
+  cardStatus:string;
+}
+const GiftCards = ({Component}:{Component:GiftCard[]}) => {
   return (
     <div className='w-full h-full py-4 px-4'>
       <h1 className='text-xl font-semibold'>Gift Cards</h1>
@@ -17,7 +29,7 @@ const GiftCards = () => {
                 </div>
             }
             {
-                giftCards.map((each,index)=>
+                Component.map((each,index)=> each.cardStatus==='Active' &&
                 <div key={index} className='flex'>
                     <div className='border-[1px] w-[380px] rounded-xl px-4 py-4 flex flex-col gap-2 drop-shadow-custom-xl bg-white bg-content'>
                         <p className=' bg-salmon text-white w-[100px] text-center text-sm font-semibold rounded-xl px-2 py-1'>{each.balance} {each.currency}</p>

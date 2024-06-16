@@ -1,11 +1,13 @@
 
-import CartUI from '@/features/UIUpdates/CartUI'
+import CartWishlist from '@/features/UIUpdates/CartWishlist'
 import { configureStore } from '@reduxjs/toolkit'
+import UserAccount from '@/features/UIUpdates/UserAccount'
 // ...
 
 export const store = configureStore({
   reducer: {
-    cart:CartUI,
+    cartWishlist:CartWishlist,
+    userState:UserAccount,
   },
 })
 

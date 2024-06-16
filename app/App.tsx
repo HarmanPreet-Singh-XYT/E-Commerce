@@ -12,21 +12,24 @@ import Favourite from '@/components/ProductUi/Favourite'
 import { MenuProvider } from '@/Helpers/MenuContext'
 import Banner from '@/components/Banner'
 import Category from '@/components/DropdownMenu/Category'
+import { AppProvider } from '@/Helpers/AccountDialog'
 const App = () => {
   return (
     <MenuProvider>
-      <main className='h-screen w-screen flex items-center flex-col overflow-x-hidden'>
-          <Cart/>
-          <Favourite/>
-          <Menubar/>
-          <Navbar/>
-          <Banner/>
-          <Trends/>
-          <Status/>
-          <Details/>
-          <Tabs/>
-          <Footer/>
-      </main>
+      <AppProvider>
+        <main className='h-screen w-screen flex items-center flex-col overflow-x-hidden'>
+            <Cart/>
+            <Favourite/>
+            <Menubar/>
+            <Navbar/>
+            <Banner/>
+            <Trends/>
+            <Status/>
+            <Details/>
+            <Tabs/>
+            <Footer/>
+        </main>
+      </AppProvider>
     </MenuProvider>
   )
 }

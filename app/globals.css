@@ -55,3 +55,7 @@
 .button-with-border:hover::after {
   transform: translateX(0);
 }
+.blurbg{
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}

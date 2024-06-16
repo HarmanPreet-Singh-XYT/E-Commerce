@@ -7,22 +7,29 @@ import { MenuProvider } from '@/Helpers/MenuContext'
 import React from 'react'
 import Cart from '../ProductUi/Cart'
 import Favourite from '../ProductUi/Favourite'
+import { AppProvider } from '@/Helpers/AccountDialog'
+import { Provider } from 'react-redux'
+import { store } from '@/app/store'
 interface ParentComponentProps {
   Component: React.ComponentType;
 }
 const Common: React.FC<ParentComponentProps> = ({Component}) => {
   return (
-    <div className='overflow-x-hidden w-screen h-screen flex flex-col items-center'>
-      <MenuProvider>
-          <Menubar/>
-          <Cart/>
-          <Favourite/>
-          <Sidebar/>
-          <Navbar/>
-          <Component/>
-          <Footer/>
-      </MenuProvider>
-    </div>
+    <Provider store={store}>
+      <div className='overflow-x-hidden w-screen h-screen flex flex-col items-center'>
+        <MenuProvider>
+          <AppProvider>
+            <Menubar/>
+            <Cart/>
+            <Favourite/>
+            <Sidebar/>
+            <Navbar/>
+            <Component/>
+            <Footer/>
+          </AppProvider>
+        </MenuProvider>
+      </div>
+    </Provider>
   )
 }
 

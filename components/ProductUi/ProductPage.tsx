@@ -1,4 +1,4 @@
-import React,{ Fragment, useState } from 'react'
+import React,{ useState } from 'react'
 import Stars from './Stars'
 import { ShoppingCartIcon, ReceiptRefundIcon, HeartIcon, CurrencyRupeeIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
 import { Radio, RadioGroup } from '@headlessui/react'
@@ -10,10 +10,20 @@ function classNames(...classes:string[]) {
 const ProductPage = () => {
     const collection = ["https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-4.jpg","https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shirt-2.jpg","https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/jacket-6.jpg","https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/clothes-4.jpg","https://codewithsadee.github.io/anon-ecommerce-website/assets/images/products/shoe-2_1.jpg"]
     const product = products[0];
+    const totalQuantity=20;
     const [selectedColor, setSelectedColor] = useState(product.colors[0]);
     const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-    
-    
+    const [quantity, setQuantity] = useState(1);
+    const changeValue = (action:string)=>{
+      switch (action) {
+        case 'increase':
+          totalQuantity > quantity && setQuantity(quantity+1);
+          break;
+        case 'decrease':
+          quantity>1 && setQuantity(quantity-1);
+          break;
+      }
+    }
     return (
     <div className='flex flex-col gap-5 border-t-[1px]'>
         <div className='flex items-center justify-center'>
@@ -50,10 +60,10 @@ const ProductPage = () => {
                 <p><span className='font-semibold'>In stock</span>: Dispatch in 5 working days</p>
                 <div className='flex gap-10 items-center'>
                     <p>Quantity</p>
-                    <div className='flex'>
-                        <button className='w-[50px] text-4xl bg-gray-100 rounded-l-lg'>-</button>
-                        <input defaultValue={1} className='bg-gray-100 w-[30px] h-[50px]' type='number'/>
-                        <button className='w-[40px] text-4xl bg-gray-100 rounded-r-lg'>+</button>
+                    <div className='flex items-center justify-center rounded-xl bg-gray-100'>
+                        <button onClick={()=>changeValue('decrease')} className='w-[50px] text-4xl bg-gray-100 rounded-l-lg'>-</button>
+                        <p className='bg-gray-100 w-[20px]'>{quantity}</p>
+                        <button onClick={()=>changeValue('increase')} className='w-[40px] text-4xl bg-gray-100 rounded-r-lg'>+</button>
                     </div>
                     
                 </div>

@@ -54,7 +54,7 @@ const SidebarS = () => {
                                     <img className='w-[80px] h-[80px] rounded-md' src={each.imgLink} alt={each.title} />
                                 </Link>
                                 <div className='ml-5'>
-                                    <Link href={`/best-sales/${each.productID}`} className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>
+                                    <Link href={`/product/${each.productID}`} className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>
                                         {each.title}
                                     </Link>
                                     <div className='flex items-center gap-2'>

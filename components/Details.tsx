@@ -32,7 +32,7 @@ const Details = () => {
             <p className='tracking-base text-xl font-semibold text-eblack border-b-[1px] pb-3 border-b-gray-200 tracking-wide'>Our Services</p>
             <div className='rounded-xl w-80 h-[375px] border-[1px] p-8 mt-8 flex justify-center flex-col gap-4'>
                 {featuresSec.map((each,index)=>
-                    <a key={index} href={each.siteLink} onMouseEnter={()=>sethover(index)} onMouseLeave={()=>sethover(null)} className='flex justify-start items-center gap-5'>
+                    <a key={index} href='/our-services' onMouseEnter={()=>sethover(index)} onMouseLeave={()=>sethover(null)} className='flex justify-start items-center gap-5'>
                     <div className='w-[40px] h-[40px] flex items-center'><i className={`${each.icon} ${hover==index ? 'text-black' : 'text-salmon'}`}></i></div>
                     <div>
                         <p className='font-semibold tracking-wide text-silver'>{each.title}</p>

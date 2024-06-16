@@ -4,7 +4,7 @@ import ContactForm from './ContactForm'
 const Contact = () => {
   return (
     <div className='border-t-[1px]'>
-        <div className="container mx-auto px-4 py-8 w-[80%] background-image-contact">
+        <div className="container mx-auto px-4 py-8 w-[80%] border-[1px] rounded-xl mt-5">
             <h1 className="text-4xl font-bold border-b-[1px] border-gray-300 pb-2 mb-8">Contact Us</h1>
 
             <section className="mb-8">

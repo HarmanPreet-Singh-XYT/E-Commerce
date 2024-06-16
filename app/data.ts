@@ -655,10 +655,10 @@ const footerSections = [
     {
         sectionName: "Products",
         items: [
-            {
-                title: "Prices Drop",
-                link: "products/price-drop"
-            },
+            // {
+            //     title: "Prices Drop",
+            //     link: "products/price-drop"
+            // },
             {
                 title: "New Products",
                 link: "products/new-products"
@@ -672,8 +672,8 @@ const footerSections = [
                 link: "/contact"
             },
             {
-                title: "Sitemap",
-                link: "#"
+                title: "Our Services",
+                link: "/our-services"
             }
         ]
     },
@@ -1706,5 +1706,50 @@ const giftCards = [
         updatedAt: new Date().toISOString(),
         status: 'Active',  // Other possible statuses: 'Used', 'Expired', 'Cancelled'
     }
-]
-export {topCat, giftCards, loginFeatures, addresses, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+];
+const serviceFeatures = [
+    {
+        title: 'Worldwide Delivery',
+        description: "Enjoy our comprehensive global shipping services, designed to bring your favorite products right to your doorstep, no matter where you are. We partner with top logistics companies to ensure your order reaches you safely and promptly, providing you with a seamless shopping experience from anywhere in the world.",
+        imgLink: 'https://cdn.pixabay.com/photo/2014/04/03/11/55/globe-312563_640.png',
+        imgAlt: 'Globe with delivery arrows',
+    },
+    {
+        title: 'Free Shipping on Orders Over $100',
+        description: "Shop to your heart's content and take advantage of our special offer: free shipping on all orders over $100. Whether you're buying gifts for loved ones or treating yourself, you'll save on shipping costs, making your shopping experience even more enjoyable. Spend more, save more with us!",
+        imgLink: 'https://img.freepik.com/premium-vector/delivery-order-illustration-modern-flat-style_529804-22.jpg',
+        imgAlt: 'Shipping box with dollar sign',
+    },
+    {
+        title: 'Next Day Delivery',
+        description: "Need your items in a hurry? With our next day delivery service, you can receive your order the very next day! This service is available for orders in tier-1 cities, ensuring that you never have to wait long for your essential items. Fast, reliable, and convenient delivery right to your door.",
+        imgLink: 'https://cdn-icons-png.freepik.com/512/1254/1254262.png',
+        imgAlt: 'Clock with delivery truck',
+    },
+    {
+        title: 'Next Day Delivery for Tier-1 Cities',
+        description: "Our next day delivery service is exclusively available for customers in tier-1 cities. This means you can enjoy the speed and convenience of receiving your orders within 24 hours, perfect for those last-minute needs or urgent purchases. Experience the ultimate in fast delivery with our premium service.",
+        imgLink: 'https://img.freepik.com/free-vector/gradient-international-trade_23-2149150716.jpg',
+        imgAlt: 'Map highlighting tier-1 cities',
+    },
+    {
+        title: 'Best Online Support',
+        description: "Our customer support team is dedicated to providing you with the best service possible. Available from 8AM to 11PM, our knowledgeable and friendly representatives are here to assist you with any inquiries or issues you may have. We're committed to ensuring your shopping experience is smooth and enjoyable.",
+        imgLink: 'https://img.freepik.com/free-vector/hand-drawn-flat-design-omnichannel-illustration_23-2149360245.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1718496000&semt=ais_user',
+        imgAlt: 'Headset with customer service icon',
+    },
+    {
+        title: 'Easy & Free Return',
+        description: "Shop with confidence knowing that our easy and free return policy has you covered. If you're not completely satisfied with your purchase, you can return it hassle-free. We aim to make the return process as straightforward as possible, giving you peace of mind with every order.",
+        imgLink: 'https://atlanticcourier.net/static/images/testimonials-atlantic-courier.jpg',
+        imgAlt: 'Return package with arrow',
+    },
+    {
+        title: '30% Money Back Guarantee',
+        description: "Enjoy added assurance with our 30% money back guarantee on orders over $100. If you're not fully satisfied with your purchase, we'll refund 30% of your order value. This guarantee underscores our commitment to your satisfaction and ensures that you can shop with complete confidence.",
+        imgLink: 'https://cdni.iconscout.com/illustration/premium/thumb/cashback-3465499-2912113.png?f=webp',
+        imgAlt: 'Money back symbol',
+    },
+];
+
+export {topCat, serviceFeatures, giftCards, loginFeatures, addresses, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
