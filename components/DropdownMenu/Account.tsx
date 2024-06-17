@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { UserIcon } from '@heroicons/react/24/outline';
 import { useApp } from '@/Helpers/AccountDialog';
+import { useAppSelector } from '@/app/hooks';
 const Account = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const { appState } = useApp();
+  const userName = useAppSelector((state)=>state.userState.defaultAccount.userName);
   return (
     <div onMouseEnter={()=>setDropdownVisible(true)} onMouseLeave={()=>setDropdownVisible(false)} className="relative mx-auto my-auto">
       <button className='mb-2'>
         <UserIcon width={40}/>
       </button>
-      {(isDropdownVisible && appState.loggedIn) && (
+      {isDropdownVisible && appState.loggedIn && (
         <div id="dropdownAvatar" className="z-30 bg-white divide-y divide-gray-100 rounded-lg absolute drop-shadow-custom-xl w-44">
           <div className="px-4 py-3 text-sm text-gray-500 ">
-            <div>Alan Walk</div>
+            <div>{userName}</div>
           </div>
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
             <li>

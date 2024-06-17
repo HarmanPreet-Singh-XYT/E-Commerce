@@ -4,7 +4,7 @@ import { loginFeatures } from '@/app/data';
 import Link from 'next/link';
 import { Checkbox } from '@headlessui/react'
 import { useApp } from '@/Helpers/AccountDialog';
-import useAuth from '@/app/API/Authentication';
+import useAuth from '@/controllers/Authentication';
 const Signup = () => {
     const [updates, setUpdates] = useState(false);
     const {registerUser} = useAuth();
