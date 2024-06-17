@@ -1,20 +1,45 @@
 import React,{useState} from 'react'
 import Link from 'next/link';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import useAuth from '@/controllers/Authentication';
 import { useApp } from '@/Helpers/AccountDialog';
 import forgotOTPHandler from '@/app/api/sendOTP';
 import OtpInput from 'react-otp-input';
+import resetPassHandler from '@/app/api/resetPass';
+import Countdown from './otpTimer';
+import { useRouter } from 'next/navigation';
 interface userData{
     email:string;
     password:string;
 }
 const ForgotPass = () => {
+    const router = useRouter();
     const [otpPopup, setotpPopup] = useState(false);
+    const [resendDisabled, setResendDisabled] = useState(true);
+    const [resent, setResent] = useState(false);
     const [OTP, setOTP] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [expiredOTP, setExpiredOTP] = useState(false);
+    const [incorrectOTP, setIncorrectOTP] = useState(false);
     const [form, setForm] = useState<userData>({email:'',password:''});
-    const {toggleIsPassword,appState} = useApp();
-    const {} = useAuth();
+    const {toggleIsPassword,appState,toggleServerError,toggleIsIncorrect} = useApp();
+    async function resetPassProceed(data:userData,otp:string){
+        const dataStructure = {email:data.email,password:data.password,otp}
+        const resetPassword = await resetPassHandler(dataStructure);
+        switch (resetPassword.status) {
+            case 200:
+                setSuccess(true);
+                break;
+            case 205:
+                setIncorrectOTP(true);
+                break;
+            case 210:
+                setExpiredOTP(true);
+                break;
+            default:
+                toggleServerError();
+                break;
+        }
+    }
     async function resetPass(e:any) {
         e.preventDefault();
         const data = {
@@ -24,16 +49,89 @@ const ForgotPass = () => {
         if(e.target.password.value === e.target.repassword.value){
             setForm(data);
             const sendMail = await forgotOTPHandler(data.email);
-            setotpPopup(true);
+            switch (sendMail.status) {
+                case 200:
+                    setotpPopup(true);
+                    break;
+                case 205:
+                    toggleIsIncorrect();
+                    break;
+                default:
+                    toggleServerError;
+                    break;
+            }
         }else toggleIsPassword();
     };
+    async function resendOTP(form:userData){
+        const sendMail = await forgotOTPHandler(form.email);
+            switch (sendMail.status) {
+                case 200:
+                    setResent(true);
+                    break;
+                default:
+                    toggleServerError;
+                    break;
+        }
+    }
+    function toggleResend(){
+        setResendDisabled(!resendDisabled);
+    }
     return (
-        <section className={`bg-gray-50 h-screen w-screen flex items-start lg:items-center overflow-x-hidden ${(otpPopup || appState.isPassword) && 'blurbg'}`}>
-            <Dialog open={otpPopup} onClose={() => setotpPopup(false)} className="relative z-50">
+        <section className={`bg-gray-50 h-screen w-screen flex items-start lg:items-center overflow-x-hidden ${(appState.isIncorrect || otpPopup || appState.isPassword) && 'blurbg'}`}>
+            <Dialog open={otpPopup} onClose={() => setotpPopup(false)} className="relative z-40">
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
             <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center font-medium">
                 <DialogTitle className="font-bold">OTP Sent</DialogTitle>
                 <Description>An OTP has been Sent on your Email Address, Please check your Email Inbox</Description>
+                <Countdown onComplete={toggleResend}/>
+                <div>
+                <Dialog open={incorrectOTP} onClose={() => setIncorrectOTP(false)} className="relative z-50">
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center drop-shadow-custom-xl">
+                    <DialogTitle className="font-bold">Incorrect</DialogTitle>
+                    <Description>OTP is Incorrect. Try again.</Description>
+                    <div className="flex justify-center gap-4">
+                        <button className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => setIncorrectOTP(false)}>OK</button>
+                    </div>
+            </DialogPanel>
+                </div>
+            </Dialog>
+            <Dialog open={expiredOTP} onClose={() => setExpiredOTP(false)} className="relative z-50">
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center drop-shadow-custom-xl">
+                    <DialogTitle className="font-bold">Expired</DialogTitle>
+                    <Description>OTP has been Expired. Try again.</Description>
+                    <div className="flex justify-center gap-4">
+                        <button className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => setExpiredOTP(false)}>OK</button>
+                        <button className='bg-primary-600 text-white py-2 hover:bg-primary-800 transition-colors duration-300 px-8 rounded-xl' onClick={()=>{resendOTP(form);setExpiredOTP(false)}}>Resend</button>
+                    </div>
+                </DialogPanel>
+                </div>
+            </Dialog>
+            <Dialog open={success} onClose={() => setSuccess(false)} className="relative z-50">
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center drop-shadow-custom-xl">
+                    <DialogTitle className="font-bold">Successful</DialogTitle>
+                    <Description>Password has been Successfully Changed.</Description>
+                    <p>Click on Sign In to Login</p>
+                    <div className="flex justify-center gap-4">
+                        <button className='bg-primary-600 text-white py-2 hover:bg-primary-800 transition-colors duration-300 px-8 rounded-xl' onClick={() => {setSuccess(false);setotpPopup(false);router.push('/sign-in');}}>Sign In</button>
+                    </div>
+                </DialogPanel>
+                </div>
+            </Dialog>
+            <Dialog open={resent} onClose={() => setResent(false)} className="relative z-50">
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center drop-shadow-custom-xl">
+                    <DialogTitle className="font-bold">Resent</DialogTitle>
+                    <Description>OTP has been Resent. Please check your Inbox</Description>
+                    <div className="flex justify-center gap-4">
+                        <button className='bg-primary-600 text-white py-2 hover:bg-primary-800 transition-colors duration-300 px-8 rounded-xl' onClick={() => setResent(false)}>OK</button>
+                    </div>
+                </DialogPanel>
+                </div>
+            </Dialog>
+                </div>
                 <div className='flex justify-center'>
                     <OtpInput
                         value={OTP}
@@ -48,16 +146,21 @@ const ForgotPass = () => {
                 </div>
                 <div className="flex justify-center gap-4">
                     <button className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => setotpPopup(false)}>Cancel</button>
-                    <button className='bg-primary-600 text-white py-2 hover:bg-primary-800 transition-colors duration-300 px-8 rounded-xl' onClick={() => {setotpPopup(false)}}>Submit</button>
+                    <button className='bg-primary-600 text-white py-2 hover:bg-primary-800 transition-colors duration-300 px-8 rounded-xl' onClick={() => {resetPassProceed(form,OTP)}}>Submit</button>
                 </div>
-                <p>Didn't receive OTP? <span className='text-primary-700'><button>Resend OTP</button></span></p>
+                <div>
+                <p>Didn't receive OTP? <span className='text-primary-700'><button onClick={()=>resendOTP(form)} disabled={resendDisabled}>Resend OTP</button></span></p>
+                </div>
+                
             </DialogPanel>
             </div>
-        </Dialog>
+            </Dialog>
+            
+        
             <section className="w-[95%] mx-auto flex justify-center">
                 <div className='flex lg:h-[650px] justify-between items-center gap-10'>
                     <div className="flex flex-col items-center justify-center min-w-[500px] px-6 py-8 mx-auto md:h-screen lg:py-0">
-                        <Link href="#" className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white lg:hidden">
+                        <Link href="#" className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white">
                             <img className="w-12 h-12 mr-2" src="https://www.strivemindz.com/images/offerings/icons/ecommerce.png" alt="logo"/>
                             H-Comm    
                         </Link>
