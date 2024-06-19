@@ -38,6 +38,7 @@ interface Wishlist{
   productName:string;
   productPrice:number;
 }
+
 const mapAddress = (address: any): Address => ({
   addressID: address.addressid,
   addressType: address.addresstype,
@@ -66,7 +67,7 @@ const mapWishlist = (wishlistItem: any): Wishlist => ({
   wishlistItemID: wishlistItem.wishlistitemid,
   productID: wishlistItem.productid,
   productImg: wishlistItem.imglink,
-  productAlt: wishlistItem.imglat,
+  productAlt: wishlistItem.imgalt,
   productName: wishlistItem.title,
   productPrice: wishlistItem.discount,
 });
@@ -80,10 +81,10 @@ export default async function userParamsHandler() {
       const response = await axios.post(`${url}/api/user/all-data`, {userIDToken:cookie.value}, {
           headers: { authorization:`Bearer ${sendingKey}` },
         });
-        
-      const addresses: Address[] = response.data.addresses.map(mapAddress);
-      const cartItems: CartItem[] = response.data.cartItems.map(mapCartItem);
-      const wishlistItems: Wishlist[] = response.data.wishlistItems.map(mapWishlist);
+      const data = response.data!;
+      const addresses: Address[] = data.addresses.map(mapAddress);
+      const cartItems: CartItem[] = data.cartItems.map(mapCartItem);
+      const wishlistItems: Wishlist[] = data.wishlistItems.map(mapWishlist);
       return {status:response.status,data:{addresses:addresses,cartItems:cartItems,wishlistItems:wishlistItems}}
     } catch (error) {
       return {status:500,error: 'Internal Server Error' }

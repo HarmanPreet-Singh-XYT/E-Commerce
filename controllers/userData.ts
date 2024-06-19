@@ -11,9 +11,11 @@ const userData = () => {
           switch (res.status) {
             case 200:
               try {
-                dispatch(setAddress(res.data?.addresses));
-                dispatch(setCart(res.data?.cartItems));
-                dispatch(setWishlist(res.data?.wishlistItems));
+                if(res.data?.addresses != undefined && res.data?.cartItems != undefined && res.data?.wishlistItems != undefined){
+                  dispatch(setAddress(res.data.addresses));
+                  dispatch(setCart(res.data.cartItems));
+                  dispatch(setWishlist(res.data.wishlistItems));
+                }
               } catch (tokenError) {
                 console.log('Parameter setting failed')
               }
