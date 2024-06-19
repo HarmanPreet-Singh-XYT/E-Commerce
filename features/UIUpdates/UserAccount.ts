@@ -12,6 +12,7 @@ interface Address {
   state:string;
   country:string;
   postalCode:string;
+  userName:string;
 }
 
 interface GiftCard {
@@ -87,6 +88,15 @@ export const userSlice = createSlice({
     setDefaultAccount(state, action: PayloadAction<Account>) {
       state.defaultAccount = action.payload
     },
+    setAddress(state, action: PayloadAction<Address[]>) {
+      state.addresses = action.payload
+    },
+    setCoupon(state, action: PayloadAction<Coupon[]>) {
+      state.coupons = action.payload
+    },
+    setGiftCard(state, action: PayloadAction<Account>) {
+      state.defaultAccount = action.payload
+    },
     addAddress(state, action: PayloadAction<Address>) {
       state.addresses.push(action.payload)
     },
@@ -134,6 +144,8 @@ export const userSlice = createSlice({
 // Export the actions
 export const { 
   setDefaultAccount, 
+  setAddress,
+  setCoupon,
   addAddress, 
   removeAddress, 
   addGiftCard, 

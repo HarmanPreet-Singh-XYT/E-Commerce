@@ -6,8 +6,6 @@ interface Wishlist{
   productAlt:string;
   productName:string;
   productPrice:number;
-  productColor:string;
-  addedAt:string;
 }
 const Wishlist = ({Component}:{Component:Wishlist[]}) => {
   return (
@@ -39,7 +37,6 @@ const Wishlist = ({Component}:{Component:Wishlist[]}) => {
                                 </h3>
                                 <p className="ml-4">{product.productPrice}</p>
                             </div>
-                            <p className="mt-1 text-sm text-gray-500">{product.productColor}</p>
                             </div>
                             <div className="flex flex-1 items-end justify-between text-sm">
                             <button className="font-medium text-indigo-600 hover:text-indigo-500">Add to Cart</button>

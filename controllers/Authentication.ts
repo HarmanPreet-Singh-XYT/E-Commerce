@@ -4,6 +4,7 @@ import { useAppDispatch } from "../app/hooks";
 import { setDefaultAccount } from "@/features/UIUpdates/UserAccount";
 import signInHandler from '@/app/api/signin';
 import signUpHandler from '@/app/api/signup';
+import sessionHandler from "@/app/api/sessionauth";
 const useAuth = () => {
   const { toggleLoggedIn, toggleIsIncorrect, toggleIsExists, toggleServerError } = useApp();
   const router = useRouter();
@@ -64,8 +65,35 @@ const useAuth = () => {
       toggleServerError();
     }
   };
-
-  return { checkLogin, registerUser };
+  const checkSession = async () => {
+      try {
+        const res = await sessionHandler();
+        switch (res.status) {
+          case 200:
+            try {
+              const data = {
+                userID: res.data.userData.userID,
+                userName: res.data.userData.userName,
+                email: res.data.userData.email,
+                mobile_number: res.data.userData.mobile_number,
+                dob: res.data.userData.dob,
+              };
+              dispatch(setDefaultAccount(data));
+              toggleLoggedIn();
+              
+            } catch (tokenError) {
+              console.log('Login Failed')
+            }
+            break;
+          case 500:
+            console.log('Server Error');
+            break;
+        }
+      } catch (err) {
+        console.log("Login Failed");
+      }
+  };
+  return { checkLogin, registerUser, checkSession };
 };
 
 export default useAuth;

@@ -11,6 +11,7 @@ interface Address {
   state:string;
   country:string;
   postalCode:string;
+  userName:string;
 }
 const Addresses = ({Component}:{Component:Address[]}) => {
   return (
@@ -27,7 +28,7 @@ const Addresses = ({Component}:{Component:Address[]}) => {
                 <div className='border-[1px] w-[380px] rounded-l-xl rounded-br-xl px-4 py-4 flex flex-col gap-2 drop-shadow-custom-xl bg-white'>
                   <p className='text-gray-800 bg-gray-100 w-[60px] text-sm font-medium rounded-xl px-2 py-1'>{each.addressType}</p>
                   <div className='flex justify-between text-sm font-medium'>
-                    {/* <p>{each.userName}</p> */}
+                    <p>{each.userName}</p>
                     <p>{each.contactNumber}</p>
                   </div>
                   <div className='text-sm font-medium'>

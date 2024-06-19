@@ -14,11 +14,15 @@ import { MenuProvider } from '@/Helpers/MenuContext'
 import Banner from '@/components/Banner'
 import { AppProvider } from '@/Helpers/AccountDialog'
 import { store } from './store'
+import useAuth from '@/controllers/Authentication'
+import Session from '@/components/Session'
 const App = () => {
+
   return (
     <Provider store={store}>
       <MenuProvider>
         <AppProvider>
+          <Session/>
           <main className='h-screen w-screen flex items-center flex-col overflow-x-hidden'>
               <Cart/>
               <Favourite/>

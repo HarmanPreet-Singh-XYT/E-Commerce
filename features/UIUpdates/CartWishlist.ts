@@ -10,7 +10,7 @@ interface Item {
   productPrice:number;
   productColor:string;
   productSize:string;
-  addedAt:string;
+  // addedAt:string;
   quantity: number;
 }
 interface Wishlist{
@@ -20,8 +20,6 @@ interface Wishlist{
   productAlt:string;
   productName:string;
   productPrice:number;
-  productColor:string;
-  addedAt:string;
 }
 interface CartWishlistState {
   cart: Item[];
@@ -39,6 +37,12 @@ const cartWishlistSlice = createSlice({
   name: 'cartWishlist',
   initialState,
   reducers: {
+    setCart(state, action: PayloadAction<Item[]>) {
+      state.cart = action.payload
+    },
+    setWishlist(state, action: PayloadAction<Wishlist[]>) {
+      state.wishlist = action.payload
+    },
     addItemToCart(state, action: PayloadAction<Item>) {
       const existingItem = state.cart.find(item => item.productID === action.payload.productID)
       if (existingItem) {
@@ -70,6 +74,8 @@ const cartWishlistSlice = createSlice({
 
 // Export the actions
 export const { 
+  setCart,
+  setWishlist,
   addItemToCart, 
   removeItemFromCart, 
   updateCartItemQuantity, 

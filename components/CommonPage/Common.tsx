@@ -10,6 +10,7 @@ import Favourite from '../ProductUi/Favourite'
 import { AppProvider } from '@/Helpers/AccountDialog'
 import { Provider } from 'react-redux'
 import { store } from '@/app/store'
+import Session from '../Session'
 interface ParentComponentProps {
   Component: React.ComponentType;
 }
@@ -19,6 +20,7 @@ const Common: React.FC<ParentComponentProps> = ({Component}) => {
       <div className='overflow-x-hidden w-screen h-screen flex flex-col items-center'>
         <MenuProvider>
           <AppProvider>
+            <Session/>
             <Menubar/>
             <Cart/>
             <Favourite/>

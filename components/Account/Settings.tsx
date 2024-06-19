@@ -1,12 +1,13 @@
 import { BookOpenIcon, CreditCardIcon, EnvelopeIcon, GiftIcon, ListBulletIcon, QueueListIcon, ReceiptPercentIcon, UserCircleIcon, UserIcon } from '@heroicons/react/24/outline'
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import ProfileInfo from './ProfileInfo'
 import Addresses from './Addresses'
 import GiftCards from './GiftCards'
 import Wishlist from './Wishlist'
 import { useAppSelector } from '@/app/hooks'
+import Coupons from './Coupons'
 const Settings = () => {
-    const [menuType, setmenuType] = useState('profile');
+  const [menuType, setmenuType] = useState('profile');
   const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
   const addresses = useAppSelector((state) => state.userState.addresses)
   const giftCards = useAppSelector((state) => state.userState.giftCards)
@@ -15,6 +16,7 @@ const Settings = () => {
   const notifications = useAppSelector((state) => state.userState.notifications)
   const preferences = useAppSelector((state) => state.userState.preferences)
   const wishlist = useAppSelector((state) => state.cartWishlist.wishlist)
+  
   return (
     <div className='w-screen h-screen flex justify-center bg-white'>
         <div className='flex w-[80%] justify-center my-5 gap-5'>
@@ -68,6 +70,7 @@ const Settings = () => {
                 {menuType==='address' && <Addresses Component={addresses}/>}
                 {menuType==='giftcard' && <GiftCards Component={giftCards}/>}
                 {menuType==='wishlist' && <Wishlist Component={wishlist}/>}
+                {menuType==='coupon' && <Coupons Component={coupons}/>}
             </div>
         </div>
     </div>
