@@ -70,7 +70,7 @@ export default function Favourite() {
                                       </h3>
                                       <p className="ml-4">{product.productPrice}</p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.productColor}</p>
+                                    {/* <p className="mt-1 text-sm text-gray-500">{product.productColor}</p> */}
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
 
