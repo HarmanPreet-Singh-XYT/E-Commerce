@@ -35,7 +35,7 @@ const Navbar = () => {
             <div className='flex justify-evenly items-center w-[100%] flex-col sm:flex-row gap-2 sm:gap-0'>
                 <div className='w-[80%] flex justify-between items-center flex-col sm:flex-row sm:gap-0'>
                     <div>
-                        <Link className='mr-2.5 text-[26px] font-bold' href={"#"}><span className='text-[36px]'>H</span>-Comm</Link>
+                        <Link className='mr-2.5 text-[26px] font-bold' href={"/"}><span className='text-[36px]'>H</span>-Comm</Link>
                     </div>
                     <div className='border-[1.5px] rounded-[10px] h-[42px] w-[90%] sm:w-[600px] mb-5 sm:mb-0 flex justify-between items-center'>
                         <input placeholder='Enter your product name...' type='text' className='outline-0 ml-5 text-[20px] w-[90%] placeholder:text-base placeholder:text-silver'/>

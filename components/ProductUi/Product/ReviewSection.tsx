@@ -1,6 +1,17 @@
 import React from 'react'
-
-const ReviewSection = () => {
+import Stars from '../Stars';
+import formatDate from '@/app/api/dateConvert';
+import { useAppSelector } from '@/app/hooks';
+interface Review {
+    reviewid: number;
+    userid: number;
+    rating: number;
+    comment: string;
+    username: string;
+    createdat:string;
+  }
+const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) => {
+    const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
   return (
     <section className="py-24 relative">
         <div className="w-full max-w-7xl px-4 md:px-5 lg:px-6 mx-auto">
@@ -121,146 +132,18 @@ const ReviewSection = () => {
                                 <div className="flex flex-col sm:flex-row items-center max-lg:justify-center w-full h-full">
                                     <div
                                         className="sm:pr-3 sm:border-r border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">4.3</h2>
+                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">{reviewCount}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
+                                            <Stars size={50} stars={reviewCount}/>
                                         </div>
-                                        <p className="font-normal text-lg leading-8 text-gray-400">46 Ratings</p>
+                                        <p className="font-normal text-lg leading-8 text-gray-400">{reviewCount} Ratings</p>
                                     </div>
 
                                     <div
                                         className="sm:pl-3 sm:border-l border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">4.8</h2>
+                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">{data[0].rating}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                viewBox="0 0 36 36" fill="none">
-                                                <g clipPath="url(#clip0_13624_3137)">
-                                                    <path
-                                                        d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z"
-                                                        fill="#FBBF24" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_13624_3137">
-                                                        <rect width="36" height="36" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
+                                            <Stars size={50} stars={data[0].rating}/>
                                         </div>
                                         <p className="font-normal text-lg leading-8 text-gray-400">Last Review</p>
                                     </div>
@@ -280,94 +163,46 @@ const ReviewSection = () => {
                     </div>
                 </div>
                 <div className="pb-8 border-b border-gray-200 max-xl:max-w-3xl max-xl:mx-auto">
-                    <h4 className="font-manrope font-semibold text-3xl leading-10 text-black mb-6">Most helpful positive
-                        review</h4>
-                    <div className="flex sm:items-center flex-col sm:flex-row justify-between  mb-4">
-                        <div className="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                                fill="none">
-                                <g clipPath="url(#clip0_13624_2974)">
-                                    <path
-                                        d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z"
-                                        fill="#FBBF24" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_13624_2974">
-                                        <rect width="30" height="30" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                                fill="none">
-                                <g clipPath="url(#clip0_13624_2974)">
-                                    <path
-                                        d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z"
-                                        fill="#FBBF24" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_13624_2974">
-                                        <rect width="30" height="30" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                                fill="none">
-                                <g clipPath="url(#clip0_13624_2974)">
-                                    <path
-                                        d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z"
-                                        fill="#FBBF24" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_13624_2974">
-                                        <rect width="30" height="30" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                                fill="none">
-                                <g clipPath="url(#clip0_13624_2974)">
-                                    <path
-                                        d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z"
-                                        fill="#FBBF24" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_13624_2974">
-                                        <rect width="30" height="30" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                                fill="none">
-                                <g clipPath="url(#clip0_13624_2974)">
-                                    <path
-                                        d="M14.1033 2.56698C14.4701 1.82374 15.5299 1.82374 15.8967 2.56699L19.1757 9.21093C19.3214 9.50607 19.6029 9.71064 19.9287 9.75797L27.2607 10.8234C28.0809 10.9426 28.4084 11.9505 27.8149 12.5291L22.5094 17.7007C22.2737 17.9304 22.1662 18.2614 22.2218 18.5858L23.4743 25.8882C23.6144 26.7051 22.7569 27.3281 22.0233 26.9424L15.4653 23.4946C15.174 23.3415 14.826 23.3415 14.5347 23.4946L7.9767 26.9424C7.24307 27.3281 6.38563 26.7051 6.52574 25.8882L7.7782 18.5858C7.83384 18.2614 7.72629 17.9304 7.49061 17.7007L2.1851 12.5291C1.59159 11.9505 1.91909 10.9426 2.73931 10.8234L10.0713 9.75797C10.3971 9.71064 10.6786 9.50607 10.8243 9.21093L14.1033 2.56698Z"
-                                        fill="#FBBF24" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_13624_2974">
-                                        <rect width="30" height="30" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <h6 className="font-semibold text-lg leading-8 text-black">@john.doe</h6>
-                            <p className="font-medium text-base leading-7 text-gray-400">Nov 01, 2023</p>
-                        </div>
-                    </div>
+                    <h4 className="font-manrope font-semibold text-3xl leading-10 text-black mb-6">Recent
+                        Reviews</h4>
+                    <div className='flex flex-col gap-5'>
+                        {data.map((each,index)=>
+                            <div className='border-[1px] px-4 rounded-xl py-4' key={index}>
+                            <div className="flex sm:items-center flex-col sm:flex-row justify-between  mb-4">
+                                <div className="flex gap-3 flex-col">
+                                    <Stars stars={each.rating} size={40}/>
+                                    <h6 className="font-semibold text-lg leading-8 text-black">@{each.username}</h6>
+                                    
+                                </div>
+                                <div className="flex items-end gap-3 flex-col">
+                                    <p className="font-medium text-base leading-7 text-gray-400">{formatDate(each.createdat)}</p>
+                                    {defaultAccount.userID===each.userid && <div className='flex gap-5'><button
+                                        className="rounded-full px-4 py-2 bg-indigo-600 font-semibold text-lg text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+                                        Edit Review
+                                    </button>
+                                    <button
+                                        className="rounded-full px-4 py-2 bg-white border-[1px] font-semibold text-lg text-black whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:text-white hover:bg-red-400 hover:shadow-red-400">
+                                        Delete Review
+                                    </button>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
 
-                    <p className="font-normal text-lg leading-8 text-gray-500 ">
-                        I recently had the opportunity to explore Pagedone's UI design system, and it left a lasting
-                        impression on my workflow. The system seamlessly blends user-friendly features with a robust set
-                        of design components, making it a go-to for creating visually stunning and consistent
-                        interfaces.
-                    </p>
+                            <p className="font-normal text-lg leading-8 text-gray-500 ">
+                                {each.comment}
+                            </p>
+                            </div>
+                        )}
+                        
+                    </div>
+                    
 
                 </div>
                 <div
                     className="flex flex-col sm:flex-row items-center justify-between pt-8  max-xl:max-w-3xl max-xl:mx-auto">
-                    <p className="font-normal text-lg py-[1px] text-black">46 reviews</p>
-                    <form>
+                    {/* <p className="font-normal text-lg py-[1px] text-black">{reviewCount} reviews</p> */}
+                    {/* <form>
                         <div className="flex">
 
                             <div className="relative ">
@@ -409,7 +244,7 @@ const ReviewSection = () => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> */}
                 </div>
             </div>
         </div>

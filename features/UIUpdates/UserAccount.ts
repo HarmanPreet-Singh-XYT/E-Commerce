@@ -16,22 +16,25 @@ interface Address {
 }
 
 interface GiftCard {
-  cardID:number;
-  cardName:string;
-  cardCode:string;
-  description:string;
-  balance:number;
-  currency:string;
-  expiryDate:string;
-  senderName:string;
-  message:string;
-  cardStatus:string;
+  cardid: number;
+  cardname: string;
+  cardcode: string;
+  description: string;
+  balance: number;
+  currency: string;
+  expirydate: string;
+  sendername: string;
+  message: string;
+  status: string;
 }
-
 interface Coupon {
-  id: number;
-  code: string;
-  discount: number;
+    couponid: number;
+    code: string;
+    description: string;
+    discountpercentage: number;
+    maxdiscountamount: number;
+    minpurchaseamount: number;
+    validuntil: string;
 }
 
 interface PaymentCard {
@@ -94,8 +97,8 @@ export const userSlice = createSlice({
     setCoupon(state, action: PayloadAction<Coupon[]>) {
       state.coupons = action.payload
     },
-    setGiftCard(state, action: PayloadAction<Account>) {
-      state.defaultAccount = action.payload
+    setGiftCard(state, action: PayloadAction<GiftCard[]>) {
+      state.giftCards = action.payload
     },
     addAddress(state, action: PayloadAction<Address>) {
       state.addresses.push(action.payload)
@@ -107,13 +110,13 @@ export const userSlice = createSlice({
       state.giftCards.push(action.payload)
     },
     removeGiftCard(state, action: PayloadAction<number>) {
-      state.giftCards = state.giftCards.filter(giftCard => giftCard.cardID !== action.payload)
+      state.giftCards = state.giftCards.filter(giftCard => giftCard.cardid !== action.payload)
     },
     addCoupon(state, action: PayloadAction<Coupon>) {
       state.coupons.push(action.payload)
     },
     removeCoupon(state, action: PayloadAction<number>) {
-      state.coupons = state.coupons.filter(coupon => coupon.id !== action.payload)
+      state.coupons = state.coupons.filter(coupon => coupon.couponid !== action.payload)
     },
     addPaymentCard(state, action: PayloadAction<PaymentCard>) {
       state.paymentCards.push(action.payload)
@@ -146,6 +149,7 @@ export const {
   setDefaultAccount, 
   setAddress,
   setCoupon,
+  setGiftCard,
   addAddress, 
   removeAddress, 
   addGiftCard, 

@@ -30,26 +30,26 @@ const Settings = () => {
                 </div>
                 <div>
                     <div className='rounded-xl py-1 px-1 flex flex-col gap-2'>
-                        <div onClick={()=>setmenuType('profile')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
+                        <button id='profile' onClick={()=>setmenuType('profile')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <UserIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
                             <p>Profile Information</p>
-                        </div>
-                        <div onClick={()=>setmenuType('address')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
+                        </button>
+                        <button id='address' onClick={()=>setmenuType('address')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <BookOpenIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
                             <p>Manage Addresses</p>
-                        </div>
-                        <div onClick={()=>setmenuType('giftcard')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
+                        </button>
+                        <button id='giftcard' onClick={()=>setmenuType('giftcard')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <GiftIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
                             <p>Available Gift Cards</p>
-                        </div>
-                        <div onClick={()=>setmenuType('coupon')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
+                        </button>
+                        <button id='coupon' onClick={()=>setmenuType('coupon')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <ReceiptPercentIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
                             <p>Available Coupons</p>
-                        </div>
-                        <div onClick={()=>setmenuType('wishlist')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
+                        </button>
+                        <button id='wishlist' onClick={()=>setmenuType('wishlist')} className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <QueueListIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
                             <p>My Wishlist</p>
-                        </div>
+                        </button>
                         {/* <div className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <CreditCardIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
                             <p>Saved Payment Cards</p>

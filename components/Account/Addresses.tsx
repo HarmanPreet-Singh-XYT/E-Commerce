@@ -15,7 +15,7 @@ interface Address {
 }
 const Addresses = ({Component}:{Component:Address[]}) => {
   return (
-    <div className='w-full h-full py-4 px-4'>
+    <div className='w-full h-full py-4 px-4 overflow-auto'>
       <h1 className='text-xl font-semibold'>Manage Addresses</h1>
       <div>
         <div className='flex justify-end mb-5'>

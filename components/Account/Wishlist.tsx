@@ -9,7 +9,7 @@ interface Wishlist{
 }
 const Wishlist = ({Component}:{Component:Wishlist[]}) => {
   return (
-    <div className='w-full h-full py-4 px-4'>
+    <div className='w-full h-full py-4 px-4 overflow-auto'>
       <h1 className='text-xl font-semibold'>My Wishlist</h1>
       <div>
         <div className='flex justify-end mb-5'>

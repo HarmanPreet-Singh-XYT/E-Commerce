@@ -38,7 +38,27 @@ interface Wishlist{
   productName:string;
   productPrice:number;
 }
-
+interface UserCoupon {
+  couponid: number;
+  code: string;
+  description: string;
+  discountpercentage: number;
+  maxdiscountamount: number;
+  minpurchaseamount: number;
+  validuntil: string;
+}
+interface GiftCard {
+  cardid: number;
+  cardname: string;
+  cardcode: string;
+  description: string;
+  balance: number;
+  currency: string;
+  expirydate: string;
+  sendername: string;
+  message: string;
+  status: string;
+}
 const mapAddress = (address: any): Address => ({
   addressID: address.addressid,
   addressType: address.addresstype,
@@ -85,7 +105,9 @@ export default async function userParamsHandler() {
       const addresses: Address[] = data.addresses.map(mapAddress);
       const cartItems: CartItem[] = data.cartItems.map(mapCartItem);
       const wishlistItems: Wishlist[] = data.wishlistItems.map(mapWishlist);
-      return {status:response.status,data:{addresses:addresses,cartItems:cartItems,wishlistItems:wishlistItems}}
+      const userCoupons: UserCoupon[] = data.coupons;
+      const giftcardsData: GiftCard[] = data.giftcards;
+      return {status:response.status,data:{addresses:addresses,cartItems:cartItems,wishlistItems:wishlistItems,coupons:userCoupons,giftCards:giftcardsData}}
     } catch (error) {
       return {status:500,error: 'Internal Server Error' }
     }
