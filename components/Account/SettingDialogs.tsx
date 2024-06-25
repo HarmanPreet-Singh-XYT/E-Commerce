@@ -42,7 +42,7 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                     })))
                 setLoading(false);
                 break;
-            case 'dob':
+            case 'date of birth':
                 await userUpdateHandler({ userID,userName:false, email:false, mobile_number:false, dob:updateValue,password:false  }).then((res)=>
                     res.status===200 && dispatch(setDefaultAccount({ 
                         ...defaultAccount, 
