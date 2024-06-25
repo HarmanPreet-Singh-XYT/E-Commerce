@@ -1,16 +1,16 @@
-import React,{ useLayoutEffect, useRef, useState } from 'react'
+import React,{ useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Stars from './Stars'
 import { ShoppingCartIcon, ReceiptRefundIcon, HeartIcon, CurrencyRupeeIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
-import { Radio, RadioGroup } from '@headlessui/react'
-
+import { useAppDispatch,useAppSelector } from '@/app/hooks'
+import { addItemToCart,addItemToWishlist } from '@/features/UIUpdates/CartWishlist'
 import ReviewSection from './Product/ReviewSection'
 import ProductNotFound from './Product/ProductNotFound'
 import productDataHandler from '@/app/api/product'
 import { useParams } from 'next/navigation'
 import Loading from '../Loading'
-function classNames(...classes:string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+import Options from './Product/Options'
+import { cartAddHandler,wishlistAddHandler } from '@/app/api/itemLists'
+import { useApp } from '@/Helpers/AccountDialog'
 // Interface for individual reviews
 interface Review {
   reviewid: number;
@@ -32,7 +32,7 @@ interface ProductImage {
 interface ProductSize {
   sizeid: number;
   sizename: string;
-  instock: number;
+  instock: boolean;
 }
 
 // Interface for colors
@@ -50,6 +50,7 @@ interface Categories {
 
 // Main interface for the product
 interface Product {
+  productid:number,
   title: string;
   description: string;
   stock: number;
@@ -66,43 +67,104 @@ interface Product {
   sizes: ProductSize[] | [];
   reviews: Review[] | [];
 }
+const defaultData = {
+  productid:1,
+  title: '',
+  description: '',
+  stock: 0,
+  discountedprice: '',
+  price: '',
+  stars: 0,
+  seller: '',
+  reviewcount: 0,
+  categories: {subcategory:'',maincategory:''},
+  imglink: '',
+  imgalt: '',
+  imgcollection: [],
+  colors: [],
+  sizes: [],
+  reviews: [],
+}
+const IDGenerator = ()=>{
+  const ID = Math.round(Math.random() * 1000 * 1000 * 100);
+  return ID;
+}
 const ProductPage = () => {
-  const ref = useRef<any>(null);
-    const [totalQuantity, settotalQuantity] = useState(1);
-    const [selectedColor, setSelectedColor] = useState<ProductColor>();
-    const [selectedSize, setSelectedSize] = useState<ProductSize>();
+  const { appState } = useApp();
+  const isLogged = appState.loggedIn;
+    const ref = useRef<any>(null);
+    const colRef = useRef<string>('Default');
+    const sizeRef = useRef<string>('Default');
+    const totalQuantity = useRef<number>(1);
+    const found = useRef<boolean>(true);
+    const dataVar = useRef<Product>(defaultData);
+    const data = dataVar.current;
+    const [selectedColor, setSelectedColor] = useState<ProductColor>({colorid:0,colorname:'Default',colorclass:'col_default'});
+    const [selectedSize, setSelectedSize] = useState<ProductSize>({sizeid:0,sizename:'Default',instock:true});
     const [selectedImage, setselectedImage] = useState({imgLink:'',imgAlt:''});
-    const [originalImage, setoriginalImage] = useState({imgLink:'',imgAlt:''});
     const [quantity, setQuantity] = useState(1);
-    const [found, setfound] = useState(true);
-    const [data, setdata] = useState<Product>();
     const params = useParams<{ productID: string }>()
     const [dataChecked, setdataChecked] = useState(false);
+    const dispatch = useAppDispatch();
+    const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
+    const listID = {cartItemID:IDGenerator(),wishlistItemID:IDGenerator()};
+    let cartItemData = {
+      cartItemID:listID.cartItemID,
+      productID:data.productid,
+      productImg:data.imglink,
+      productAlt:data.imgalt,
+      productName:data.title,
+      productPrice:parseInt(data.discountedprice),
+      productColor:colRef.current,
+      productSize:colRef.current,
+      quantity: quantity,
+    };
+    let wishlistItem = {
+      wishlistItemID:listID.wishlistItemID,
+      productID:data.productid,
+      productImg:data.imglink,
+      productAlt:data.imgalt,
+      productName:data.title,
+      productPrice:parseInt(data.discountedprice),
+    };
     async function dataRequest(){
       const response = await productDataHandler({productID:params.productID});
+      
       switch (response.status) {
         case 200:
-        setdata(response.data.data);
+        dataVar.current = response.data.data;
+        if(response.data.data != undefined) totalQuantity.current=response.data.data.stock;
         setdataChecked(true);
-        if(data != undefined){
-          setSelectedColor(data.colors[0]);
-          setSelectedSize(data.sizes[0]);
-        }
-        data != undefined && settotalQuantity(data?.stock);
-          break;
+        break;
         case 500:
-          setfound(false);
+          found.current = false;
           setdataChecked(true);
           break;
+        }
       }
+    async function setUpData(){
+      if(data != undefined){
+        data.colors.length > 0 && setSelectedColor(data.colors[0]);
+        data.sizes.length > 0 && setSelectedSize(data.sizes[0]);
+        setselectedImage({imgLink:data.imglink,imgAlt:data.imgalt})
+        if(data.sizes.length > 0 && data.colors.length > 0){
+          cartItemData.productColor = data.colors[0].colorname;
+          cartItemData.productSize = data.sizes[0].sizename;
+        }
+      }
+    };
+    async function dataInitializer(){
+      !dataChecked && await dataRequest();
+      dataChecked && await setUpData();
     }
     useLayoutEffect(() => {
-      dataRequest();
-    }, [])
+      dataInitializer();
+    }, [dataChecked])
+    
     const changeValue = (action:string)=>{
       switch (action) {
         case 'increase':
-          totalQuantity > quantity && setQuantity(quantity+1);
+          totalQuantity.current > quantity && setQuantity(quantity+1);
           break;
         case 'decrease':
           quantity>1 && setQuantity(quantity-1);
@@ -118,22 +180,46 @@ const ProductPage = () => {
       const percentageDiff = (difference / average) * 100;
       return Math.round(percentageDiff);
     }
+    async function itemStateUpdate(key:string){
+      switch (key) {
+        case 'cart':
+        
+        isLogged && await cartAddHandler({cartItemID:listID.cartItemID,userID:defaultAccount.userID,productID:data.productid,productPrice:parseInt(data.discountedprice),colorID:selectedColor.colorid,sizeID:selectedSize.sizeid,quantity})
+        dispatch(addItemToCart(cartItemData));
+          break;
+        case 'wishlist':
+        isLogged && await wishlistAddHandler({wishlistItemID:listID.wishlistItemID,userID:defaultAccount.userID,productID:data.productid})
+        dispatch(addItemToWishlist(wishlistItem));
+          break;
+      }
+    }
     return (
     <div className='flex flex-col gap-5 border-t-[1px] w-[100%]'>
       {!dataChecked && <Loading/>}
-      {(dataChecked && data!=undefined) && <>{found && <>
+      {(dataChecked && data!=undefined) && <>{found.current && <>
       <div className='flex items-center flex-col justify-center'>
             <div className='w-[80%] mb-5 mt-5'>
                 <p>{data.categories.maincategory} {'>'} {data.categories.subcategory}</p>
             </div>
         </div>
         <div className='flex justify-center gap-10 flex-col items-center lg:flex-row'>
-            <div className='flex img-wrapper flex-col gap-5 w-[90%] md:w-[60%] py-2 px-2 lg:w-[600px] lg:h-[600px] items-center'>
-                <img className='border-[1px] rounded-xl drop-shadow-custom-xl w-[100%] lg:w-[600px] lg:h-[600px] hover-zoom' src={selectedImage.imgLink} alt={selectedImage.imgAlt}/>
+            <div className='flex img-wrapper flex-col gap-5 w-[90%] md:w-[60%] px-2 lg:w-[600px] lg:h-[600px] items-center'>
+                <img className='border-[1px] rounded-xl w-[100%] lg:w-[600px] lg:h-[600px] hover-zoom' src={selectedImage.imgLink} alt={selectedImage.imgAlt}/>
                 <div className='flex gap-5 justify-center'>
-                    {data.imgcollection.map((each,index)=>
-                        <img onMouseLeave={()=>setselectedImage(originalImage)} onMouseEnter={()=>setselectedImage({imgLink:each.imglink,imgAlt:each.imgalt})} className='rounded-md border-[1px]' onClick={()=>setselectedImage({imgLink:each.imglink,imgAlt:each.imgalt})} height={75} width={75} key={index} src={each.imgalt} alt={each.imgalt}/>
-                    )}
+                {data.imgcollection.map((each, index) => (
+                    <img 
+                        key={index}
+                        src={each.imglink}
+                        alt={each.imgalt}
+                        height={75}
+                        width={75}
+                        className="rounded-md border-[1px] hover:drop-shadow-custom-xl mb-6"
+                        onClick={() => {
+                            const imageDetails = { imgLink: each.imglink, imgAlt: each.imgalt };
+                            setselectedImage(imageDetails);
+                        }}
+                    />
+                ))}
                 </div>
             </div>
             <div className='flex flex-col gap-5 border-[1px] py-10 px-10 max-w-[90%] rounded-xl lg:max-w-[50%] w-auto'>
@@ -149,8 +235,8 @@ const ProductPage = () => {
                     </div>
                 </div>
                 <div className='flex gap-5 items-center'>
-                    <p className='font-bold text-3xl'>₹ {data.discountedprice}</p>
-                    <p className='line-through'>₹ {data.price}</p>
+                    <p className='font-bold text-3xl'>$ {data.discountedprice}</p>
+                    <p className='line-through'>$ {data.price}</p>
                     <p className='text-yellow-500'>{percentageDifference(parseInt(data.discountedprice),parseInt(data.price))}% off</p>
                 </div>
                 <p><span className='font-semibold'>In stock</span>: Dispatch in 5 working days</p>
@@ -164,122 +250,18 @@ const ProductPage = () => {
                     
                 </div>
                 {/*  */}
-                <section aria-labelledby="options-heading">
-                        <h3 id="options-heading" className="sr-only">
-                          Product options
-                        </h3>
-
-                        <form>
-                          {/* Colors */}
-                          {data.colors.length > 1 && <fieldset aria-label="Choose a color">
-                            <legend className="text-sm font-medium text-gray-900">Color</legend>
-
-                            <RadioGroup
-                              value={selectedColor}
-                              onChange={setSelectedColor}
-                              className="mt-2 flex items-center space-x-3"
-                            >
-                              {data.colors.map((color) => (
-                                <Radio
-                                  key={color.colorname}
-                                  value={color}
-                                  aria-label={color.colorname}
-                                  className={({ focus, checked }) =>
-                                    classNames(
-                                      color.colorclass,
-                                      focus && checked ? 'ring ring-offset-1' : '',
-                                      !focus && checked ? 'ring-2' : '',
-                                      'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
-                                    )
-                                  }
-                                >
-                                  <span
-                                    aria-hidden="true"
-                                    className={classNames(
-                                      color.colorclass,
-                                      'h-8 w-8 rounded-full border border-black border-opacity-10'
-                                    )}
-                                  />
-                                </Radio>
-                              ))}
-                            </RadioGroup>
-                          </fieldset>}
-
-                          {/* Sizes */}
-                          {data.sizes.length > 0 && <fieldset className="mt-4" aria-label="Choose a size">
-                            <div className="flex items-center justify-between">
-                              <div className="text-sm font-medium text-gray-900">Size</div>
-                              {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                Size guide
-                              </a> */}
-                            </div>
-
-                            <RadioGroup
-                              value={selectedSize}
-                              onChange={setSelectedSize}
-                              className="mt-2 grid grid-cols-4 gap-4"
-                            >
-                              {data.sizes.map((size) => (
-                                <Radio
-                                  key={size.sizename}
-                                  value={size}
-                                  disabled={!size.instock}
-                                  className={({ focus }) =>
-                                    classNames(
-                                      size.instock
-                                        ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                                        : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                                      focus ? 'ring-2 ring-indigo-500' : '',
-                                      'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
-                                    )
-                                  }
-                                >
-                                  {({ checked, focus }) => (
-                                    <>
-                                      <span>{size.sizename}</span>
-                                      {size.instock ? (
-                                        <span
-                                          className={classNames(
-                                            checked ? 'border-indigo-500' : 'border-transparent',
-                                            focus ? 'border' : 'border-2',
-                                            'pointer-events-none absolute -inset-px rounded-md'
-                                          )}
-                                          aria-hidden="true"
-                                        />
-                                      ) : (
-                                        <span
-                                          aria-hidden="true"
-                                          className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                        >
-                                          <svg
-                                            className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                            viewBox="0 0 100 100"
-                                            preserveAspectRatio="none"
-                                            stroke="currentColor"
-                                          >
-                                            <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
-                                          </svg>
-                                        </span>
-                                      )}
-                                    </>
-                                  )}
-                                </Radio>
-                              ))}
-                            </RadioGroup>
-                          </fieldset>}
-                        </form>
-                      </section>
+                  <Options sizes={data.sizes} colors={data.colors} selectedColor={selectedColor} setSelectedColor={setSelectedColor} selectedSize={selectedSize} setSelectedSize={setSelectedSize} colRef={colRef} sizeRef={sizeRef} cartItemData={cartItemData}/>
                 {/*  */}
                 <div className='flex gap-5'>
-                    <button className='w-[200px] h-[50px] bg-yellow-400 rounded-lg font-semibold'>ADD TO CART</button>
-                    <button className='w-[200px] h-[50px] rounded-lg font-semibold border-yellow-400 border-[2px]'>BUY NOW</button>
+                    <button onClick={()=>itemStateUpdate('cart')} className='w-[200px] h-[50px] bg-yellow-400 rounded-lg hover:border-yellow-400 hover:border-2 hover:bg-white transition-colors duration-300 font-semibold'>ADD TO CART</button>
+                    <button className='w-[200px] h-[50px] rounded-lg font-semibold border-yellow-400 hover:bg-yellow-400 transition-colors duration-300 border-[2px]'>BUY NOW</button>
                 </div>
                 <div className='flex gap-10 text-silver text-sm border-b-[1px] pb-10'>
-                    <div className='flex items-center gap-1 cursor-pointer'>
+                    <div onClick={()=>itemStateUpdate('wishlist')} className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>
                         <HeartIcon width={25}/>
                         <p>Add to wishlist</p>
                     </div>
-                    <div className='flex items-center gap-1 cursor-pointer'>
+                    <div className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>
                         <GlobeAltIcon width={25}/>
                         <p>Find alternate products</p>
                     </div>

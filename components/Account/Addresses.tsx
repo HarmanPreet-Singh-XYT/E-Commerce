@@ -13,13 +13,13 @@ interface Address {
   postalCode:string;
   userName:string;
 }
-const Addresses = ({Component}:{Component:Address[]}) => {
+const Addresses = ({Component,setdialogType,setselectedAddress}:{Component:Address[],setdialogType:React.Dispatch<React.SetStateAction<string | null>>,setselectedAddress:React.Dispatch<React.SetStateAction<Address>>}) => {
   return (
     <div className='w-full h-full py-4 px-4 overflow-auto'>
       <h1 className='text-xl font-semibold'>Manage Addresses</h1>
       <div>
         <div className='flex justify-end mb-5'>
-          <button className='bg-primary-600 text-white px-4 py-2 rounded-xl'>Add Address</button>
+          <button onClick={()=>setdialogType('newaddress')} className='bg-primary-600 text-white px-4 py-2 rounded-xl'>Add Address</button>
         </div>
         <div className='flex flex-col gap-4 py-2 px-2'>
           {
@@ -40,10 +40,10 @@ const Addresses = ({Component}:{Component:Address[]}) => {
                 </div>
                 <div className='h-[100px] rounded-r-xl w-[35px] flex flex-col'>
                   <div className='bg-yellow-200 h-[50%] rounded-tr-xl flex justify-center'>
-                    <button className='w-[25px]'><PencilIcon/></button>
+                    <button onClick={()=>{setdialogType('address');setselectedAddress(each)}} className='w-[25px]'><PencilIcon/></button>
                   </div>
                   <div className='bg-red-300 h-[50%] rounded-br-xl flex justify-center'>
-                    <button className='w-[25px]'><TrashIcon/></button>
+                    <button onClick={()=>{setdialogType('deleteaddress');setselectedAddress(each)}} className='w-[25px]'><TrashIcon/></button>
                   </div>
                 </div>
               </div>

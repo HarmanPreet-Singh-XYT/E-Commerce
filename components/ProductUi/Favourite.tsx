@@ -1,11 +1,26 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { cartProducts as products } from '@/app/data'
 import { useMenu } from '@/Helpers/MenuContext'
-import { useAppSelector } from '@/app/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useApp } from '@/Helpers/AccountDialog'
+import { wishlistDeleteHandler } from '@/app/api/itemLists'
+import { removeItemFromWishlist } from '@/features/UIUpdates/CartWishlist'
+import Loading from '../Loading'
+import { useState } from 'react'
 export default function Favourite() {
+  const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
+  const [loading, setloading] = useState(false);
+  const dispatch = useAppDispatch();
   const { menu,toggleFav } = useMenu();
+  const { appState } = useApp();
+  const isLogged = appState.loggedIn;
   const wishlist = useAppSelector((state) => state.cartWishlist.wishlist);
+  async function removeItem(wishlistItemID:number,productID:number){
+    setloading(true);
+    isLogged && await wishlistDeleteHandler({wishlistItemID, userID:defaultAccount.userID})
+    dispatch(removeItemFromWishlist(productID));
+    setloading(false);
+  }
   return (
     <Transition show={menu.fav}>
       <Dialog className="relative z-50" onClose={toggleFav}>
@@ -50,7 +65,8 @@ export default function Favourite() {
                       </div>
 
                       <div className="mt-8">
-                        <div className="flow-root">
+                        <div className="flow-root relative">
+                        {loading && <div className='absolute left-0 right-0 top-[100%] z-50'><Loading/></div>}
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
                             {wishlist.map((product) => (
                               <li key={product.productID} className="flex py-6">
@@ -61,27 +77,28 @@ export default function Favourite() {
                                     className="h-full w-full object-cover object-center"
                                   />
                                 </div>
-
+                                
                                 <div className="ml-4 flex flex-1 flex-col">
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
                                         <a href={`/product/${product.productID}`}>{product.productName}</a>
                                       </h3>
-                                      <p className="ml-4">{product.productPrice}</p>
+                                      <p className="ml-4">${product.productPrice}</p>
                                     </div>
                                     {/* <p className="mt-1 text-sm text-gray-500">{product.productColor}</p> */}
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
 
                                     <div className="flex gap-5">
-                                        <button
+                                        {/* <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                       >
                                         Add to Cart
-                                      </button>
+                                      </button> */}
                                       <button
+                                        onClick={()=>removeItem(product.wishlistItemID,product.productID)}
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                       >
@@ -103,17 +120,17 @@ export default function Favourite() {
                         <p>$262.00</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p> */}
-                      <div className="mt-6">
+                      {/* <div className="mt-6">
                         <a
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Add All to Cart
                         </a>
-                      </div>
+                      </div> */}
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
-                          or{' '}
+                          {/* or{' '} */}
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"

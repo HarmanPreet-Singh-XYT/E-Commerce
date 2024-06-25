@@ -1,14 +1,29 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { cartProducts as products } from '@/app/data'
 import { useMenu } from '@/Helpers/MenuContext';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector,useAppDispatch } from '@/app/hooks';
+import { removeItemFromCart } from '@/features/UIUpdates/CartWishlist';
+import { cartDeleteHandler } from '@/app/api/itemLists';
+import { useApp } from '@/Helpers/AccountDialog';
+import { useState } from 'react';
+import Loading from '../Loading';
 export default function Cart() {
+  const { appState } = useApp();
+  const [loading, setloading] = useState(false);
+  const isLogged = appState.loggedIn;
   const cartlist = useAppSelector((state) => state.cartWishlist.cart);
+  const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
+  const dispatch = useAppDispatch();
   const { menu,toggleCart } = useMenu();
   let total = cartlist.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.quantity * currentValue.productPrice;
   }, 0);
+  async function removeItem(cartItemID:number,productID:number){
+    setloading(true);
+    isLogged && await cartDeleteHandler({userID:defaultAccount.userID,cartItemID});
+    dispatch(removeItemFromCart(productID));
+    setloading(false);
+  }
   return (
     <Transition show={menu.cart}>
       <Dialog className="relative z-50" onClose={toggleCart}>
@@ -53,7 +68,8 @@ export default function Cart() {
                       </div>
 
                       <div className="mt-8">
-                        <div className="flow-root">
+                        <div className="flow-root relative">
+                          {loading && <div className='absolute left-0 right-0 top-[100%] z-50'><Loading/></div>}
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
                             {cartlist.map((product) => (
                               <li key={product.productID} className="flex py-6">
@@ -71,7 +87,7 @@ export default function Cart() {
                                       <h3>
                                         <a href={`/product/${product.productID}`}>{product.productName}</a>
                                       </h3>
-                                      <p className="ml-4">{product.productPrice}</p>
+                                      <p className="ml-4">${product.productPrice}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">{product.productColor}</p>
                                   </div>
@@ -80,6 +96,7 @@ export default function Cart() {
 
                                     <div className="flex">
                                       <button
+                                      onClick={()=>removeItem(product.cartItemID,product.productID)}
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                       >

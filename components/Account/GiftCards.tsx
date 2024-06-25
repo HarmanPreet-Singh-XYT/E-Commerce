@@ -20,13 +20,13 @@ const GiftCards = ({Component}:{Component:GiftCard[]}) => {
       <h1 className='text-xl font-semibold'>Gift Cards</h1>
       <div>
         <div className='flex justify-end mb-5'>
-          <button className='bg-primary-600 text-white px-4 py-2 rounded-xl'>Add Gift Card</button>
+          {/* <button className='bg-primary-600 text-white px-4 py-2 rounded-xl'>Add Gift Card</button> */}
         </div>
         <div className='flex flex-col gap-4 py-2 px-2'>
             {giftCards.length===0 && 
                 <div className='flex font-medium flex-col items-center'>
                     <p>No Gift Cards Available</p>
-                    <p>Add Gift Card from Above Option</p>
+                    {/* <p>Add Gift Card from Above Option</p> */}
                 </div>
             }
             {

@@ -141,9 +141,9 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
 
                                     <div
                                         className="sm:pl-3 sm:border-l border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">{data[0].rating}</h2>
+                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">{data.length > 1 ? data[0].rating : 0}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <Stars size={50} stars={data[0].rating}/>
+                                            <Stars size={50} stars={data.length > 1 ? data[0].rating : 0}/>
                                         </div>
                                         <p className="font-normal text-lg leading-8 text-gray-400">Last Review</p>
                                     </div>
