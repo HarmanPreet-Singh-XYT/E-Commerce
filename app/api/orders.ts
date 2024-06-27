@@ -24,4 +24,19 @@ async function ordersHandler() {
     return {status:250,error: 'Cookie Not Found' };
     
 };
-export {ordersHandler};
+async function orderDetailHandler(orderID:string) {
+  const sendingKey = await encrypt(authKey);
+  const cookie = cookies().get('sessionhold');
+  if(cookie){
+    try {
+        const response = await axios.get(`${url}/api/user/order-detail/${cookie.value}/${orderID}`, {
+          headers: { authorization:`Bearer ${sendingKey}` },
+        });
+        return {status:response.status,data:response.data}
+    } catch (error) {
+        return {status:404,error: 'Internal Server Error' }
+    }
+  }else
+    return {status:500,error: 'Cookie Not Found' };
+};
+export {ordersHandler,orderDetailHandler};

@@ -3,7 +3,7 @@ interface option{
     title: string,
     link: string,
 }
-const Dropdown = ({ options }:{options:option[]}) => {
+const Dropdown = ({ options,orderid }:{options:option[],orderid:number}) => {
   const [margin, setMargin] = useState(10);
   const [opacity, setOpacity] = useState(0);
 
@@ -30,7 +30,7 @@ const Dropdown = ({ options }:{options:option[]}) => {
       <ul className="py-0 text-sm" aria-labelledby="dropdownUserAvatarButton">
         {options.map((each, index) => (
           <li key={index}>
-            <a href={each.link} className="block px-4 py-2 text-base text-silver hover:text-black hover:bg-gray-100">
+            <a href={`${each.link}${orderid}`} className="block px-4 py-2 text-base text-silver hover:text-black hover:bg-gray-100">
               {each.title}
             </a>
           </li>
