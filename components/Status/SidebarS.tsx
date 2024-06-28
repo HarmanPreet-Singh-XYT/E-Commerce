@@ -36,7 +36,8 @@ const SidebarS = () => {
                                         {stat.links.map((link, linkIndex) =>
                                             <a href={link.link} key={linkIndex} className='flex justify-between mt-1 items-center text-silver hover:text-black'>
                                                 <p className='tracking-[1px]'>{link.title}</p>
-                                                <p className='text-[17px]'>{link.quantity}</p>
+                                                {/* <p className='text-[17px]'>{link.quantity}</p> */}
+                                                <p className='text-[17px]'>{'>'}</p>
                                             </a>
                                         )}
                                     </div>

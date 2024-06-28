@@ -63,7 +63,7 @@ const navBtns = [
           title: "Wallet",
           link: "",
         },
-      ],catLink:''},
+      ],catLink:'/categories/men'},
     {name:"Women's",isExtendable:true,extendables:[
         {
             title: "Dress & Frock", // Combined Dress and Frock
@@ -81,7 +81,7 @@ const navBtns = [
             title: "Makeup Kit",
             link: "",
           },
-    ],catLink:''},
+    ],catLink:'/categories/women'},
     {name:"Jewelry",isExtendable:true,extendables:[
         {
             title: "Necklace",
@@ -99,7 +99,7 @@ const navBtns = [
             title: "Bracelets",
             link: "",
           },
-    ],catLink:''},
+    ],catLink:'/categories/jewellery'},
     {name:"Perfume",isExtendable:true,extendables:[
           {
             title: "Clothes Perfume",
@@ -117,9 +117,9 @@ const navBtns = [
             title: "Air Freshener",
             link: "",
           },
-    ],catLink:''},
-    {name:"Blog",isExtendable:false,extendables:[],catLink:''},
-    {name:"Hot Offers",isExtendable:false,extendables:[],catLink:''}
+    ],catLink:'/categories/perfume'},
+    {name:"Blog",isExtendable:false,extendables:[],catLink:'/blog'},
+    {name:"Hot Offers",isExtendable:false,extendables:[],catLink:'/offers'}
 ];
 const leftStatus = [
     {

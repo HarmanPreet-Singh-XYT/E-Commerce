@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        remotePatterns: [{hostname:'cdn3d.iconscout.com'}],
+        remotePatterns: [],
     },
 };
 

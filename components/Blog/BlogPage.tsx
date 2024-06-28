@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import Loading from './Loading';
+import Loading from '../Loading';
 import articlesDataHandler from '@/app/api/articleData';
 import formatDate from '@/app/api/dateConvert';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
@@ -13,7 +13,7 @@ interface Article {
   published_date: string;
   content: string;
 }
-const Tabs = () => {
+const BlogPage = () => {
   const [loading, setloading] = useState(true);
   const data = useRef<Article[]>([]);
   const [dialog, setdialog] = useState(false);
@@ -47,9 +47,9 @@ const Tabs = () => {
           </DialogPanel>
           </div>
       </Dialog>
-    <div className='w-[80%] h-auto gap-5 m-5 flex justify-center mt-10 mb-10 relative'>
+    <div className='max-w-[85%] h-auto gap-5 flex justify-center mt-10 mb-10 relative'>
       {loading && <div className='w-full h-[300px]'>{loading && <div className='absolute left-0 right-0 z-50'><Loading/></div>}</div> }
-      <div className='flex overflow-x-auto gap-5 snap-mandatory snap-x relative'>
+      <div className='flex gap-5 relative flex-wrap'>
           {data.current.map((each, index) => (
             <div key={index} className='flex flex-col gap-5 min-w-[300px] snap-center'>
                 <img width={300} onClick={()=>{selectedData.current=each;setdialog(true)}} className='rounded-xl cursor-pointer' src={each.imglink} alt={each.title} />
@@ -63,8 +63,7 @@ const Tabs = () => {
       </div>
     </div>
     </>
-  );
-};
+  )
+}
 
-export default Tabs;
-
+export default BlogPage

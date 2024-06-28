@@ -16,7 +16,7 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
     <section className="py-24 relative">
         <div className="w-full max-w-7xl px-4 md:px-5 lg:px-6 mx-auto">
             <div className="">
-                <h2 className="font-manrope font-bold text-3xl sm:text-4xl leading-10 text-black mb-8 text-center">
+                <h2 className="font-manrope font-bold text-xl sm:text-2xl leading-10 text-black mb-8 text-center">
                     Customer reviews &
                     rating</h2>
                 <div className="grid grid-cols-12 mb-11">
@@ -132,30 +132,30 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
                                 <div className="flex flex-col sm:flex-row items-center max-lg:justify-center w-full h-full">
                                     <div
                                         className="sm:pr-3 sm:border-r border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">{reviewCount}</h2>
+                                        <h2 className="font-manrope font-bold text-4xl text-black text-center mb-4">{reviewCount}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <Stars size={50} stars={reviewCount}/>
+                                            <Stars size={40} stars={reviewCount}/>
                                         </div>
-                                        <p className="font-normal text-lg leading-8 text-gray-400">{reviewCount} Ratings</p>
+                                        <p className="font-normal leading-8 text-gray-400">{reviewCount} Ratings</p>
                                     </div>
 
                                     <div
                                         className="sm:pl-3 sm:border-l border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-5xl text-black text-center mb-4">{data.length > 1 ? data[0].rating : 0}</h2>
+                                        <h2 className="font-manrope font-bold text-4xl text-black text-center mb-4">{data.length > 1 ? data[0].rating : 0}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <Stars size={50} stars={data.length > 1 ? data[0].rating : 0}/>
+                                            <Stars size={40} stars={data.length > 1 ? data[0].rating : 0}/>
                                         </div>
-                                        <p className="font-normal text-lg leading-8 text-gray-400">Last Review</p>
+                                        <p className="font-normal leading-8 text-gray-400">Last Review</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-span-12 md:col-span-4 max-lg:mt-8 md:pl-8">
                                 <div className="flex items-center flex-col justify-center w-full h-full ">
                                     <button
-                                        className="rounded-full px-6 py-4 bg-indigo-600 font-semibold text-lg text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">Write
+                                        className="rounded-full px-4 py-4 bg-indigo-600 font-semibold text-md text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">Write
                                         A Review</button>
                                     <button
-                                        className="rounded-full px-6 py-4 bg-white font-semibold text-lg text-indigo-600 whitespace-nowrap w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">See
+                                        className="rounded-full px-4 py-4 bg-white font-semibold text-md text-indigo-600 whitespace-nowrap w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">See
                                         All Reviews</button>
                                 </div>
                             </div>
@@ -163,7 +163,7 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
                     </div>
                 </div>
                 <div className="pb-8 border-b border-gray-200 max-xl:max-w-3xl max-xl:mx-auto">
-                    <h4 className="font-manrope font-semibold text-3xl leading-10 text-black mb-6">Recent
+                    <h4 className="font-manrope font-semibold text-2xl leading-10 text-black mb-6">Recent
                         Reviews</h4>
                     <div className='flex flex-col gap-5'>
                         {data.map((each,index)=>
@@ -177,11 +177,11 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
                                 <div className="flex items-end gap-3 flex-col">
                                     <p className="font-medium text-base leading-7 text-gray-400">{formatDate(each.createdat)}</p>
                                     {defaultAccount.userID===each.userid && <div className='flex gap-5'><button
-                                        className="rounded-full px-4 py-2 bg-indigo-600 font-semibold text-lg text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+                                        className="rounded-full px-4 py-2 bg-indigo-600 font-semibold text-md text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
                                         Edit Review
                                     </button>
                                     <button
-                                        className="rounded-full px-4 py-2 bg-white border-[1px] font-semibold text-lg text-black whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:text-white hover:bg-red-400 hover:shadow-red-400">
+                                        className="rounded-full px-4 py-2 bg-white border-[1px] font-semibold text-md text-black whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:text-white hover:bg-red-400 hover:shadow-red-400">
                                         Delete Review
                                     </button>
                                     </div>

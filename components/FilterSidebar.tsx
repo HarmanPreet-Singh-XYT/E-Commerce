@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactStars from 'react-stars'
-const FilterSidebar = () => {
+const FilterSidebar = ({dataChecked}:{dataChecked:boolean}) => {
   return (
     // <form action="#" method="get" id="drawer-example"
     //     className="fixed top-0 left-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
@@ -76,7 +76,7 @@ const FilterSidebar = () => {
 
                 <div className="space-y-2">
                     <h6 className="text-base font-medium text-black dark:text-white">
-                        Rating
+                        Minimum Rating
                     </h6>
 
                     <div className="flex items-center">
@@ -153,10 +153,12 @@ const FilterSidebar = () => {
             </div>
             <div className="bottom-0 left-0 flex justify-center w-full pb-4 mt-6 space-x-4 md:px-4 ">
                 <button type="submit"
+                disabled={!dataChecked}
                     className="w-full px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">
                     Apply filters
                 </button>
                 <button type="reset"
+                disabled={!dataChecked}
                     className="w-full px-5 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                     Clear all
                 </button>

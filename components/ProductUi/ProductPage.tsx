@@ -302,7 +302,7 @@ const ProductPage = () => {
         <ReviewSection data={data.reviews} reviewCount={data.reviewcount}/>
         </div></>
         }</>}
-        {(dataChecked && !found) && <ProductNotFound/>}
+        {(dataChecked && !found.current) && <ProductNotFound/>}
     </div>
   )
 }

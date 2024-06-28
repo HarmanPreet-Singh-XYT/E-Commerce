@@ -14,7 +14,6 @@ import { MenuProvider } from '@/Helpers/MenuContext'
 import Banner from '@/components/Banner'
 import { AppProvider } from '@/Helpers/AccountDialog'
 import { store } from './store'
-import useAuth from '@/controllers/Authentication'
 import Session from '@/components/Session'
 const App = () => {
 
