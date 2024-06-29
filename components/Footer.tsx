@@ -33,7 +33,7 @@ const Footer = () => {
                 </div>
             )}
         </div>
-        <div className='w-[100%] h-50  gap-2 flex flex-col items-center mt-4'>
+        <div className='w-[100%] h-50  gap-2 flex flex-col items-center mt-4 mb-16 lg:mb-0'>
             <img height={50} src='https://codewithsadee.github.io/anon-ecommerce-website/assets/images/payment.png'/>
             <p className='text-silver font-semibold tracking-[2px] lg:pb-0'>Copyright &copy; Anon All Rights Reserved.</p>
         </div>

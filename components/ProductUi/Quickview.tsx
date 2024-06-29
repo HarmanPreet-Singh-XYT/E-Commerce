@@ -1,60 +1,85 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Dialog, DialogPanel, Radio, RadioGroup, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import Stars from './Stars'
+import { useAppDispatch,useAppSelector } from '@/app/hooks'
+import { addItemToCart } from '@/features/UIUpdates/CartWishlist'
 import Link from 'next/link'
+import { useApp } from '@/Helpers/AccountDialog'
+import { cartAddHandler } from '@/app/api/itemLists'
+import Stars from './Stars'
 function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
 interface Color {
-  name: string;
-  class: string;
-  selectedClass: string;
+    colorid:number;
+    name: string;
+    colorname: string;
+    colorclass: string;
 }
 
 interface Size {
-  name: string;
-  inStock: boolean;
+    sizeid:number;
+    name: string;
+    sizename:string;
+    instock: boolean;
+}
+interface ProductImage {
+    imageid: number;
+    imglink: string;
+    imgalt: string;
 }
 
-interface Price {
-  basePrice: number;
-  discountPrice: number;
-}
-
-interface Params {
-  isSale: boolean;
-  isNew: boolean;
-  isDiscount: boolean;
-}
-
+// Interface for products
 interface Product {
-  imgLink: string;
-  secImglink: string;
-  imgCollection: string[];
-  imgAlt: string;
-  productID: string;
-  discount: number;
-  category: string;
-  title: string;
-  ratingCount: number;
-  stars: number;
-  price: Price;
-  params: Params;
-  colors: Color[];
-  isSizeAvailable: boolean;
-  sizes: Size[];
+    productid: number;
+    title: string;
+    category: string;
+    price: string;
+    discount: string;
+    stars: number;
+    isnew: boolean;
+    issale: boolean;
+    isdiscount: boolean;
+    colors: Color[]; // assuming colors is an array of strings
+    sizes: Size[];  // assuming sizes is an array of strings
+    reviewCount: number;
+    images: ProductImage;
 }
 interface ProductCardProps {
   product: Product;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function Quickview({ product, open, setOpen }: ProductCardProps) {
+const IDGenerator = ()=>{
+  const ID = Math.round(Math.random() * 1000 * 1000 * 100);
+  return ID;
+}
+export default function CategoryQuickview({ product, open, setOpen }: ProductCardProps) {
   // const [open, setOpen] = useState(false)
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0])
-
+  const colRef = useRef<string>('Default');
+  const sizeRef = useRef<string>('Default');
+  const [selectedColor, setSelectedColor] = useState(product.colors.length===0 ? {colorid:0,name:'Default',colorname:'Default',colorclass:''} : product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(product.sizes.length===0 ? {sizeid:0,name:'Default',sizename:'Default',instock:true} : product.sizes[0]);
+  const { appState } = useApp();
+  const dispatch = useAppDispatch();
+  const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
+  const listID = {cartItemID:IDGenerator()};
+  let cartItemData = {
+    cartItemID:listID.cartItemID,
+    productID:product.productid,
+    productImg:product.images.imglink,
+    productAlt:product.images.imgalt,
+    productName:product.title,
+    productPrice:parseInt(product.discount),
+    productColor:colRef.current,
+    productSize:sizeRef.current,
+    quantity: 1,
+  };
+  const isLogged = appState.loggedIn;
+  async function addCart(){
+    isLogged && await cartAddHandler({cartItemID:listID.cartItemID,userID:defaultAccount.userID,productID:product.productid,productPrice:parseInt(product.discount),colorID:selectedColor.colorid,sizeID:selectedSize.sizeid,quantity:1})
+    dispatch(addItemToCart(cartItemData));
+  }
   return (
     <Transition show={open}>
       <Dialog className="relative z-50" onClose={setOpen}>
@@ -92,7 +117,7 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
 
                   <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                     <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                      <img src={product.imgLink} alt={product.imgAlt} className="object-cover object-center" />
+                      <img src={product.images.imglink} alt={product.images.imgalt} className="object-cover object-center" />
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{product.title}</h2>
@@ -102,7 +127,7 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                           Product information
                         </h3>
 
-                        <p className="text-2xl text-gray-900">${product.price.discountPrice}</p>
+                        <p className="text-2xl text-gray-900">${product.discount}</p>
 
                         {/* Reviews */}
                         <div className="mt-6">
@@ -111,7 +136,7 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                             <Stars stars={product.stars}/>
                             <p className="sr-only">{product.stars} out of 5 stars</p>
                             <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                              {product.ratingCount} reviews
+                              {product.reviewCount} reviews
                             </a>
                           </div>
                         </div>
@@ -122,9 +147,9 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                           Product options
                         </h3>
 
-                        <form>
+                        <div>
                           {/* Colors */}
-                          <fieldset aria-label="Choose a color">
+                        {product.colors.length != 0 && <fieldset aria-label="Choose a color">
                             <legend className="text-sm font-medium text-gray-900">Color</legend>
 
                             <RadioGroup
@@ -139,7 +164,7 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                                   aria-label={color.name}
                                   className={({ focus, checked }) =>
                                     classNames(
-                                      color.selectedClass,
+                                      color.colorclass,
                                       focus && checked ? 'ring ring-offset-1' : '',
                                       !focus && checked ? 'ring-2' : '',
                                       'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
@@ -149,17 +174,17 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                                   <span
                                     aria-hidden="true"
                                     className={classNames(
-                                      color.class,
+                                      color.colorclass,
                                       'h-8 w-8 rounded-full border border-black border-opacity-10'
                                     )}
                                   />
                                 </Radio>
                               ))}
                             </RadioGroup>
-                          </fieldset>
+                          </fieldset>}
 
                           {/* Sizes */}
-                          <fieldset className="mt-10" aria-label="Choose a size">
+                          {product.sizes.length != 0 &&<fieldset className="mt-10" aria-label="Choose a size">
                             <div className="flex items-center justify-between">
                               <div className="text-sm font-medium text-gray-900">Size</div>
                               <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -174,12 +199,12 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                             >
                               {product.sizes.map((size) => (
                                 <Radio
-                                  key={size.name}
+                                  key={size.sizename}
                                   value={size}
-                                  disabled={!size.inStock}
+                                  disabled={!size.instock}
                                   className={({ focus }) =>
                                     classNames(
-                                      size.inStock
+                                      size.instock
                                         ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                                         : 'cursor-not-allowed bg-gray-50 text-gray-200',
                                       focus ? 'ring-2 ring-indigo-500' : '',
@@ -189,8 +214,8 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                                 >
                                   {({ checked, focus }) => (
                                     <>
-                                      <span>{size.name}</span>
-                                      {size.inStock ? (
+                                      <span>{size.sizename}</span>
+                                      {size.instock ? (
                                         <span
                                           className={classNames(
                                             checked ? 'border-indigo-500' : 'border-transparent',
@@ -220,19 +245,19 @@ export default function Quickview({ product, open, setOpen }: ProductCardProps) 
                               ))}
                             </RadioGroup>
                           </fieldset>
-
+}
                           <button
-                            type="submit"
+                            onClick={addCart}
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
                             Add to bag
                           </button>
                           <div className='w-full flex justify-center mt-2'>
-                          <Link href={`/product/${product.productID}`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                          <Link href={`/product/${product.productid}`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                               Go to Product Site
                           </Link>
                           </div>
-                        </form>
+                        </div>
                       </section>
                     </div>
                   </div>

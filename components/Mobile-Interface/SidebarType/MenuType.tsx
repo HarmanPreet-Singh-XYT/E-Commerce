@@ -1,31 +1,46 @@
 import React,{useState} from 'react'
 import { navBtns } from '@/app/data'
 import { useMenu } from '@/Helpers/MenuContext';
-
+import signOutHandler from '@/app/api/signout';
+import { useRouter } from 'next/navigation';
+import { useApp } from '@/Helpers/AccountDialog';
 const MenuType = () => {
     const socialMedia = ['facebook','twitter','instagram','linkedin'];
+    const {appState} = useApp();
+    const loggedIn = appState.loggedIn;
     const { toggleSidebar } = useMenu();
     const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
     const handleToggle = (index: number) => {
         setCollapsedIndex((prevIndex) => (prevIndex === index ? null : index));
     };
-    const [coll, setColl] = useState(null);
-
+    const router = useRouter();
     const handleColl = (index:number) => {
         setCollapsedIndex(collapsedIndex === index ? null : index);
     };
     const AccBtns = [
         {
-            name: 'Account',
+            name: 'loggedIn',
             isExtendable: true,
             extendables: [
                 { title: 'Settings', link: '/settings' },
                 { title: 'Orders', link: '/orders' },
-                { title: 'Sign out', link: '/signout' }
             ]
         },
+        {
+            name: 'login',
+            isExtendable: true,
+            extendables: [
+                { title: 'Register', link: '/sign-up' },
+                { title: 'Sign In', link: '/sign-in' },
+            ]
+        }
         // Add other nav buttons here if needed
     ];
+    function signOut(){
+        signOutHandler();
+        router.refresh();
+        router.push('/');
+      }
   return (
     <>
             <div className='flex w-[90%] items-center justify-between border-b-[1px] pb-4 -left-96'>
@@ -63,23 +78,29 @@ const MenuType = () => {
                     </button>
                 )}
             </div>
-            <div className='w-[90%]'>
+            <div className='w-[90%] border-t-[1px]'>
                 {AccBtns.map((each,index)=> 
                 <div key={index}>
                     <div key={index}
                         className={`transition-[max-height] duration-[400ms] ease-linear overflow-hidden ${
                             'max-h-[160px]'
                         }`}>
-                            <div className='pb-2 border-t-[1px] flex flex-col gap-2 pt-5 '>
-                                {each.extendables.map((link, linkIndex) =>
+                            <div className='pb-2 flex flex-col gap-2 pt-5 '>
+                                {each.extendables.map((link, linkIndex) => loggedIn ? each.name === 'loggedIn' &&
+                                    <a href={link.link} key={linkIndex} className='flex justify-between mt-1 items-center text-gray-700 border-b-[1px] pb-4 hover:text-black'>
+                                        <p className='tracking-[1px]'>{link.title}</p>
+                                    </a>
+                                    : each.name === 'login' &&
                                     <a href={link.link} key={linkIndex} className='flex justify-between mt-1 items-center text-gray-700 border-b-[1px] pb-4 hover:text-black'>
                                         <p className='tracking-[1px]'>{link.title}</p>
                                     </a>
                                 )}
+                                
                             </div>
                     </div>
                 </div>
                 )}
+                {loggedIn && <button onClick={signOut} className='flex justify-between mt-1 items-center text-gray-700  pb-4 hover:text-black'>Sign Out</button>}
             </div>
     </>
   )

@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Dialog, DialogPanel, Radio, RadioGroup, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import Stars from '../ProductUi/Stars'
+import { useAppDispatch,useAppSelector } from '@/app/hooks'
+import { addItemToCart } from '@/features/UIUpdates/CartWishlist'
 import Link from 'next/link'
+import { useApp } from '@/Helpers/AccountDialog'
+import { cartAddHandler } from '@/app/api/itemLists'
+import Stars from '../ProductUi/Stars'
 function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
 interface Color {
+    colorid:number;
     name: string;
     colorname: string;
     colorclass: string;
 }
 
 interface Size {
+    sizeid:number;
     name: string;
     sizename:string;
     instock: boolean;
@@ -44,11 +50,36 @@ interface ProductCardProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+const IDGenerator = ()=>{
+  const ID = Math.round(Math.random() * 1000 * 1000 * 100);
+  return ID;
+}
 export default function CategoryQuickview({ product, open, setOpen }: ProductCardProps) {
   // const [open, setOpen] = useState(false)
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0])
-
+  const colRef = useRef<string>('Default');
+  const sizeRef = useRef<string>('Default');
+  const [selectedColor, setSelectedColor] = useState(product.colors.length===0 ? {colorid:0,name:'Default',colorname:'Default',colorclass:''} : product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(product.sizes.length===0 ? {sizeid:0,name:'Default',sizename:'Default',instock:true} : product.sizes[0]);
+  const { appState } = useApp();
+  const dispatch = useAppDispatch();
+  const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
+  const listID = {cartItemID:IDGenerator()};
+  let cartItemData = {
+    cartItemID:listID.cartItemID,
+    productID:product.productid,
+    productImg:product.images.imglink,
+    productAlt:product.images.imgalt,
+    productName:product.title,
+    productPrice:parseInt(product.discount),
+    productColor:colRef.current,
+    productSize:sizeRef.current,
+    quantity: 1,
+  };
+  const isLogged = appState.loggedIn;
+  async function addCart(){
+    isLogged && await cartAddHandler({cartItemID:listID.cartItemID,userID:defaultAccount.userID,productID:product.productid,productPrice:parseInt(product.discount),colorID:selectedColor.colorid,sizeID:selectedSize.sizeid,quantity:1})
+    dispatch(addItemToCart(cartItemData));
+  }
   return (
     <Transition show={open}>
       <Dialog className="relative z-50" onClose={setOpen}>
@@ -116,7 +147,7 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                           Product options
                         </h3>
 
-                        <form>
+                        <div>
                           {/* Colors */}
                         {product.colors.length != 0 && <fieldset aria-label="Choose a color">
                             <legend className="text-sm font-medium text-gray-900">Color</legend>
@@ -216,7 +247,7 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                           </fieldset>
 }
                           <button
-                            type="submit"
+                            onClick={addCart}
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
                             Add to bag
@@ -226,7 +257,7 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                               Go to Product Site
                           </Link>
                           </div>
-                        </form>
+                        </div>
                       </section>
                     </div>
                   </div>

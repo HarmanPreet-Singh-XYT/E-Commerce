@@ -53,7 +53,7 @@ const ProductCard = ({ product }:{ product: Product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Quickview open={open} setOpen={setOpen} product={productData} />
+      {/* <Quickview open={open} setOpen={setOpen} product={productData} /> */}
       {product.params.isSale && (
         <div className="absolute top-2 -left-8 bg-black text-white px-10 py-1 z-10 rotate-[320deg] text-[12px] uppercase rounded">
           SALE

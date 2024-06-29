@@ -9,7 +9,7 @@ interface Account{
   }
 const ProfileInfo = ({Component,setdialogType}:{Component:Account,setdialogType:React.Dispatch<React.SetStateAction<string | null>>}) => {
     return (
-        <div className="p-6 w-full">
+        <div className="p-6 w-full sm:w-[600px]  min-w-[360px] max-w-[600px]">
             <div className='flex justify-between border-b-[1px] items-center'>
             <h1 className="text-xl font-semibold mb-4 pb-2">Basic info</h1>
             <button className='text-sm text-white px-2 py-2 rounded-xl font-medium hover:bg-primary-800 bg-primary-600' onClick={()=>setdialogType('password')}>Change Password</button>

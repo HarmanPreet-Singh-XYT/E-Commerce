@@ -1,4 +1,4 @@
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
+
 import React from 'react'
 import { giftCards } from '@/app/data'
 import formatDate from '@/app/api/dateConvert'
@@ -32,7 +32,7 @@ const GiftCards = ({Component}:{Component:GiftCard[]}) => {
             {
                 Component.map((each,index)=> each.status==='Active' &&
                 <div key={index} className='flex'>
-                    <div className='border-[1px] w-[380px] rounded-xl px-4 py-4 flex flex-col gap-2 drop-shadow-custom-xl bg-white bg-content'>
+                    <div className='border-[1px] max-w-[380px] rounded-xl px-4 py-4 flex flex-col gap-2 drop-shadow-custom-xl bg-white bg-content'>
                         <p className=' bg-salmon text-white w-[100px] text-center text-sm font-semibold rounded-xl px-2 py-1'>{each.balance} {each.currency}</p>
                         <div className='flex justify-between text-sm font-semibold'>
                             <p>{each.cardname}</p>

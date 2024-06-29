@@ -49,10 +49,10 @@ const Settings = () => {
     <SettingDialogs addresses={addresses} dialogType={dialogType} setdialogType={setdialogType} menuType={menuType} userID={defaultAccount.userID} setLoading={setLoading} selectedAddress={selectedAddress} setselectedAddress={setselectedAddress} defaultAccount={defaultAccount}/>
     {loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}
     <div className='w-screen h-screen flex justify-center bg-whiteblur-sm'>
-        <div className='flex w-[80%] justify-center my-5 gap-5'>
+        <div className='flex w-[95%] lg:w-[80%] justify-center my-5 lg:gap-5'>
             <div className='flex flex-col gap-4'>
 
-                <div className='flex gap-4 border-[1px] bg-white drop-shadow-custom-xl items-center rounded-xl px-10 py-4'>
+                <div className='hidden gap-4 border-[1px] lg:flex bg-white drop-shadow-custom-xl items-center rounded-xl px-10 py-4'>
                     <div><UserCircleIcon width={50}/></div>
                     <div>
                         <p className='flex text-sm font-medium'>Hello,</p>
@@ -62,24 +62,24 @@ const Settings = () => {
                 <div>
                     <div className='rounded-xl py-1 px-1 flex flex-col gap-2'>
                         <button id='profile' onClick={()=>setmenuType('profile')} className={`flex items-center gap-4 drop-shadow-custom-xl  rounded-xl py-1 px-1 cursor-pointer ${menuType!='profile' && 'hover:text-salmon'}  ${menuType==='profile' ? 'bg-salmon text-white': 'bg-white'}`}>
-                            <UserIcon className=' max-w-[35px] rounded-xl text-black bg-white drop-shadow-custom-xl px-2 py-2'/>
-                            <p>Profile Information</p>
+                            <UserIcon className='w-[35px] max-w-[35px] rounded-xl text-black bg-white drop-shadow-custom-xl px-2 py-2'/>
+                            <p className='hidden lg:flex'>Profile Information</p>
                         </button>
                         <button id='address' onClick={()=>setmenuType('address')} className={`flex items-center gap-4 drop-shadow-custom-xl  rounded-xl py-1 px-1 cursor-pointer ${menuType!='address' && 'hover:text-salmon'}  ${menuType==='address' ? 'bg-salmon text-white': 'bg-white'}`}>
                             <BookOpenIcon className=' max-w-[35px] rounded-xl text-black bg-white drop-shadow-custom-xl px-2 py-2'/>
-                            <p>Manage Addresses</p>
+                            <p className='hidden lg:flex'>Manage Addresses</p>
                         </button>
                         <button id='giftcard' onClick={()=>setmenuType('giftcard')} className={`flex items-center gap-4 drop-shadow-custom-xl  rounded-xl py-1 px-1 cursor-pointer ${menuType!='giftcard' && 'hover:text-salmon'}  ${menuType==='giftcard' ? 'bg-salmon text-white': 'bg-white'}`}>
                             <GiftIcon className=' max-w-[35px] rounded-xl text-black bg-white drop-shadow-custom-xl px-2 py-2'/>
-                            <p>Available Gift Cards</p>
+                            <p className='hidden lg:flex'>Available Gift Cards</p>
                         </button>
                         <button id='coupon' onClick={()=>setmenuType('coupon')} className={`flex items-center gap-4 drop-shadow-custom-xl  rounded-xl py-1 px-1 cursor-pointer ${menuType!='coupon' && 'hover:text-salmon'}  ${menuType==='coupon' ? 'bg-salmon text-white': 'bg-white'}`}>
                             <ReceiptPercentIcon className=' max-w-[35px] rounded-xl text-black bg-white drop-shadow-custom-xl px-2 py-2'/>
-                            <p>Available Coupons</p>
+                            <p className='hidden lg:flex'>Available Coupons</p>
                         </button>
                         <button id='wishlist' onClick={()=>setmenuType('wishlist')} className={`flex items-center gap-4 drop-shadow-custom-xl  rounded-xl py-1 px-1 cursor-pointer ${menuType!='wishlist' && 'hover:text-salmon'}  ${menuType==='wishlist' ? 'bg-salmon text-white': 'bg-white'}`}>
                             <QueueListIcon className=' max-w-[35px] rounded-xl text-black bg-white drop-shadow-custom-xl px-2 py-2'/>
-                            <p>My Wishlist</p>
+                            <p className='hidden lg:flex'>My Wishlist</p>
                         </button>
                         {/* <div className='flex items-center gap-4 drop-shadow-custom-xl bg-white rounded-xl py-1 px-1 cursor-pointer hover:text-salmon'>
                             <CreditCardIcon className=' max-w-[35px] rounded-xl bg-white drop-shadow-custom-xl px-2 py-2'/>
@@ -96,7 +96,7 @@ const Settings = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-white w-[600px] h-full drop-shadow-custom-xl rounded-xl flex-col flex items-center'>
+            <div className='bg-white sm:max-w-[600px] lg:max-w-[600px] lg:w-[600px] h-full drop-shadow-custom-xl rounded-xl flex-col flex items-center'>
                 {menuType==='profile' && <ProfileInfo Component={defaultAccount} setdialogType={setdialogType}/>}
                 {menuType==='address' && <Addresses Component={addresses}  setdialogType={setdialogType} setselectedAddress={setselectedAddress}/>}
                 {menuType==='giftcard' && <GiftCards Component={giftCards}/>}

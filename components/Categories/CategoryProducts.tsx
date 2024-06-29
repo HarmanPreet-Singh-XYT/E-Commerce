@@ -1,18 +1,17 @@
-import { products } from '@/app/data';
 import React, { useState } from 'react';
 import Quickview from '../ProductUi/Quickview';
-import { defaultData } from '@/app/data';
 import Stars from '../ProductUi/Stars';
-import CategoryQuickview from './CategoryQuickView';
 import NoProduct from './NoProduct';
 import Loading from '../Loading';
 interface Color {
+  colorid:number;
   name: string;
   colorname: string;
   colorclass: string;
 }
 
 interface Size {
+  sizeid:number;
   name: string;
   sizename:string;
   instock: boolean;
@@ -68,7 +67,7 @@ const ProductCard = ({ product }:{ product:Product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CategoryQuickview open={open} setOpen={setOpen} product={productData} />
+      <Quickview open={open} setOpen={setOpen} product={productData} />
       {product.issale && (
         <div className="absolute top-2 -left-8 bg-black text-white px-10 py-1 z-10 rotate-[320deg] text-[12px] uppercase rounded">
           SALE

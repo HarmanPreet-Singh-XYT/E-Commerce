@@ -643,12 +643,12 @@ const footerSections = [
                 link: "/categories/cosmetics"
             },
             {
-                title: "Health",
-                link: "/categories/health"
+                title: "Footwear",
+                link: "/categories/footwear"
             },
             {
-                title: "Watches",
-                link: "/categories/watches"
+                title: "Perfume",
+                link: "/categories/perfume"
             }
         ]
     },
@@ -1751,5 +1751,5 @@ const serviceFeatures = [
         imgAlt: 'Money back symbol',
     },
 ];
-
-export {topCat, serviceFeatures, giftCards, loginFeatures, addresses, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};
+const allCategories = [{name:"Men's",link:'/categories/MEN'},{name:"Women's",link:'/categories/WOMEN'},{name:'Cosmetics',link:'/categories/Cosmetics'},{name:'Electronics',link:'/categories/electronics'},{name:'Perfume',link:'/categories/perfume'},{name:'Jewellery',link:'/categories/jewellery'},{name:'Footwear',link:'/categories/footwear'},{name:'Fashion',link:'/categories/fashion'}]
+export {topCat, allCategories, serviceFeatures, giftCards, loginFeatures, addresses, navBtns, orders, aboutUS, availableCategories, paymentSecure, leftStatus, bestSell, categoryDropDown, trendings, footerCategories, footerSections, banners, defaultData, products, featuresSec, currentEvent, testimonial, cards, deals, cartProducts};

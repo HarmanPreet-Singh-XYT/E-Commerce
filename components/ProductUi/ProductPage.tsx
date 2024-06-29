@@ -116,7 +116,7 @@ const ProductPage = () => {
       productName:data.title,
       productPrice:parseInt(data.discountedprice),
       productColor:colRef.current,
-      productSize:colRef.current,
+      productSize:sizeRef.current,
       quantity: quantity,
     };
     let wishlistItem = {

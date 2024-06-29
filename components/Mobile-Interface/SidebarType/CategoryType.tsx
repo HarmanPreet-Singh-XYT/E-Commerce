@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { bestSell, leftStatus } from '@/app/data'
+import { allCategories, bestSell, leftStatus } from '@/app/data'
 import { useMenu } from '@/Helpers/MenuContext';
 import Stars from '@/components/ProductUi/Stars';
 import Link from 'next/link';
@@ -37,7 +37,8 @@ const CategoryType = () => {
                                 {each.links.map((link, linkIndex) =>
                                     <a href={link.link} key={linkIndex} className='flex justify-between mt-1 items-center text-silver hover:text-black'>
                                         <p className='tracking-[1px]'>{link.title}</p>
-                                        <p className='text-[17px]'>{link.quantity}</p>
+                                        {/* <p className='text-[17px]'>{link.quantity}</p> */}
+                                        <p>{'>'}</p>
                                     </a>
                                 )}
                             </div>
@@ -47,8 +48,8 @@ const CategoryType = () => {
                     )}
 
                 </div>
-                <div className='h-[500px] border-t-[1px] pt-2'>
-                <p className='font-bold tracking-[2px] text-md'>BEST SELLERS</p>
+                <div className='h-[500px] border-t-[1px] w-[80%] pt-2'>
+                {/* <p className='font-bold tracking-[2px] text-md'>BEST SELLERS</p>
                 <div className='flex flex-col'>
                     {bestSell.map((each,index)=>
                         <div key={index} className='flex mt-5'>
@@ -66,7 +67,18 @@ const CategoryType = () => {
                             </div>
                         </div>
                     )}
+                    </div> */}
+
+                    <p className='text-salmon font-bold text-lg tracking-[2px]'>Categories</p>
+                    {allCategories.map((each,index)=>
+                    <div key={index}>
+                        <div className='flex mt-3 border-b-[1px] pb-3 tracking-wider justify-between hover:cursor-pointer'>
+                            <Link href={each.link} className='flex justify-between mt-1 items-center text-silver hover:text-black'>
+                                <p className='tracking-[1px]'>{each.name}</p>
+                            </Link>
+                        </div>
                     </div>
+                    )}
                 </div>
         </>
     )
