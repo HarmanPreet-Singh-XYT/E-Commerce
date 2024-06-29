@@ -13,16 +13,18 @@ interface categories{
     name: string;
 };
 interface Color {
-    name: string;
-    colorname: string;
-    colorclass: string;
-  }
-  
-  interface Size {
-    name: string;
-    sizename:string;
-    instock: boolean;
-  }
+  colorid:number;
+  name: string;
+  colorname: string;
+  colorclass: string;
+}
+
+interface Size {
+  sizeid:number;
+  name: string;
+  sizename:string;
+  instock: boolean;
+}
   interface ProductImage {
     imageid: number;
     imglink: string;
