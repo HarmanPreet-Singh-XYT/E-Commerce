@@ -11,11 +11,13 @@ import Loading from '../Loading'
 import Options from './Product/Options'
 import { cartAddHandler,wishlistAddHandler } from '@/app/api/itemLists'
 import { useApp } from '@/Helpers/AccountDialog'
+import ProductDialogs from './ProductDialogs'
 // Interface for individual reviews
 interface Review {
   reviewid: number;
   userid: number;
   rating: number;
+  title:string;
   comment: string;
   username: string;
   createdat: string;
@@ -97,14 +99,18 @@ const ProductPage = () => {
     const sizeRef = useRef<string>('Default');
     const totalQuantity = useRef<number>(1);
     const found = useRef<boolean>(true);
+    const [selectedRating, setselectedRating] = useState<number>(1);
     const dataVar = useRef<Product>(defaultData);
+    const [selectedReview, setselectedReview] = useState<null|Review>(null)
     const data = dataVar.current;
     const [selectedColor, setSelectedColor] = useState<ProductColor>({colorid:0,colorname:'Default',colorclass:'col_default'});
     const [selectedSize, setSelectedSize] = useState<ProductSize>({sizeid:0,sizename:'Default',instock:true});
     const [selectedImage, setselectedImage] = useState({imgLink:'',imgAlt:''});
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState<number>(1);
     const params = useParams<{ productID: string }>()
-    const [dataChecked, setdataChecked] = useState(false);
+    const [dataChecked, setdataChecked] = useState<boolean>(false);
+    const [loading, setloading] = useState<boolean>(false);
+    const [dialogType, setdialogType] = useState<null|string>(null)
     const dispatch = useAppDispatch();
     const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
     const listID = {cartItemID:IDGenerator(),wishlistItemID:IDGenerator()};
@@ -194,6 +200,9 @@ const ProductPage = () => {
       }
     }
     return (
+      <>
+      {loading && <div className='w-full h-[500px]'>{loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}</div> }
+      <ProductDialogs dialogType={dialogType} setdialogType={setdialogType} setloading={setloading} productID={data.productid} selectedReview={selectedReview} selectedRating={selectedRating} setselectedRating={setselectedRating}/>
     <div className='flex flex-col gap-5 border-t-[1px] w-[100%]'>
       {!dataChecked && <Loading/>}
       {(dataChecked && data!=undefined) && <>{found.current && <>
@@ -299,11 +308,12 @@ const ProductPage = () => {
             </div>
         </div>
         <div ref={ref}>
-        <ReviewSection data={data.reviews} reviewCount={data.reviewcount}/>
+        <ReviewSection data={data.reviews} setdialogType={setdialogType} setloading={setloading} reviewCount={data.reviewcount} setselectedReview={setselectedReview}  setselectedRating={setselectedRating} allReview={false} productID={data.productid}/>
         </div></>
         }</>}
         {(dataChecked && !found.current) && <ProductNotFound/>}
     </div>
+    </>
   )
 }
 

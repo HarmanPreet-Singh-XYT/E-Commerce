@@ -118,8 +118,76 @@ const navBtns = [
             link: "",
           },
     ],catLink:'/categories/perfume'},
-    {name:"Blog",isExtendable:false,extendables:[],catLink:'/blog'},
-    {name:"Hot Offers",isExtendable:false,extendables:[],catLink:'/offers'}
+    {
+        name: "Cosmetics",
+        isExtendable: true,
+        extendables: [
+          {
+            title: "Body Soap",
+            link: "",
+          },
+          {
+            title: "Shampoo",
+            link: "",
+          },
+          {
+            title: "Perfume",
+            link: "",
+          },
+          {
+            title: "Body Wash",
+            link: "",
+          }
+        ],
+        catLink: "/categories/cosmetics"
+      },
+      {
+        name: "Footwear",
+        isExtendable: true,
+        extendables: [
+          {
+            title: "Long Shoes",
+            link: "",
+          },
+          {
+            title: "First Copy",
+            link: "",
+          },
+          {
+            title: "Cowboy Shoes",
+            link: "",
+          },
+          {
+            title: "Safety Shoes",
+            link: "",
+          }
+        ],
+        catLink: "/categories/footwear"
+      },
+      {
+        name: "Fashion",
+        isExtendable: true,
+        extendables: [
+          {
+            title: "Innerwear",
+            link: "",
+          },
+          {
+            title: "Shirts",
+            link: "",
+          },
+          {
+            title: "Dress & Frock",
+            link: "",
+          },
+          {
+            title: "Jacket",
+            link: "",
+          }
+        ],
+        catLink: "/categories/fashion"
+      },
+    {name:"Blog",isExtendable:false,extendables:[],catLink:'/blog'}
 ];
 const leftStatus = [
     {

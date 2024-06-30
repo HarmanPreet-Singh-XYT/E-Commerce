@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import Stars from '../Stars';
 import formatDate from '@/app/api/dateConvert';
 import { useAppSelector } from '@/app/hooks';
+import Link from 'next/link';
 interface Review {
     reviewid: number;
     userid: number;
     rating: number;
+    title:string;
     comment: string;
     username: string;
     createdat:string;
-  }
+}
 interface star{
     one:number;
     two:number;
@@ -17,12 +19,13 @@ interface star{
     four:number;
     five:number;
 }
-const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) => {
+const ReviewSection = ({data,reviewCount,setloading,setdialogType,setselectedReview,setselectedRating,allReview,productID}:{productID:number,data:Review[],reviewCount:number,setdialogType:React.Dispatch<React.SetStateAction<string | null>>,setloading:React.Dispatch<React.SetStateAction<boolean>>,setselectedReview:React.Dispatch<React.SetStateAction<null|Review>>,setselectedRating:React.Dispatch<React.SetStateAction<number>>,allReview:boolean}) => {
     const [one, setone] = useState(0);
     const [two, settwo] = useState(0);
     const [three, setthree] = useState(0);
     const [four, setfour] = useState(0);
     const [five, setfive] = useState(0);
+    
     const defaultAccount = useAppSelector((state) => state.userState.defaultAccount)
     let stars:any = {one:0,two:0,three:0,four:0,five:0};
     function addStars (num:number){
@@ -216,11 +219,12 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
                             <div className="col-span-12 md:col-span-4 max-lg:mt-8 md:pl-8">
                                 <div className="flex items-center flex-col justify-center w-full h-full ">
                                     <button
+                                    onClick={()=>setdialogType('create')}
                                         className="rounded-full px-4 py-4 bg-indigo-600 font-semibold text-md text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">Write
                                         A Review</button>
-                                    <button
+                                    {!allReview && <Link href={`/all-reviews/${productID}`}><button
                                         className="rounded-full px-4 py-4 bg-white font-semibold text-md text-indigo-600 whitespace-nowrap w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">See
-                                        All Reviews</button>
+                                        All Reviews</button></Link>}
                                 </div>
                             </div>
                         </div>
@@ -235,16 +239,19 @@ const ReviewSection = ({data,reviewCount}:{data:Review[],reviewCount:number}) =>
                             <div className="flex sm:items-center flex-col sm:flex-row justify-between  mb-4">
                                 <div className="flex gap-3 flex-col">
                                     <Stars stars={each.rating} size={40}/>
-                                    <h6 className="font-semibold text-lg leading-8 text-black">@{each.username}</h6>
                                     
+                                    <p className='text-xl font-medium'>{each.title}</p>
                                 </div>
                                 <div className="flex items-end gap-3 flex-col">
                                     <p className="font-medium text-base leading-7 text-gray-400">{formatDate(each.createdat)}</p>
+                                    <h6 className="font-semibold text-lg leading-8 text-black">@{each.username}</h6>
                                     {defaultAccount.userID===each.userid && <div className='flex gap-5'><button
+                                        onClick={()=>{setselectedRating(each.rating);setselectedReview(each);setdialogType('edit')}}
                                         className="rounded-full px-4 py-2 bg-indigo-600 font-semibold text-md text-white whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
                                         Edit Review
                                     </button>
                                     <button
+                                        onClick={()=>{setselectedReview(each);setdialogType('delete')}}
                                         className="rounded-full px-4 py-2 bg-white border-[1px] font-semibold text-md text-black whitespace-nowrap mb-6 w-full text-center shadow-sm shadow-transparent transition-all duration-500 hover:text-white hover:bg-red-400 hover:shadow-red-400">
                                         Delete Review
                                     </button>

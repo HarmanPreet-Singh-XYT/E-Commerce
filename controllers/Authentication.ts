@@ -82,15 +82,15 @@ const useAuth = () => {
               toggleLoggedIn();
               
             } catch (tokenError) {
-              console.log('Login Failed')
+              // console.log('Login Failed')
             }
             break;
           case 500:
-            console.log('Server Error');
+            // console.log('Server Error');
             break;
         }
       } catch (err) {
-        console.log("Login Failed");
+        // console.log("Login Failed");
       }
   };
   return { checkLogin, registerUser, checkSession };

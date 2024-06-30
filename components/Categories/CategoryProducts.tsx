@@ -3,6 +3,7 @@ import Quickview from '../ProductUi/Quickview';
 import Stars from '../ProductUi/Stars';
 import NoProduct from './NoProduct';
 import Loading from '../Loading';
+import Link from 'next/link';
 interface Color {
   colorid:number;
   name: string;
@@ -94,8 +95,8 @@ const ProductCard = ({ product }:{ product:Product }) => {
         )}
       </div>
       <div className='pl-4 pr-4 flex flex-col gap-2'>
-        <a href=''><p className='text-[14px] text-salmon'>{product.category}</p></a>
-        <a href=''><p className='tracking-[1px] text-silver hover:text-davysilver'>{product.title}</p></a>
+        <Link href={`/product/${product.productid}`}><p className='text-[14px] text-salmon'>{product.category}</p></Link>
+        <Link href={`/product/${product.productid}`}><p className='tracking-[1px] text-silver hover:text-davysilver'>{product.title}</p></Link>
         <div className='flex items-center gap-2'>
           <Stars stars={product.stars}/>
           {product.reviewCount > 0 && <p className=' text-silver'>{product.reviewCount}</p>}

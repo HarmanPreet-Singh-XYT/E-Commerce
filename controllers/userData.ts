@@ -19,15 +19,15 @@ const userData = () => {
                   dispatch(setGiftCard(res.data.giftCards));
                 }
               } catch (tokenError) {
-                console.log('Parameter setting failed')
+                // console.log('Parameter setting failed')
               }
               break;
             case 500:
-              console.log('Server Error');
+              // console.log('Server Error');
               break;
           }
         } catch (err) {
-          console.log("Internal Server Error");
+          // console.log("Internal Server Error");
         }
     };
     return {grabUserData};
