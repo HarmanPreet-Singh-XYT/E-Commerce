@@ -13,6 +13,10 @@ const Navbar = () => {
     const { toggleCart, toggleFav } = useMenu();
     const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
     const [selectIndex, setselectIndex] = useState<number | null>(null);
+    function searchRedirect(e:any){
+        e.preventDefault();
+        router.push(`/search/${(e.target.searchEntry.value.split(' ').join('-'))}`)
+    }
     return (
     <nav className='w-full h-auto flex flex-col items-center'>
         <div className='h-[50px] w-[100%] justify-evenly items-center border-b-[1px] hidden sm:flex'>
@@ -37,10 +41,10 @@ const Navbar = () => {
                     <div>
                         <Link className='mr-2.5 text-[26px] font-bold' href={"/"}><span className='text-[36px]'>H</span>-Comm</Link>
                     </div>
-                    <div className='border-[1.5px] rounded-[10px] h-[42px] w-[90%] sm:w-[600px] mb-5 sm:mb-0 flex justify-between items-center'>
-                        <input placeholder='Enter your product name...' type='text' className='outline-0 ml-5 text-[20px] w-[90%] placeholder:text-base placeholder:text-silver'/>
-                        <button className='text-[16px] mr-2'><i className="fa-solid fa-magnifying-glass"></i></button>
-                    </div>
+                    <form onSubmit={searchRedirect} className='border-[1.5px] rounded-[10px] h-[42px] w-[90%] sm:w-[600px] mb-5 sm:mb-0 flex justify-between items-center'>
+                        <input name='searchEntry' placeholder='Enter your product name...' type='text' className='outline-0 ml-5 text-[20px] w-[90%] placeholder:text-base placeholder:text-silver'/>
+                        <button type='submit' className='text-[16px] mr-2'><i className="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
                     <div className='gap-5 text-davysilver my-8 hidden sm:flex sm:items-center'>
                         {/* <button><i className="fa-regular fa-user fa-xl"></i></button> */}
                         <Account/>

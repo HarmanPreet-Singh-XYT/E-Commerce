@@ -4,44 +4,44 @@ const topCat = [{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/dress.svg',
     name:"DRESS & FROCK",
     quantity:53,
-    showLink:""
+    showLink:"/sub-category/fashion/dress-&-frock"
 },{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/coat.svg',
-    name:"WINTER WEAR",
+    name:"INNERWEAR",
     quantity:58,
-    showLink:""
+    showLink:"/sub-category/fashion/innerwear"
 },{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/glasses.svg ',
-    name:"GLASSES & LENS",
+    name:"SUNGLASSES",
     quantity:32,
-    showLink:""
+    showLink:"/sub-category/men/sunglasses"
 },{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/shorts.svg',
     name:"SHORTS & JEANS",
     quantity:42,
-    showLink:""
+    showLink:"/sub-category/fashion/shorts-&-jeans"
 },{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/tee.svg',
     name:"T-SHIRTS",
     quantity:12,
-    showLink:""
+    showLink:"/sub-category/fashion/TShirt"
 },
 {
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/jacket.svg',
     name:"JACKET",
     quantity:63,
-    showLink:""
+    showLink:"/sub-category/men/jacket"
 },
 {
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/watch.svg',
-    name:"WATCH",
+    name:"SMART WATCH",
     quantity:42,
-    showLink:""
+    showLink:"/sub-category/electronics/smart-watch"
 },{
     imgLink:'https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/hat.svg',
-    name:"HAT & CAPS",
+    name:"HAIR GEL",
     quantity:29,
-    showLink:""
+    showLink:"/sub-category/cosmetics/hair-gel"
 }];
 const navBtns = [
     {name:"Home",isExtendable:false,extendables:[],catLink:'/'},
@@ -49,73 +49,73 @@ const navBtns = [
     {name:"Men's",isExtendable:true,extendables:[
         {
           title: "Shirt",
-          link: "",
+          link: "/sub-category/men/shirt",
         },
         {
           title: "Shorts & Jeans",
-          link: "",
+          link: "/sub-category/fashion/shorts-&-jeans",
         },
         {
           title: "Safety Shoes",
-          link: "",
+          link: "/sub-category/footwear/safety-shoes",
         },
         {
           title: "Wallet",
-          link: "",
+          link: "/sub-category/men/wallet",
         },
       ],catLink:'/categories/men'},
     {name:"Women's",isExtendable:true,extendables:[
         {
             title: "Dress & Frock", // Combined Dress and Frock
-            link: "",
+            link: "/sub-category/women/dress-&-frock",
           },
           {
             title: "Earrings",
-            link: "",
+            link: "/sub-category/women/earrings",
           },
           {
             title: "Necklace",
-            link:"",
+            link:"/sub-category/women/necklace",
           },
           {
             title: "Makeup Kit",
-            link: "",
+            link: "/sub-category/women/makeup-kit",
           },
     ],catLink:'/categories/women'},
     {name:"Jewelry",isExtendable:true,extendables:[
         {
             title: "Necklace",
-            link: "",
+            link: "/sub-category/jewellery/necklace",
           },
           {
             title: "Earrings",
-            link: "",
+            link: "/sub-category/jewellery/earrings",
           },
           {
             title: "Couple Rings",
-            link: "",
+            link: "/sub-category/jewellery/couple-rings",
           },
           {
             title: "Bracelets",
-            link: "",
+            link: "/sub-category/jewellery/bracelets",
           },
     ],catLink:'/categories/jewellery'},
     {name:"Perfume",isExtendable:true,extendables:[
           {
             title: "Clothes Perfume",
-            link: "",
+            link: "/sub-category/perfume/clothes-perfume",
           },
           {
             title: "Deodorant",
-            link: "",
+            link: "/sub-category/perfume/deodorant",
           },
           {
             title: "Flower Fragrance",
-            link: "",
+            link: "/sub-category/perfume/flower-fragrance",
           },
           {
             title: "Air Freshener",
-            link: "",
+            link: "/sub-category/perfume/air-freshener",
           },
     ],catLink:'/categories/perfume'},
     {
@@ -124,19 +124,19 @@ const navBtns = [
         extendables: [
           {
             title: "Body Soap",
-            link: "",
+            link: "/sub-category/cosmetics/body-soap",
           },
           {
             title: "Shampoo",
-            link: "",
+            link: "/sub-category/cosmetics/shampoo",
           },
           {
             title: "Perfume",
-            link: "",
+            link: "/sub-category/cosmetics/perfume",
           },
           {
             title: "Body Wash",
-            link: "",
+            link: "/sub-category/cosmetics/bodywash",
           }
         ],
         catLink: "/categories/cosmetics"
@@ -147,19 +147,19 @@ const navBtns = [
         extendables: [
           {
             title: "Long Shoes",
-            link: "",
+            link: "/sub-category/footwear/long-shoes",
           },
           {
             title: "First Copy",
-            link: "",
+            link: "/sub-category/footwear/firstcopy",
           },
           {
             title: "Cowboy Shoes",
-            link: "",
+            link: "/sub-category/footwear/cowboy-shoes",
           },
           {
             title: "Safety Shoes",
-            link: "",
+            link: "/sub-category/footwear/safety-shoes",
           }
         ],
         catLink: "/categories/footwear"
@@ -170,19 +170,19 @@ const navBtns = [
         extendables: [
           {
             title: "Innerwear",
-            link: "",
+            link: "/sub-category/fashion/innerwear",
           },
           {
             title: "Shirts",
-            link: "",
+            link: "/sub-category/fashion/shirts",
           },
           {
             title: "Dress & Frock",
-            link: "",
+            link: "/sub-category/fashion/dress-&-frock",
           },
           {
             title: "Jacket",
-            link: "",
+            link: "/sub-category/fashion/jacket",
           }
         ],
         catLink: "/categories/fashion"
@@ -196,22 +196,22 @@ const leftStatus = [
         links:[
             {
                 title:"Shirt",
-                link:"",
+                link:"/sub-category/clothes/shirt",
                 quantity:50,
             },
             {
                 title:"Shorts & Jeans",
-                link:"",
+                link:"/sub-category/clothes/shorts-&-jeans",
                 quantity:50,
             },
             {
                 title:"Jacket",
-                link:"",
+                link:"/sub-category/clothes/jacket",
                 quantity:50,
             },
             {
                 title:"Dress & Frock",
-                link:"",
+                link:"/sub-category/clothes/dress-&-frock",
                 quantity:50,
             }
         ]
@@ -221,23 +221,23 @@ const leftStatus = [
         title:"Footwear",
         links:[
             {
-                title:"Sports",
-                link:"",
+                title:"Sport",
+                link:"/sub-category/footwear/sport",
                 quantity:50,
             },
             {
                 title:"Formal",
-                link:"",
+                link:"/sub-category/footwear/formal",
                 quantity:50,
             },
             {
                 title:"Casual",
-                link:"",
+                link:"/sub-category/footwear/casual",
                 quantity:50,
             },
             {
                 title:"Safety Shoes",
-                link:"",
+                link:"/sub-category/footwear/safety-shoes",
                 quantity:50,
             }
         ]
@@ -248,17 +248,17 @@ const leftStatus = [
         links:[
             {
                 title:"Earrings",
-                link:"",
+                link:"/sub-category/jewellery/earrings",
                 quantity:50,
             },
             {
                 title:"Couple Rings",
-                link:"",
+                link:"/sub-category/jewellery/couple-rings",
                 quantity:50,
             },
             {
                 title:"Necklace",
-                link:"",
+                link:"/sub-category/jewellery/necklace",
                 quantity:50,
             }
         ]
@@ -269,17 +269,17 @@ const leftStatus = [
         links:[
             {
                 title:"Clothes Perfume",
-                link:"",
+                link:"/sub-category/perfume/clothes-perfume",
                 quantity:50,
             },
             {
                 title:"Deodorant",
-                link:"",
+                link:"/sub-category/perfume/deodorant",
                 quantity:50,
             },
             {
-                title:"Jacket",
-                link:"",
+                title:"Air Freshener",
+                link:"/sub-category/perfume/air-freshener",
                 quantity:50,
             },
         ]
@@ -290,38 +290,38 @@ const leftStatus = [
         links:[
             {
                 title:"Shampoo",
-                link:"",
+                link:"/sub-category/cosmetics/shampoo",
                 quantity:50,
             },
             {
                 title:"Sunscreen",
-                link:"",
+                link:"/sub-category/cosmetics/sunscreen",
                 quantity:50,
             },
             {
                 title:"Body Wash",
-                link:"",
+                link:"/sub-category/cosmetics/bodywash",
                 quantity:50,
             },
             {
                 title:"Makeup Kit",
-                link:"",
+                link:"/sub-category/cosmetics/makeup-kit",
                 quantity:50,
             }
         ]
     },
     {
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/icons/glasses.svg",
-        title:"Glasses",
+        title:"Men",
         links:[
             {
                 title:"Sunglasses",
-                link:"",
+                link:"/sub-category/men/sunglasses",
                 quantity:50,
             },
             {
-                title:"Lenses",
-                link:"",
+                title:"Casual",
+                link:"/sub-category/men/casual",
                 quantity:50,
             }
         ]
@@ -332,22 +332,22 @@ const leftStatus = [
         links:[
             {
                 title:"Shopping Bag",
-                link:"",
+                link:"/sub-category/women/bags",
                 quantity:50,
             },
             {
                 title:"Gym Backpack",
-                link:"",
+                link:"/sub-category/women/bags",
                 quantity:50,
             },
             {
                 title:"Purse",
-                link:"",
+                link:"/sub-category/women/bags",
                 quantity:50,
             },
             {
                 title:"Wallet",
-                link:"",
+                link:"/sub-category/men/wallet",
                 quantity:50,
             }
         ]
@@ -632,65 +632,65 @@ const footerCategories = [
     {
         name: 'FASHION',
         subcategories: [
-            { name: 'T-Shirt', subcatLink: '' },
-            { name: 'Shirts', subcatLink: '' },
-            { name: 'Shorts & Jeans', subcatLink: '' },
-            { name: 'Jacket', subcatLink: '' },
-            { name: 'Dress & Frock', subcatLink: '' },
-            { name: 'Innerwear', subcatLink: '' },
-            { name: 'Hosiery', subcatLink: '' }
+            { name: 'T-Shirt', subcatLink: '/sub-category/fashion/TShirt' },
+            { name: 'Shirts', subcatLink: '/sub-category/fashion/shirts' },
+            { name: 'Shorts & Jeans', subcatLink: '/sub-category/fashion/shorts-&-jeans' },
+            { name: 'Jacket', subcatLink: '/sub-category/fashion/jacket' },
+            { name: 'Dress & Frock', subcatLink: '/sub-category/fashion/dress-&-frock' },
+            { name: 'Innerwear', subcatLink: '/sub-category/fashion/innerwear' },
+            { name: 'Hosiery', subcatLink: '/sub-category/fashion/hosiery' }
         ]
     },
     {
         name: 'FOOTWEAR',
         subcategories: [
-            { name: 'Sport', subcatLink: '' },
-            { name: 'Formal', subcatLink: '' },
-            { name: 'Boots', subcatLink: '' },
-            { name: 'Casual', subcatLink: '' },
-            { name: 'Cowboy Shoes', subcatLink: '' },
-            { name: 'Safety Shoes', subcatLink: '' },
-            { name: 'Party Wear Shoes', subcatLink: '' },
-            { name: 'Branded', subcatLink: '' },
-            { name: 'Firstcopy', subcatLink: '' },
-            { name: 'Long Shoes', subcatLink: '' }
+            { name: 'Sport', subcatLink: '/sub-category/footwear/sport' },
+            { name: 'Formal', subcatLink: '/sub-category/footwear/formal' },
+            { name: 'Boots', subcatLink: '/sub-category/footwear/boots' },
+            { name: 'Casual', subcatLink: '/sub-category/footwear/casual' },
+            { name: 'Cowboy Shoes', subcatLink: '/sub-category/footwear/cowboy-shoes' },
+            { name: 'Safety Shoes', subcatLink: '/sub-category/footwear/safety-shoes' },
+            { name: 'Party Wear Shoes', subcatLink: '/sub-category/footwear/party-wear-shoes' },
+            { name: 'Branded', subcatLink: '/sub-category/footwear/branded' },
+            { name: 'Firstcopy', subcatLink: '/sub-category/footwear/firstcopy' },
+            { name: 'Long Shoes', subcatLink: '/sub-category/footwear/long-shoes' }
         ]
     },
     {
         name: 'JEWELLERY',
         subcategories: [
-            { name: 'Necklace', subcatLink: '' },
-            { name: 'Earrings', subcatLink: '' },
-            { name: 'Couple Rings', subcatLink: '' },
-            { name: 'Pendants', subcatLink: '' },
-            { name: 'Crystal', subcatLink: '' },
-            { name: 'Bangles', subcatLink: '' },
-            { name: 'Bracelets', subcatLink: '' },
-            { name: 'Nosepin', subcatLink: '' },
-            { name: 'Chain', subcatLink: '' },
-            { name: 'Earrings', subcatLink: '' },
-            { name: 'Couple Rings', subcatLink: '' }
+            { name: 'Necklace', subcatLink: '/sub-category/jewellery/necklace' },
+            { name: 'Earrings', subcatLink: '/sub-category/jewellery/earrings' },
+            { name: 'Couple Rings', subcatLink: '/sub-category/jewellery/couple-rings' },
+            { name: 'Pendants', subcatLink: '/sub-category/jewellery/pendants' },
+            { name: 'Crystal', subcatLink: '/sub-category/jewellery/crystal' },
+            { name: 'Bangles', subcatLink: '/sub-category/jewellery/bangles' },
+            { name: 'Bracelets', subcatLink: '/sub-category/jewellery/bracelets' },
+            { name: 'Nosepin', subcatLink: '/sub-category/jewellery/nosepin' },
+            { name: 'Chain', subcatLink: '/sub-category/jewellery/chain' },
+            { name: 'Earrings', subcatLink: '/sub-category/jewellery/earrings' },
+            { name: 'Couple Rings', subcatLink: '/sub-category/jewellery/couple-rings' }
         ]
     },
     {
         name: 'COSMETICS',
         subcategories: [
-            { name: 'Shampoo', subcatLink: '' },
-            { name: 'Bodywash', subcatLink: '' },
-            { name: 'Facewash', subcatLink: '' },
-            { name: 'Makeup Kit', subcatLink: '' },
-            { name: 'Liner', subcatLink: '' },
-            { name: 'Lipstick', subcatLink: '' },
-            { name: 'Perfume', subcatLink: '' },
-            { name: 'Body Soap', subcatLink: '' },
-            { name: 'Scrub', subcatLink: '' },
-            { name: 'Hair Gel', subcatLink: '' },
-            { name: 'Hair Colors', subcatLink: '' },
-            { name: 'Hair Dye', subcatLink: '' },
-            { name: 'Sunscreen', subcatLink: '' },
-            { name: 'Skin Lotion', subcatLink: '' },
-            { name: 'Liner', subcatLink: '' },
-            { name: 'Lipstick', subcatLink: '' }
+            { name: 'Shampoo', subcatLink: '/sub-category/cosmetics/shampoo' },
+            { name: 'Bodywash', subcatLink: '/sub-category/cosmetics/bodywash' },
+            { name: 'Facewash', subcatLink: '/sub-category/cosmetics/facewash' },
+            { name: 'Makeup Kit', subcatLink: '/sub-category/cosmetics/makeup-kit' },
+            { name: 'Liner', subcatLink: '/sub-category/cosmetics/liner' },
+            { name: 'Lipstick', subcatLink: '/sub-category/cosmetics/lipstick' },
+            { name: 'Perfume', subcatLink: '/sub-category/cosmetics/perfume' },
+            { name: 'Body Soap', subcatLink: '/sub-category/cosmetics/body-soap' },
+            { name: 'Scrub', subcatLink: '/sub-category/cosmetics/scrub' },
+            { name: 'Hair Gel', subcatLink: '/sub-category/cosmetics/hair-gel' },
+            { name: 'Hair Colors', subcatLink: '/sub-category/cosmetics/hair-colors' },
+            { name: 'Hair Dye', subcatLink: '/sub-category/cosmetics/hair-dye' },
+            { name: 'Sunscreen', subcatLink: '/sub-category/cosmetics/sunscreen' },
+            { name: 'Skin Lotion', subcatLink: '/sub-category/cosmetics/skin-lotion' },
+            { name: 'Liner', subcatLink: '/sub-category/cosmetics/liner' },
+            { name: 'Lipstick', subcatLink: '/sub-category/cosmetics/lipstick' }
         ]
     }
 ];
@@ -1270,23 +1270,23 @@ const categoryDropDown = [
         subCategories:[
             {
                 title:"Desktop",
-                link:"",
+                link:"/sub-category/electronics/desktop",
             },
             {
                 title:"Laptop",
-                link:"",
+                link:"/sub-category/electronics/laptop",
             },
             {
                 title:"Camera",
-                link:"",
+                link:"/sub-category/electronics/camera",
             },
             {
                 title:"Tablet",
-                link:"",
+                link:"/sub-category/electronics/tablet",
             },
             {
                 title:"Headphone",
-                link:"",
+                link:"/sub-category/electronics/headphone",
             },
         ]
     },
@@ -1299,23 +1299,23 @@ const categoryDropDown = [
         subCategories:[
             {
                 title:"Formal",
-                link:"",
+                link:"/sub-category/men/formal",
             },
             {
                 title:"Casual",
-                link:"",
+                link:"/sub-category/men/casual",
             },
             {
-                title:"Sports",
-                link:"", 
+                title:"Sport",
+                link:"/sub-category/men/sports", 
             },
             {
                 title:"Jacket",
-                link:"",
+                link:"/sub-category/men/jacket",
             },
             {
                 title:"Sunglasses",
-                link:"",
+                link:"/sub-category/men/sunglasses",
             },
         ]
     },
@@ -1328,23 +1328,23 @@ const categoryDropDown = [
         subCategories:[
             {
                 title:"Formal",
-                link:"",
+                link:"/sub-category/women/formal",
             },
             {
                 title:"Casual",
-                link:"", 
+                link:"/sub-category/women/casual", 
             },
             {
                 title:"Perfume",
-                link:"",
+                link:"/sub-category/women/perfume",
             },
             {
                 title:"Cosmetics",
-                link:"",
+                link:"/sub-category/women/cosmetics",
             },
             {
                 title:"Bags",
-                link:"",
+                link:"/sub-category/women/bags",
             },
         ]
     },
@@ -1357,23 +1357,23 @@ const categoryDropDown = [
         subCategories:[
             {
                 title:"Smart Watch",
-                link:"",
+                link:"/sub-category/electronics/smart-watch",
             },
             {
                 title:"Smart TV",
-                link:"",
+                link:"/sub-category/electronics/smart-TV",
             },
             {
                 title:"Keyboard",
-                link:"",
+                link:"/sub-category/electronics/keyboard",
             },
             {
                 title:"Mouse",
-                link:"",
+                link:"/sub-category/electronics/mouse",
             },
             {
                 title:"Microphone",
-                link:"",
+                link:"/sub-category/electronics/microphone",
             },
         ]
     },
@@ -1563,11 +1563,11 @@ const availableCategories = [
         title: 'fashion',
         banners:["https://i.pinimg.com/736x/71/c0/90/71c090c1ee401a79f7b84c086fa04063.jpg","https://www.apetogentleman.com/wp-content/uploads/2022/05/FALL-WINTER-TRENDS.jpg","https://assets.vogue.com/photos/614a24383c6a255bbac856d8/master/w_2560%2Cc_limit/00_story.jpg"],
         subcategories: [
-            { title: 'T-Shirt', link: '/t-shirts' },
+            { title: 'T-Shirt', link: '/TShirt' },
             { title: 'Shirts', link: '/shirts' },
-            { title: 'Shorts & Jeans', link: '/shorts-jeans' },
-            { title: 'Jacket', link: '/jackets' },
-            { title: 'Dress & Frock', link: '/dresses-frocks' },
+            { title: 'Shorts & Jeans', link: '/shorts-&-jeans' },
+            { title: 'Jacket', link: '/jacket' },
+            { title: 'Dress & Frock', link: '/dress-&-frock' },
             { title: 'Innerwear', link: '/innerwear' },
             { title: 'Hosiery', link: '/hosiery' },
         ]
@@ -1576,15 +1576,15 @@ const availableCategories = [
         title: 'footwear',
         banners:["https://www.india.com/wp-content/uploads/2017/08/footwear.jpg","https://images.moneycontrol.com/static-mcnews/2020/04/footwear-28042020.jpg?impolicy=website&width=1600&height=900","https://www.airwavesf.com/wp-content/uploads/2022/06/79589-645-collecting-sneakers-and-photography-a-collection-of-limited-editions-and-exclusive-models-combination_t20_Op1ydp.jpg"],
         subcategories: [
-            { title: 'Sport', link: '/sport-footwear' },
-            { title: 'Formal', link: '/formal-footwear' },
+            { title: 'Sport', link: '/sport' },
+            { title: 'Formal', link: '/formal' },
             { title: 'Boots', link: '/boots' },
-            { title: 'Casual', link: '/casual-footwear' },
+            { title: 'Casual', link: '/casual' },
             { title: 'Cowboy Shoes', link: '/cowboy-shoes' },
             { title: 'Safety Shoes', link: '/safety-shoes' },
             { title: 'Party Wear Shoes', link: '/party-wear-shoes' },
             { title: 'Branded', link: '/branded-footwear' },
-            { title: 'Firstcopy', link: '/firstcopy-footwear' },
+            { title: 'Firstcopy', link: '/firstcopy' },
             { title: 'Long Shoes', link: '/long-shoes' },
         ]
     },
@@ -1601,8 +1601,6 @@ const availableCategories = [
             { title: 'Bracelets', link: '/bracelets' },
             { title: 'Nosepin', link: '/nosepin' },
             { title: 'Chain', link: '/chain' },
-            { title: 'Earrings', link: '/earrings' },
-            { title: 'Couple Rings', link: '/couple-rings' },
         ]
     },
     {
@@ -1623,58 +1621,20 @@ const availableCategories = [
             { title: 'Hair Dye', link: '/hair-dye' },
             { title: 'Sunscreen', link: '/sunscreen' },
             { title: 'Skin Lotion', link: '/skin-lotion' },
-            { title: 'Liner', link: '/liner' },
-            { title: 'Lipstick', link: '/lipstick' },
         ]
     },
     {
         title: 'electronics',
         banners:["https://i.pinimg.com/originals/d2/b9/40/d2b940959caadeaf591041c70ab7a0ab.png","https://d1csarkz8obe9u.cloudfront.net/posterpreviews/gaming-computer-banner-sale-design-template-4eee9f783ef62e0f7122e9ae7828bec1_screen.jpg?ts=1659604125","https://d1csarkz8obe9u.cloudfront.net/posterpreviews/computer-accessories-template-design-129534fcc8ab7b353cd7627bac2ec34e_screen.jpg?ts=1659516861"],
         subcategories: [
-            { title: 'Mobile Phones', link: '/mobile-phones' },
-            { title: 'Laptops', link: '/laptops' },
-            { title: 'Tablets', link: '/tablets' },
-            { title: 'Headphones', link: '/headphones' },
+            { title: 'Laptops', link: '/laptop' },
+            { title: 'Tablets', link: '/tablet' },
+            { title: 'Headphones', link: '/headphone' },
             { title: 'Cameras', link: '/cameras' },
-            { title: 'Smartwatches', link: '/smartwatches' },
-            { title: 'Televisions', link: '/televisions' },
-            { title: 'Speakers', link: '/speakers' },
-            { title: 'Gaming Consoles', link: '/gaming-consoles' },
-            { title: 'Wearable Tech', link: '/wearable-tech' },
+            { title: 'Smartwatches', link: '/smart-watch' },
+            { title: 'Smart TV', link: '/smart-TV' },
         ]
     },
-    {
-        title: 'health',
-        banners:["https://www.proquestnutrition.com/blog/wp-content/uploads/2023/12/Best-Bodybuilding-Supplements.jpg","https://www.shutterstock.com/image-vector/minimalistic-ad-banner-vitamin-d3-260nw-2260391737.jpg","https://png.pngtree.com/thumb_back/fw800/background/20230902/pngtree-healthy-drink-recipe-for-fruit-juices-image_13157966.jpg"],
-        subcategories: [
-            { title: 'Vitamins & Supplements', link: '/vitamins-supplements' },
-            { title: 'Personal Care', link: '/personal-care' },
-            { title: 'Fitness Equipment', link: '/fitness-equipment' },
-            { title: 'Health Monitors', link: '/health-monitors' },
-            { title: 'First Aid', link: '/first-aid' },
-            { title: 'Health Drinks', link: '/health-drinks' },
-            { title: 'Protein & Nutrition', link: '/protein-nutrition' },
-            { title: 'Yoga & Meditation', link: '/yoga-meditation' },
-            { title: 'Medical Devices', link: '/medical-devices' },
-        ]
-    },
-    {
-        title: 'watches',
-        banners:["https://d1csarkz8obe9u.cloudfront.net/posterpreviews/smart-watch-banner-design-template-1c7faa8b6c6f040f15486ac8464e6f9f_screen.jpg?ts=1665736035","https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fe213f37352801.573d3df297da5.jpg","https://cytwatch.my/resources/link/20211022/1634891530/banner001_2.jpg"],
-        
-        subcategories: [
-            { title: 'Analog Watches', link: '/analog-watches' },
-            { title: 'Digital Watches', link: '/digital-watches' },
-            { title: 'Smartwatches', link: '/smartwatches' },
-            { title: 'Fitness Trackers', link: '/fitness-trackers' },
-            { title: 'Luxury Watches', link: '/luxury-watches' },
-            { title: 'Chronograph Watches', link: '/chronograph-watches' },
-            { title: 'Diving Watches', link: '/diving-watches' },
-            { title: 'Quartz Watches', link: '/quartz-watches' },
-            { title: 'Mechanical Watches', link: '/mechanical-watches' },
-            { title: 'Dress Watches', link: '/dress-watches' },
-        ]
-    }
 ];
 const loginFeatures = [
     {

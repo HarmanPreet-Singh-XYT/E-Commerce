@@ -81,7 +81,7 @@ const FilterSidebar = ({dataChecked,filterSubmit,toggleClear,mobileMode}:{dataCh
 
                     <div className="flex items-center">
                         <input id="five-stars" type="radio"  name="rating" value={5} defaultChecked
-                            className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            className="w-4 h-4 bg-gray-100 accent-primary-500 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         <label className="flex items-center ml-2">
                         <ReactStars
                         count={5}
@@ -95,7 +95,7 @@ const FilterSidebar = ({dataChecked,filterSubmit,toggleClear,mobileMode}:{dataCh
 
                     <div className="flex items-center">
                         <input id="four-stars" type="radio"  name="rating" value={4}
-                            className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            className="w-4 h-4 bg-gray-100 accent-primary-500 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         <label className="flex items-center ml-2">
                             <ReactStars
                             count={5}
@@ -109,7 +109,7 @@ const FilterSidebar = ({dataChecked,filterSubmit,toggleClear,mobileMode}:{dataCh
 
                     <div className="flex items-center">
                         <input id="three-stars" type="radio"  name="rating" value={3}
-                            className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            className="w-4 h-4 bg-gray-100 accent-primary-500 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         <label className="flex items-center ml-2">
                             <ReactStars
                             count={5}
@@ -123,7 +123,7 @@ const FilterSidebar = ({dataChecked,filterSubmit,toggleClear,mobileMode}:{dataCh
 
                     <div className="flex items-center">
                         <input id="two-stars" type="radio"  name="rating"  value={2}
-                            className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            className="w-4 h-4 bg-gray-100 accent-primary-500 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         <label className="flex items-center ml-2">
                             <ReactStars
                             count={5}
@@ -137,7 +137,7 @@ const FilterSidebar = ({dataChecked,filterSubmit,toggleClear,mobileMode}:{dataCh
 
                     <div className="flex items-center">
                         <input id="one-star" type="radio"  name="rating"  value={1}
-                            className="w-4 h-4 bg-gray-100 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            className="w-4 h-4 bg-gray-100 accent-primary-500 border-gray-300 text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         <label className="flex items-center ml-2">
                             <ReactStars
                             count={5}
