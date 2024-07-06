@@ -14,6 +14,7 @@ interface Address {
     country:string;
     postalCode:string;
     userName:string;
+    is_default:boolean;
 }
 interface Account{
     userID:number;
@@ -95,7 +96,7 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                 addressID != undefined && await userAddressUpdateHandler(data,userID,addressID).then((res)=>{
                     if(res.status===200){
                         dispatch(setAddress(addresses.map((each) => {
-                            return each.addressID === addressID ? { ...data, addressID } : each;
+                            return each.addressID === addressID ? { ...data, addressID,is_default:false } : each;
                         })));
                     }
                 })
@@ -104,7 +105,7 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
             case 'newaddress':
                 await userAddressAddHandler(data,userID).then((res)=>{
                     if(res.status===200){
-                        const newAddress = { ...data, addressID: res.addressID };
+                        const newAddress = { ...data, addressID: res.addressID, is_default:false };
                         dispatch(addAddress(newAddress));
                     }
                 })

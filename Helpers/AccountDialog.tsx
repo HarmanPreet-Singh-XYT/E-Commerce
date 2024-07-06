@@ -11,7 +11,7 @@ interface AppState {
   loggedIn: boolean;
   AccNotExistent: boolean;
   backgroundBlur: boolean;
-  serverError:boolean;
+  serverError: boolean;
 }
 
 // Define the type for the context value
@@ -27,6 +27,7 @@ interface AppContextProps {
   toggleAccNotExistent: () => void;
   toggleBackgroundBlur: () => void;
   toggleServerError: () => void;
+  setLoggedIn: (value: boolean) => void;
 }
 
 // Create a Context with a default value
@@ -48,7 +49,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     loggedIn: false,
     AccNotExistent: false,
     backgroundBlur: false,
-    serverError:false
+    serverError: false,
   });
 
   const toggleState = (key: keyof AppState) => {
@@ -65,6 +66,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const toggleAccNotExistent = () => toggleState('AccNotExistent');
   const toggleBackgroundBlur = () => toggleState('backgroundBlur');
   const toggleServerError = () => toggleState('serverError');
+  const setLoggedIn = (value: boolean) => setAppState(prevState => ({ ...prevState, loggedIn: value }));
 
   return (
     <AppContext.Provider value={{
@@ -76,6 +78,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       toggleIsExists,
       toggleIsIncorrect,
       toggleLoggedIn,
+      setLoggedIn,
       toggleAccNotExistent,
       toggleBackgroundBlur,
       toggleServerError

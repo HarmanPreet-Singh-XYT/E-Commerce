@@ -4,15 +4,40 @@ import { loginFeatures } from '@/app/data';
 import Link from 'next/link';
 import { Checkbox } from '@headlessui/react'
 import useAuth from '@/controllers/Authentication';
+import { useGoogleLogin } from '@react-oauth/google';
+import authDataHandler from '@/app/api/googleAuth';
+import Loading from '../Loading';
 const SignIn = () => {
     const [enabled, setEnabled] = useState(false)
-    const {checkLogin} = useAuth();
+    const {checkLogin,checkAuthLogin} = useAuth();
+    const [loading, setloading] = useState(false);
     async function login(e:any,remember:boolean){
         e.preventDefault();
-        await checkLogin({email:e.target.email.value,password:e.target.password.value},remember);
+        setloading(true);
+        await checkLogin({email:e.target.email.value,password:e.target.password.value},remember,setloading);
     }
+    const responseGoogle = async (authResult:any) => {
+		try {
+			if (authResult["code"]) {
+				await checkAuthLogin(authResult.code,setloading);
+			} else {
+                setloading(false);
+				throw new Error(authResult);
+			}
+		} catch (e) {
+            setloading(false)
+		}
+	};
+
+	const googleLogin = useGoogleLogin({
+		onSuccess: responseGoogle,
+		onError: responseGoogle,
+		flow: "auth-code",
+	});
     return (
+        <>
         <section className={`bg-gray-50 h-screen w-screen flex items-start lg:items-center overflow-x-hidden`}>
+        {loading && <div className='w-full h-full absolute'>{loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}</div> }
             <section className="w-[95%] mx-auto flex justify-center">
                 <div className='flex lg:h-[650px] justify-between items-center gap-10'>
                     <div className='h-full lg:flex lg:flex-col w-auto hidden lg:justify-between'>
@@ -53,19 +78,9 @@ const SignIn = () => {
                                 </h1>
                                 <h1 className='font-semibold'>Sign in With</h1>
                                 <div className='flex justify-between gap-2'>
-                                    <button className='px-6 py-3 border-[1px] border-gray-200 rounded-lg text-sm font-medium transition-colors duration-150 hover:bg-gray-700 hover:text-white'>
+                                    <button onClick={()=>{setloading(true);googleLogin()}} className='px-6 w-4/6 mx-auto py-3 border-[1px] border-gray-200 rounded-lg text-sm font-medium transition-colors duration-150 hover:bg-gray-700 hover:text-white'>
                                         <div className='flex items-center justify-center gap-2'>
                                             <img width={20} height={5} src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png'/>Google
-                                        </div>
-                                    </button>
-                                    <button className='px-6 py-3 border-[1px] border-gray-200 rounded-lg text-sm font-medium transition-colors duration-150 hover:bg-gray-700 hover:text-white'>
-                                        <div className='flex items-center justify-center gap-2'>
-                                            <i className="fa-brands fa-apple fa-xl"></i>Apple
-                                        </div>
-                                    </button>
-                                    <button className='px-6 py-3 border-[1px] border-gray-200 rounded-lg text-sm font-medium transition-colors duration-150 hover:bg-gray-700 hover:text-white'>
-                                        <div className='flex items-center justify-center gap-2'>
-                                            <img width={20} height={5} src='https://1000logos.net/wp-content/uploads/2021/10/logo-Meta.png'/>Meta
                                         </div>
                                     </button>
                                 </div>
@@ -115,7 +130,7 @@ const SignIn = () => {
                 
             </section>
         </section>
-
+    </>
   )
 }
 

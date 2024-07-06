@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { Checkbox } from '@headlessui/react'
 import { useApp } from '@/Helpers/AccountDialog';
 import useAuth from '@/controllers/Authentication';
+import Loading from '../Loading';
 const Signup = () => {
     const [updates, setUpdates] = useState(false);
     const {registerUser} = useAuth();
     const {toggleAgreement,toggleIsPassword,appState, toggleIsOpenAgreement} = useApp();
+    const [loading, setloading] = useState(false)
     async function register(e:any,agreement:boolean,promotion:boolean) {
         e.preventDefault();
         const data = {
@@ -19,13 +21,13 @@ const Signup = () => {
             dob:e.target.dob.value
         };
         if(e.target.password.value === e.target.repassword.value){
-            if(agreement) await registerUser(data,promotion)
+            if(agreement) {setloading(true);await registerUser(data,promotion,setloading)}
             else toggleIsOpenAgreement();
         }else toggleIsPassword();
     };
   return (
-    <section className={`bg-gray-50 h-screen w-screen flex items-start lg:items-center overflow-x-hidden`}>
-        
+    <section className={`bg-gray-50 h-screen w-screen relative flex items-start lg:items-center overflow-x-hidden`}>
+        {loading && <div className='w-full h-full absolute'>{loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}</div> }
         <section className="w-[95%] mx-auto flex justify-center">
             <div className='flex lg:h-[800px] justify-between gap-10'>
                 <div className='h-full lg:flex lg:flex-col w-auto hidden lg:justify-between'>
@@ -64,7 +66,7 @@ const Signup = () => {
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                                 Create new account
                             </h1>
-                            <h1 className='font-semibold'>Sign up With</h1>
+                            {/* <h1 className='font-semibold'>Sign up With</h1>
                             <div className='flex justify-between gap-2'>
                                 <button className='px-6 py-3 border-[1px] border-gray-200 rounded-lg text-sm font-medium transition-colors duration-150 hover:bg-gray-700 hover:text-white'>
                                     <div className='flex items-center justify-center gap-2'>
@@ -81,14 +83,14 @@ const Signup = () => {
                                         <img width={20} height={5} src='https://1000logos.net/wp-content/uploads/2021/10/logo-Meta.png'/>Meta
                                     </div>
                                 </button>
-                            </div>
+                            </div> */}
                             <form onSubmit={e=>register(e,appState.agreement,updates)} className="space-y-4 md:space-y-6 flex flex-col gap-4 lg:gap-0">
                                 
-                                <div className='flex w-full items-center'>
+                                {/* <div className='flex w-full items-center'>
                                     <div className='w-full h-[2px] bg-gray-200'></div>
                                     <p className='px-4 text-gray-500'>or</p>
                                     <div className='w-full h-[2px] bg-gray-200'></div>
-                                </div>
+                                </div> */}
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
                                     <input required type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your name"/>
@@ -159,7 +161,6 @@ const Signup = () => {
             
         </section>
     </section>
-
   )
 }
 export default Signup

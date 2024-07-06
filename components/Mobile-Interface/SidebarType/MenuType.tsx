@@ -22,7 +22,7 @@ const MenuType = () => {
             name: 'loggedIn',
             isExtendable: true,
             extendables: [
-                { title: 'Settings', link: '/settings' },
+                { title: 'Settings', link: '/account-settings' },
                 { title: 'Orders', link: '/orders' },
             ]
         },

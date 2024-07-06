@@ -11,8 +11,7 @@ const Account = () => {
   const userName = useAppSelector((state)=>state.userState.defaultAccount.userName);
   function signOut(){
     signOutHandler();
-    router.refresh();
-    router.push('/');
+    router.push('/signed-out');
   }
   return (
     <div onMouseEnter={()=>setDropdownVisible(true)} onMouseLeave={()=>setDropdownVisible(false)} className="relative mx-auto my-auto">

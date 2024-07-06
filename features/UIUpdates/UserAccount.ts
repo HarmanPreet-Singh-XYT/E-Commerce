@@ -13,6 +13,7 @@ interface Address {
   country:string;
   postalCode:string;
   userName:string;
+  is_default:boolean;
 }
 
 interface GiftCard {

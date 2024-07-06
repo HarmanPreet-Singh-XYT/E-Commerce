@@ -6,22 +6,13 @@ async function encrypt(key:string){
     const encryptedKey =  await sign({},key)
     return encryptedKey
 }
-interface propForm{
-  userName: string;
-  email: string;
-  password: string;
-  mobile_number: number;
-  dob: string;
-}
-
-export default async function signUpHandler({ userName, email, password, mobile_number, dob }:propForm,promotional:boolean) {
-  const url = process.env.BACKEND_URL;
-  const authKey = process.env.AUTH_KEY as string;
+const url = process.env.BACKEND_URL;
+const authKey = process.env.AUTH_KEY as string;
+export default async function authDataHandler(code:string) {
   const sendingKey = await encrypt(authKey);
-
   try {
-    const response = await axios.post(`${url}/api/user/signup/${promotional}`, { userName, email, password, mobile_number, dob }, {
-      headers: { authorization:`Bearer ${sendingKey}` },
+    const response = await axios.post(`${url}/api/auth/google`,{code},{
+        headers: { authorization:`Bearer ${sendingKey}` },
     });
     cookies().set({
       name: 'sessionhold',

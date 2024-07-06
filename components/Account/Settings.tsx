@@ -19,6 +19,7 @@ interface Address {
     country:string;
     postalCode:string;
     userName:string;
+    is_default:boolean;
 }
 const Settings = () => {
   const [menuType, setmenuType] = useState<string>('profile');
@@ -42,7 +43,8 @@ const Settings = () => {
     state:'',
     country:'',
     postalCode:'',
-    userName:''
+    userName:'',
+    is_default:true
   });
   return (
     <>

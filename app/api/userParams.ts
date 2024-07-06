@@ -17,6 +17,7 @@ interface Address {
   country:string;
   postalCode:string;
   userName:string;
+  is_default:boolean;
 }
 interface CartItem {
   cartItemID:number;
@@ -70,6 +71,7 @@ const mapAddress = (address: any): Address => ({
   country: address.country,
   postalCode: address.postalcode,
   userName: address.username,
+  is_default: address.is_default
 });
 const mapCartItem = (cartItem: any): CartItem => ({
   cartItemID: cartItem.cartitemid,

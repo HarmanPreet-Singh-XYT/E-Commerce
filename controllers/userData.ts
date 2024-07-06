@@ -17,17 +17,20 @@ const userData = () => {
                   dispatch(setWishlist(res.data.wishlistItems));
                   dispatch(setCoupon(res.data.coupons));
                   dispatch(setGiftCard(res.data.giftCards));
+                  return {success:true,addresses:res.data.addresses};
                 }
+                return {success:false};
               } catch (tokenError) {
                 // console.log('Parameter setting failed')
+                return {success:false};
               }
-              break;
             case 500:
               // console.log('Server Error');
-              break;
+              return {success:false};
           }
         } catch (err) {
           // console.log("Internal Server Error");
+          return {success:false};
         }
     };
     return {grabUserData};

@@ -6,7 +6,7 @@ import { addItemToCart,addItemToWishlist } from '@/features/UIUpdates/CartWishli
 import ReviewSection from './Product/ReviewSection'
 import ProductNotFound from './Product/ProductNotFound'
 import productDataHandler from '@/app/api/product'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Loading from '../Loading'
 import Options from './Product/Options'
 import { cartAddHandler,wishlistAddHandler } from '@/app/api/itemLists'
@@ -93,6 +93,7 @@ const IDGenerator = ()=>{
 }
 const ProductPage = () => {
   const { appState } = useApp();
+  const router = useRouter();
   const isLogged = appState.loggedIn;
     const ref = useRef<any>(null);
     const colRef = useRef<string>('Default');
@@ -170,7 +171,7 @@ const ProductPage = () => {
     const changeValue = (action:string)=>{
       switch (action) {
         case 'increase':
-          totalQuantity.current > quantity && setQuantity(quantity+1);
+          (totalQuantity.current > quantity && 9 > quantity) && setQuantity(quantity+1);
           break;
         case 'decrease':
           quantity>1 && setQuantity(quantity-1);
@@ -263,7 +264,7 @@ const ProductPage = () => {
                 {/*  */}
                 <div className='flex gap-5'>
                     <button onClick={()=>itemStateUpdate('cart')} className='w-[200px] h-[50px] bg-yellow-400 rounded-lg hover:border-yellow-400 hover:border-2 hover:bg-white transition-colors duration-300 font-semibold'>ADD TO CART</button>
-                    <button className='w-[200px] h-[50px] rounded-lg font-semibold border-yellow-400 hover:bg-yellow-400 transition-colors duration-300 border-[2px]'>BUY NOW</button>
+                    <button onClick={()=>router.push(`/checkout/${data.productid}/${selectedSize.sizeid}/${selectedColor.colorid}`)} className='w-[200px] h-[50px] rounded-lg font-semibold border-yellow-400 hover:bg-yellow-400 transition-colors duration-300 border-[2px]'>BUY NOW</button>
                 </div>
                 <div className='flex gap-10 text-silver text-sm border-b-[1px] pb-10'>
                     <div onClick={()=>itemStateUpdate('wishlist')} className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>

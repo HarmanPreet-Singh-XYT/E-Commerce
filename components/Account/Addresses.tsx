@@ -1,6 +1,5 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import { addresses } from '@/app/data'
 interface Address {
   addressID:number;
   addressType:string;
@@ -12,6 +11,7 @@ interface Address {
   country:string;
   postalCode:string;
   userName:string;
+  is_default:boolean;
 }
 const Addresses = ({Component,setdialogType,setselectedAddress}:{Component:Address[],setdialogType:React.Dispatch<React.SetStateAction<string | null>>,setselectedAddress:React.Dispatch<React.SetStateAction<Address>>}) => {
   return (
