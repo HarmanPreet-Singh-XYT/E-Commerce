@@ -31,6 +31,7 @@ interface Order {
   mobile_number: string;
   title: string;
   discount: string;
+  price:string;
   shippingcost: string;
   quantity: number;
   imglink: string;
@@ -58,6 +59,7 @@ const emptyOrder: Order = {
   mobile_number: "",
   title: "",
   discount: "0.00",
+  price:"0.00",
   shippingcost: "0.00",
   quantity: 0,
   imglink: "",
@@ -99,11 +101,12 @@ const OrderDetail = () => {
     const found = useRef<boolean>(false)
     const dataChecked = useRef(false);
     const loggedIn = useRef(true);
-    const subTotal = (parseFloat(data.discount) * data.quantity);
+    const paymentCharge = useRef(0);
+    const taxes = ((parseFloat(data.price)*data.quantity) * (18 / 100));
+    const subTotal = parseFloat(data.price)+taxes;
     const shipping = parseFloat(data.shippingcost);
-    const taxes = (parseFloat(data.totalamount) * 18 / 100);
-    const discount = parseFloat(data.totalamount) - (subTotal + shipping);
-    const totalAmount = subTotal + shipping + taxes - discount;
+    const discount = (parseFloat(data.price)*data.quantity) - (parseFloat(data.discount)*data.quantity);
+    const totalAmount = (subTotal + shipping + paymentCharge.current)-taxes-discount;
     const formattedSubTotal = subTotal.toFixed(2);
     const formattedShipping = shipping.toFixed(2);
     const formattedTaxes = taxes.toFixed(2);
@@ -118,6 +121,7 @@ const OrderDetail = () => {
             dataVar.current = response.data.data
             found.current = true;
             dataChecked.current = true;
+            if(response.data.data.paymentmethod==='Payment on Delivery') paymentCharge.current=15;
             setloading(false);
           };
           break;
@@ -232,6 +236,12 @@ const OrderDetail = () => {
             <p className='text-lg text-silver'>Shipping Charge</p>
             <p className='text-xl font-semibold'>${formattedShipping}</p>
           </div>
+          {dataVar.current.paymentmethod==='Payment on Delivery' &&
+          <div className='flex justify-between'>
+            <p className='text-lg text-silver'>Payment Processing Charge</p>
+            <p className='text-xl font-semibold'>${paymentCharge.current}</p>
+          </div>
+          }
           <div className='flex justify-between'>
             <p className='text-lg text-silver'>Taxes</p>
             <p className='text-xl font-semibold'>${formattedTaxes}</p>

@@ -33,6 +33,9 @@ const OrderConfirmation = () => {
             case 404:
                 setloading(false);
                 break;
+            default:
+                setloading(false);
+              break;
         }
     }
     useEffect(() => {
@@ -41,10 +44,13 @@ const OrderConfirmation = () => {
     
   return (
     <>
-    {(found.current && paymentPending.current) && <PaymentPending/>}
-    {(!found.current) && <OrderNotFound/>}
-    {(error.current) && <PaymentFailed/>}
-    {(found.current && !paymentPending.current) && <div className='flex flex-col items-center w-screen'>
+    {(!loading && found.current && paymentPending.current) && <PaymentPending/>}
+    {(!loading && !found.current) && <OrderNotFound/>}
+    {(!loading && error.current) && <PaymentFailed/>}
+    {loading && <div className='w-full absolute h-[300px]'>{loading && <div className='absolute left-0 right-0 top-64 z-50'><Loading/></div>}</div> }
+    {(!loading && found.current && !paymentPending.current) && 
+    <div className='flex flex-col items-center w-screen relative'>
+      
         <ol className="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">
         <li className="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
             <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
@@ -73,7 +79,6 @@ const OrderConfirmation = () => {
         </ol>
         
     <div className="bg-white flex items-center justify-center h-screen relative">
-        {loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}
       <div className="bg-gray-50 border-2 flex relative gap-5 items-center flex-col text-gray-800 p-6 rounded-lg shadow-lg max-w-[90%] w-full text-center">
         <div className="text-2xl mb-4 text-white bg-green-400 rounded-full py-5 px-5 w-[90px]">
           <svg

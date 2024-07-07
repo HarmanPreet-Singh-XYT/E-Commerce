@@ -22,7 +22,7 @@ const Category = () => {
         {categoryDropDown.map((each,index)=>
             <div key={index}>
                 <div className='border-b-[1px] pb-3'>
-                <a href={`/categories/${each.title}`} className='font-semibold text-base'>{each.title}</a>
+                <a href={`/categories/${each.catLink}`} className='font-semibold text-base'>{each.title}</a>
                 </div>
                 <div className='flex flex-col gap-2 mb-8 mt-5'>
                     {each.subCategories.map((each,index)=>

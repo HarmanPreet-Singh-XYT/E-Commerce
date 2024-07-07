@@ -95,6 +95,7 @@ const Checkout = () => {
     const formattedTaxes = taxes.toFixed(2);
     const formattedDiscount = discount.toFixed(2);
     const formattedTotalAmount = totalAmount.toFixed(2);
+    const orderID = useRef(0);
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
     const {checkSession} = useAuth();
     const { grabUserData } = userData();
@@ -123,15 +124,15 @@ const Checkout = () => {
       if(sessionCheck?.success && userDataCheck?.success) {
         if(sessionCheck.data != undefined) genUserData.current = sessionCheck.data;
         if(userDataCheck.addresses != undefined && userDataCheck.addresses.length > 0) userDataCheck.addresses.map((each)=>{if(each.is_default) genUserAddress.current=each;})
-        paymentGateway();
+        paymentGateway(genUserData.current.userID);
         loading && setloading(false);
       }else{
         router.push('/sign-in');
       }
     }
-    async function paymentGateway(){
+    async function paymentGateway(userID:number){
         !loading && setloading(true);
-        const ClientS = await paymentGatewayHandler(params.productID);
+        const ClientS = await paymentGatewayHandler(params.productID,userID);
         setClientSecret(ClientS.clientSecret);
         setloading(false);
     }
@@ -142,6 +143,7 @@ const Checkout = () => {
         switch (createOrder.status) {
             case 200:
                 setloading(false);
+                orderID.current=createOrder.data.orderid;
                 router.push(`/order-confirmation/${createOrder.data.orderid}`)
                 break;
             default:
@@ -164,7 +166,7 @@ const Checkout = () => {
   return (
     <section className="bg-white py-8 h-screen w-screen overflow-x-hidden antialiased relative dark:bg-gray-900 md:py-6">
     {loading && <div className='w-screen h-screen absolute'>{loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}</div> }
-    <form action="/" onSubmit={createOrder} className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <ol className="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">
         <li className="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
             <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
@@ -193,10 +195,10 @@ const Checkout = () => {
         </ol>
 
         <div className="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
-        <div className="min-w-0 flex-1 space-y-8">
+        <form action="/" id='informational-form' onSubmit={createOrder} className="min-w-0 flex-1 space-y-8">
             <div className="space-y-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Delivery Details</h2>
-
+            
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                 <label htmlFor="your_name" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Your name </label>
@@ -361,57 +363,57 @@ const Checkout = () => {
                 <button type="button" className="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Apply</button>
             </div>
             </div>
-        </div>
+        </form>
         
 
         <div className="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
             <div className="flow-root">
-            <div className="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
-                <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
-                <dd className="text-base font-medium text-gray-900 dark:text-white">${formattedSubTotal}</dd>
-                </dl>
+                <div className="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
+                    <dl className="flex items-center justify-between gap-4 py-3">
+                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
+                    <dd className="text-base font-medium text-gray-900 dark:text-white">${formattedSubTotal}</dd>
+                    </dl>
 
-                <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Shipping Charge</dt>
-                <dd className="text-base font-medium text-gray-900">${formattedShipping}</dd>
-                </dl>
+                    <dl className="flex items-center justify-between gap-4 py-3">
+                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Shipping Charge</dt>
+                    <dd className="text-base font-medium text-gray-900">${formattedShipping}</dd>
+                    </dl>
 
-                {paymentCharge != 0 && <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Payment Processing Charge</dt>
-                <dd className="text-base font-medium text-gray-900 dark:text-white">${paymentCharge}</dd>
-                </dl>}
+                    {paymentCharge != 0 && <dl className="flex items-center justify-between gap-4 py-3">
+                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Payment Processing Charge</dt>
+                    <dd className="text-base font-medium text-gray-900 dark:text-white">${paymentCharge}</dd>
+                    </dl>}
 
-                <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Taxes</dt>
-                <dd className="text-base font-medium text-gray-900 dark:text-white">${formattedTaxes}</dd>
-                </dl>
+                    <dl className="flex items-center justify-between gap-4 py-3">
+                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Taxes</dt>
+                    <dd className="text-base font-medium text-gray-900 dark:text-white">${formattedTaxes}</dd>
+                    </dl>
 
-                <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Discount</dt>
-                <dd className="text-base font-medium text-green-500 dark:text-white">${formattedDiscount}</dd>
-                </dl>
+                    <dl className="flex items-center justify-between gap-4 py-3">
+                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Discount</dt>
+                    <dd className="text-base font-medium text-green-500 dark:text-white">${formattedDiscount}</dd>
+                    </dl>
 
-                <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                <dd className="text-base font-bold text-gray-900 dark:text-white">${formattedTotalAmount}</dd>
-                </dl>
+                    <dl className="flex items-center justify-between gap-4 py-3">
+                    <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
+                    <dd className="text-base font-bold text-gray-900 dark:text-white">${formattedTotalAmount}</dd>
+                    </dl>
+                </div>
             </div>
-            </div>
-
+            
             <div className="space-y-3">
-            {!onlinePayment && <button disabled={!loggedIn} type="submit" className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Place Order</button>}
+            {!onlinePayment && <button form='informational-form' disabled={!loggedIn} type="submit" className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Place Order</button>}
             </div>
             <div id='payment-integration' className={`payment-integration`}>
                 {(clientSecret && onlinePayment) && (
                     <Elements options={options} stripe={stripePromise}>
-                    <CheckoutForm />
+                    <CheckoutForm orderID={orderID.current} userID={genUserData.current.userID}/>
                     </Elements>
                 )}
             </div>
         </div>
         </div>
-    </form>
+    </div>
         
     </section>
   )

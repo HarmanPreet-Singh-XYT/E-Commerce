@@ -7,10 +7,10 @@ async function encrypt(key:string){
 }
 const url = process.env.BACKEND_URL;
 const authKey = process.env.AUTH_KEY as string;
-export default async function paymentGatewayHandler(productID:string|string[]) {
+export default async function paymentGatewayHandler(productID:string|string[],userID:number) {
   const sendingKey = await encrypt(authKey);
   try {
-    const response = await axios.post(`${url}/api/create/payment/create-payment-intent`,{ item:productID }, {
+    const response = await axios.post(`${url}/api/create/payment/create-payment-intent`,{ item:productID,userID }, {
       headers: { authorization:`Bearer ${sendingKey}` },
     });
     return {status:response.status,clientSecret:response.data.clientSecret};
@@ -44,6 +44,17 @@ export async function paymentOnDeliveryHandler({userid, productid, colorid, size
   const sendingKey = await encrypt(authKey);
   try {
     const response = await axios.post(`${url}/api/payment-on-delivery/create-order`,{ userid, productid, colorid, sizeid }, {
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status,data:response.data};
+  } catch (error) {
+    return {status:500,error: 'Internal Server Error' }
+  }
+};
+export async function cardCheckoutHandler({userid, productid, colorid, sizeid, paymentid,paymentStatus}:{userid:number,productid:string|string[],colorid:string|string[],sizeid:string|string[],paymentid:string,paymentStatus:string}) {
+  const sendingKey = await encrypt(authKey);
+  try {
+    const response = await axios.post(`${url}/api/card/create-order`,{ userid, productid, colorid, sizeid,paymentid,paymentStatus }, {
       headers: { authorization:`Bearer ${sendingKey}` },
     });
     return {status:response.status,data:response.data};

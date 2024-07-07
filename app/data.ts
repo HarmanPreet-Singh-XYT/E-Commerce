@@ -732,8 +732,8 @@ const footerSections = [
                 link: "products/new-products"
             },
             {
-                title: "Best Sales",
-                link: "products/best-sales"
+                title: "Blog",
+                link: "/blog"
             },
             {
                 title: "Contact Us",
@@ -1263,7 +1263,7 @@ const banners = [
 const categoryDropDown = [
     {
         title:'Electronics',
-        catLink:"",
+        catLink:"/electronics",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/electronics-banner-1.jpg",
         imgAlt:"",
         imgRedirectLink:"",
@@ -1292,7 +1292,7 @@ const categoryDropDown = [
     },
     {
         title:"Men's",
-        catLink:"",
+        catLink:"/men",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/mens-banner.jpg",
         imgAlt:"",
         imgRedirectLink:"",
@@ -1321,7 +1321,7 @@ const categoryDropDown = [
     },
     {
         title:"Women's",
-        catLink:"",
+        catLink:"/women",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/womens-banner.jpg",
         imgAlt:"",
         imgRedirectLink:"",
@@ -1350,7 +1350,7 @@ const categoryDropDown = [
     },
     {
         title:'Electronics',
-        catLink:"",
+        catLink:"/electronics",
         imgLink:"https://codewithsadee.github.io/anon-ecommerce-website/assets/images/electronics-banner-2.jpg",
         imgAlt:"",
         imgRedirectLink:"",
