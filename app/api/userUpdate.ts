@@ -84,3 +84,18 @@ export async function userAddressDeleteHandler(addressID:number,userID:number) {
     return {status:500,error: 'Internal Server Error' }
   }
 };
+export async function userAddressDefaultHandler(addressID:number,userID:number) {
+  const url = process.env.BACKEND_URL;
+  const authKey = process.env.AUTH_KEY as string;
+  const sendingKey = await encrypt(authKey);
+    
+  try {
+    const response = await axios.post(`${url}/api/update/user/set-default-address`,{ addressID, userID }, {
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status}
+  } catch (error) {
+    
+    return {status:500,error: 'Internal Server Error' }
+  }
+};

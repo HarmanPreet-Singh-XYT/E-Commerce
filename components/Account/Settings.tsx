@@ -100,7 +100,7 @@ const Settings = () => {
             </div>
             <div className='bg-white sm:max-w-[600px] lg:max-w-[600px] lg:w-[600px] h-full drop-shadow-custom-xl rounded-xl flex-col flex items-center'>
                 {menuType==='profile' && <ProfileInfo Component={defaultAccount} setdialogType={setdialogType}/>}
-                {menuType==='address' && <Addresses Component={addresses}  setdialogType={setdialogType} setselectedAddress={setselectedAddress}/>}
+                {menuType==='address' && <Addresses Component={addresses}  setdialogType={setdialogType} setselectedAddress={setselectedAddress} setLoading={setLoading} userID={defaultAccount.userID}/>}
                 {menuType==='giftcard' && <GiftCards Component={giftCards}/>}
                 {menuType==='wishlist' && <Wishlist Component={wishlist} loading={loading} setLoading={setLoading}/>}
                 {menuType==='coupon' && <Coupons Component={coupons}/>}

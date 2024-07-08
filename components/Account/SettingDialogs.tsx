@@ -74,6 +74,9 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                 await userUpdateHandler({ userID,userName:false, email:false, mobile_number:false, dob:false,password:updateValue  })
                 setLoading(false);
                 break;
+            default:
+                setdialogType('defaultAddressError');
+                break;
         }
     }
     async function formSubmitAddress(e:any,Dialog:string|null,userID:number,addressID?:number){
@@ -111,11 +114,14 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                 })
                 setLoading(false);
                 break;
+            default:
+                setdialogType('defaultAddressError');
+                break;
         }
     }
     async function deleteAddress(userID:number,addressID:number){
         setLoading(true);
-        await userAddressDeleteHandler(addressID,userID).then((res)=>res.status===200 && dispatch(removeAddress(addressID)));
+        await userAddressDeleteHandler(addressID,userID).then((res)=>res.status===200 ? dispatch(removeAddress(addressID)) : setdialogType('defaultAddressError'));
         setLoading(false);
     }
     return (
@@ -241,6 +247,19 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
         </Dialog>
     </div>
     }
+    <div>
+    <Dialog open={dialogType==='defaultAddressError'} onClose={() => setdialogType(null)} className="relative z-50">
+        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+        <DialogPanel className="max-w-lg space-y-4 border  p-6 rounded-xl text-center drop-shadow-custom-xl bg-red-400 text-white">
+            <DialogTitle className="font-bold">Server Error</DialogTitle>
+            <Description>We're facing downtime currently. Please try again lator.</Description>
+            <div className="flex justify-center gap-4">
+            <button className='border-[1.5px] text-black hover:bg-red-200 bg-white transition-colors duration-300 hover:text-black py-2 px-6 rounded-xl' onClick={() => setdialogType(null)}>OK</button>
+            </div>
+        </DialogPanel>
+        </div>
+    </Dialog>
+    </div>
 
     </>
   )
