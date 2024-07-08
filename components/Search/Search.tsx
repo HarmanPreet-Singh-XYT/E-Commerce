@@ -98,7 +98,7 @@ const Search = () => {
   return (
     <>
     <SearchMSidebar isMenu={isMenu} setIsMenu={setIsMenu} dataChecked={dataChecked.current} filterSubmit={filterSubmit} toggleClear={toggleClear} />
-    <section className='flex flex-col gap-6 min-h-[1000px]'>
+    <section className='flex flex-col gap-6'>
         {/* <CategoryBanner banners={filterOut[0]}/> */}
         <div className='flex items-center gap-5'>
             <HomeIcon width={35}/>

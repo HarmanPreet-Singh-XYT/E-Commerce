@@ -11,6 +11,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import Link from 'next/link';
 import { useAppSelector } from '@/app/hooks';
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 interface ProductDetails {
   title: string;
   price: string;
@@ -94,6 +95,7 @@ const Checkout = () => {
     const formattedShipping = shipping.toFixed(2);
     const formattedTaxes = taxes.toFixed(2);
     const formattedDiscount = discount.toFixed(2);
+    const [dialogType, setdialogType] = useState<null|string>(null);
     const formattedTotalAmount = totalAmount.toFixed(2);
     const orderID = useRef(0);
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
@@ -108,7 +110,7 @@ const Checkout = () => {
           found.current = true;
           break;
           case 500:
-            router.push('/')
+            router.push('/');
             break;
         default:
             router.push('/');
@@ -122,8 +124,10 @@ const Checkout = () => {
       const userDataCheck = await grabUserData();
       dataChecked.current = true;
       if(sessionCheck?.success && userDataCheck?.success) {
+        if(userDataCheck.addresses?.length === 0) {setdialogType('addressRequired');setloading(false);return};
         if(sessionCheck.data != undefined) genUserData.current = sessionCheck.data;
-        if(userDataCheck.addresses != undefined && userDataCheck.addresses.length > 0) userDataCheck.addresses.map((each)=>{if(each.is_default) genUserAddress.current=each;})
+        if(userDataCheck.addresses != undefined && userDataCheck.addresses.length > 0) userDataCheck.addresses.map((each)=>{if(each.is_default) genUserAddress.current=each});
+        if(genUserAddress.current.addressID === 0){ setdialogType('defaultAddressRequired');setloading(false);return}
         paymentGateway(genUserData.current.userID);
         loading && setloading(false);
       }else{
@@ -165,6 +169,28 @@ const Checkout = () => {
     };
   return (
     <section className="bg-white py-8 h-screen w-screen overflow-x-hidden antialiased relative dark:bg-gray-900 md:py-6">
+        <Dialog open={dialogType==='addressRequired'} onClose={() => setdialogType('addressRequired')} className="relative z-50">
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center drop-shadow-custom-xl">
+                    <DialogTitle className="font-bold">Address Required</DialogTitle>
+                    <Description>Please add a Address to Proceed with Checkout</Description>
+                    <div className="flex justify-center gap-4">
+                        <button className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => {router.push('/account-settings')}}>Go to Account Settings</button>
+                    </div>
+                </DialogPanel>
+                </div>
+        </Dialog>
+        <Dialog open={dialogType==='defaultAddressRequired'} onClose={() => setdialogType('defaultAddressRequired')} className="relative z-50">
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center drop-shadow-custom-xl">
+                    <DialogTitle className="font-bold">Default Address Required</DialogTitle>
+                    <Description>Please add a Default Address or Set Existing Address to Default to Proceed with Checkout</Description>
+                    <div className="flex justify-center gap-4">
+                        <button className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => {router.push('/account-settings')}}>Go to Account Settings</button>
+                    </div>
+                </DialogPanel>
+                </div>
+        </Dialog>
     {loading && <div className='w-screen h-screen absolute'>{loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}</div> }
     <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <ol className="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">
