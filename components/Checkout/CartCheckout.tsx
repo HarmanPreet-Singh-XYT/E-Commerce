@@ -1,16 +1,13 @@
-import React,{useLayoutEffect,useState,useRef, useEffect} from 'react'
+import React,{useLayoutEffect,useState,useRef} from 'react'
 import userData from '@/controllers/userData';
 import useAuth from '@/controllers/Authentication';
-import { useParams } from 'next/navigation'
 import { useApp } from '@/Helpers/AccountDialog';
 import Loading from '../Loading';
 import { useRouter } from 'next/navigation';
-import paymentGatewayHandler, { checkoutProductDataHandler, paymentOnDeliveryHandler } from '@/app/api/paymentSystem';
+import { paymentGatewayCartHandler, checkoutCartProductDataHandler, cartCashCheckoutHandler} from '@/app/api/paymentSystem';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
-import Link from 'next/link';
-import { useAppSelector } from '@/app/hooks';
+import CheckoutForm from "./CartCheckoutForm";
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 interface ProductDetails {
   title: string;
@@ -43,28 +40,17 @@ interface Account{
     dob:string;
 }
 // Example object of ProductDetails with default values
-const emptyProductDetails: ProductDetails = {
-  title: '',
-  price: '0',
-  discount: '0',
-  sizename: '',
-  colorname: '',
-  imglink: '',
-  imgalt: '',
-  shippingcost:0
-};
-const Checkout = () => {
+const CartCheckout = () => {
     const {appState} = useApp();
     const loggedIn = appState.loggedIn;
     const [paymentCharge, setPaymentCharge] = useState(0);
-    const params = useParams<{ productID: string,colorID:string,sizeID:string }>()
     const [loading, setloading] = useState(true);
     const [clientSecret, setClientSecret] = useState("");
     const dataChecked = useRef(false);
     const found = useRef(false);
     const [onlinePayment, setonlinePayment] = useState(true);
     const router = useRouter();
-    const dataVar = useRef<ProductDetails>(emptyProductDetails);
+    const dataVar = useRef<ProductDetails[]>([]);
     const data = dataVar.current
     const genUserData = useRef<Account>({
         userID:0,
@@ -86,12 +72,13 @@ const Checkout = () => {
         userName:'',
         is_default:true
     });
-    const shipping = data.shippingcost;
-    const taxes = (parseFloat(data.price) * (18 / 100));
-    const subTotal = parseFloat(data.price);
-    const subTotalWithoutTax = (parseFloat(data.price)-(parseFloat(data.price)*18/100));
-    const discount = parseFloat(data.price) - parseFloat(data.discount);
-    const totalAmount = (subTotal + shipping + paymentCharge)-discount;
+    const shipping = data.reduce((sum, item) => sum + item.shippingcost, 0);
+    const taxes = data.reduce((sum, item) => sum + (parseFloat(item.price) * (18 / 100)), 0);
+    const subTotal = data.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    const subTotalWithoutTax = data.reduce((sum, item) => sum + (parseFloat(item.price)-(parseFloat(item.price)*18/100)), 0);
+    const discount = data.reduce((sum, item) => sum + (parseFloat(item.price) - parseFloat(item.discount)), 0);
+    const totalAmount = subTotal + paymentCharge - discount + shipping;
+
     const formattedSubTotal = subTotalWithoutTax.toFixed(2);
     const formattedShipping = shipping.toFixed(2);
     const formattedTaxes = taxes.toFixed(2);
@@ -103,11 +90,11 @@ const Checkout = () => {
     const {checkSession} = useAuth();
     const { grabUserData } = userData();
     const orderCreationError = useRef(false);
-    async function dataRequest(){
-        const response = await checkoutProductDataHandler({productID:params.productID,colorID:params.colorID,sizeID:params.sizeID});
+    async function dataRequest(userID:number){
+        const response = await checkoutCartProductDataHandler(userID);
         switch (response.status) {
           case 200:
-          dataVar.current = response.data;
+          dataVar.current = response.data.products;
           found.current = true;
           break;
           case 500:
@@ -119,10 +106,10 @@ const Checkout = () => {
           }
     }
     async function sync(){
-      await dataRequest();
-      if(!found.current) return;
       const sessionCheck = await checkSession();
       const userDataCheck = await grabUserData();
+      await dataRequest(sessionCheck?.data?.userID);
+      if(!found.current) return;
       dataChecked.current = true;
       if(sessionCheck?.success && userDataCheck?.success) {
         if(userDataCheck.addresses?.length === 0) {setdialogType('addressRequired');setloading(false);return};
@@ -137,19 +124,19 @@ const Checkout = () => {
     }
     async function paymentGateway(userID:number){
         !loading && setloading(true);
-        const ClientS = await paymentGatewayHandler(params.productID,userID);
+        const ClientS = await paymentGatewayCartHandler(userID);
         setClientSecret(ClientS.clientSecret);
         setloading(false);
     }
     async function createOrder(e:any){
         e.preventDefault();
         setloading(true);
-        const createOrder = await paymentOnDeliveryHandler({userid:genUserData.current.userID,productid:params.productID,colorid:params.colorID,sizeid:params.sizeID})
+        const createOrder = await cartCashCheckoutHandler(genUserData.current.userID)
         switch (createOrder.status) {
             case 200:
                 setloading(false);
                 orderID.current=createOrder.data.orderid;
-                router.push(`/order-confirmation/${createOrder.data.orderid}`)
+                router.push(`/cart-confirmation/${createOrder.status}`)
                 break;
             default:
                 orderCreationError.current=true;
@@ -200,7 +187,7 @@ const Checkout = () => {
             <svg className="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
-            Product
+            Cart
             </span>
         </li>
 
@@ -366,23 +353,23 @@ const Checkout = () => {
                 </div>
             </div>
             </div> */}
-            <div className="p-4 mb-8 flex flex-col gap-4">
+            {dataVar.current.map((each,index)=><div key={index} className="p-4 mb-8 flex flex-col gap-4">
                 <div className="flex border-[1px] min-h-[150px] rounded-xl px-6 py-6 items-center mb-4">
-                    <img src={data.imglink} alt={data.imgalt} width={100} height={100} className="mr-10 bg-gray-50 rounded-xl"/>
+                    <img src={each.imglink} alt={each.imgalt} width={100} height={100} className="mr-10 bg-gray-50 rounded-xl"/>
                     <div className='flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between w-full items-center'>
-                    <div className={`flex flex-col ${(data.sizename != null || data.colorname != null) ? 'gap-1' : 'gap-5'}`}>
-                        <h4 className="font-medium text-xl">{data.title}</h4>
-                        {data.sizename != null && <p className='text-sm font-medium'>Size: <span className='font-semibold'>{data.sizename}</span></p>}
-                        {data.colorname != null && <p className='text-sm font-medium'>Color: <span className='font-semibold'>{data.colorname}</span></p>}
+                    <div className={`flex flex-col ${(each.sizename != null || each.colorname != null) ? 'gap-1' : 'gap-5'}`}>
+                        <h4 className="font-medium text-xl">{each.title}</h4>
+                        {each.sizename != null && <p className='text-sm font-medium'>Size: <span className='font-semibold'>{each.sizename}</span></p>}
+                        {each.colorname != null && <p className='text-sm font-medium'>Color: <span className='font-semibold'>{each.colorname}</span></p>}
                         <p className='text-sm text-silver'>Quantity: <span className='text-black font-semibold'>{1}</span></p>
                     </div>
                     <div>
-                        <p className='font-medium text-3xl'>${data.discount}</p>
-                        <p className='font-medium text-xl line-through'>${data.price}</p>
+                        <p className='font-medium text-3xl'>${each.discount}</p>
+                        <p className='font-medium text-xl line-through'>${each.price}</p>
                     </div>
                     </div>
                 </div>
-            </div>
+            </div>)}
             <div>
             <label htmlFor="voucher" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Enter a gift card, voucher or promotional code </label>
             <div className="flex max-w-md items-center gap-4">
@@ -408,7 +395,7 @@ const Checkout = () => {
 
                     {paymentCharge != 0 && <dl className="flex items-center justify-between gap-4 py-3">
                     <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Payment Processing Charge</dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">${paymentCharge}</dd>
+                    <dd className="text-base font-medium text-gray-900 dark:text-white">${paymentCharge*dataVar.current.length}</dd>
                     </dl>}
 
                     <dl className="flex items-center justify-between gap-4 py-3">
@@ -446,4 +433,4 @@ const Checkout = () => {
   )
 }
 
-export default Checkout
+export default CartCheckout

@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-interface EndTime {
-  date: number;
-  month: number;
-  year: number;
-  time: number;
-  minute: number;
-}
 
 interface PropType {
-  endTime: EndTime;
+  endTime: string;
 }
 
 const DealTime: React.FC<PropType> = ({ endTime }) => {
   const calculateTimeRemaining = () => {
     const now = new Date();
-    const end = new Date(endTime.year, endTime.month - 1, endTime.date, endTime.time, endTime.minute);
+    const end = new Date(endTime);
     const timeDifference = end.getTime() - now.getTime();
 
     if (timeDifference <= 0) {

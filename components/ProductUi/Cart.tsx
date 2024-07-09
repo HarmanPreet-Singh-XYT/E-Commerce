@@ -7,6 +7,7 @@ import { cartDeleteHandler } from '@/app/api/itemLists';
 import { useApp } from '@/Helpers/AccountDialog';
 import { useState } from 'react';
 import Loading from '../Loading';
+import Link from 'next/link';
 export default function Cart() {
   const { appState } = useApp();
   const [loading, setloading] = useState(false);
@@ -119,12 +120,19 @@ export default function Cart() {
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">
-                        <a
-                          href="#"
+                        {isLogged ? <Link
+                        href={`/cart-checkout`}
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout
-                        </a>
+                        </Link>:
+                        <Link
+                        href={'/sign-in'}
+                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                        >
+                          Login to Checkout
+                        </Link>
+                        }
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>

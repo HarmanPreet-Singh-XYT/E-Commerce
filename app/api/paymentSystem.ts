@@ -62,3 +62,47 @@ export async function cardCheckoutHandler({userid, productid, colorid, sizeid, p
     return {status:500,error: 'Internal Server Error' }
   }
 };
+export async function checkoutCartProductDataHandler(userID:number) {
+  const sendingKey = await encrypt(authKey);
+  try {
+    const response = await axios.get(`${url}/api/checkout-cart/product-details/${userID}`,{
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status,data:response.data}
+  } catch (error) {
+    return {status:500,error: 'Internal Server Error' }
+  }
+};
+export async function cartCardCheckoutHandler(userID:number,paymentid:string,paymentstatus:string) {
+  const sendingKey = await encrypt(authKey);
+  try {
+    const response = await axios.post(`${url}/api/cart-card/create-order`,{ userID,paymentid,paymentstatus }, {
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status,data:response.data};
+  } catch (error) {
+    return {status:500,error: 'Internal Server Error' }
+  }
+};
+export async function cartCashCheckoutHandler(userID:number) {
+  const sendingKey = await encrypt(authKey);
+  try {
+    const response = await axios.post(`${url}/api/cart-payment-on-delivery/create-order`,{ userID }, {
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status,data:response.data};
+  } catch (error) {
+    return {status:500,error: 'Internal Server Error' }
+  }
+};
+export async function paymentGatewayCartHandler(userID:number) {
+  const sendingKey = await encrypt(authKey);
+  try {
+    const response = await axios.post(`${url}/api/create/cart-payment/create-payment-intent`,{ userID }, {
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status,clientSecret:response.data.clientSecret};
+  } catch (error) {
+    return {status:500,error: 'Internal Server Error' }
+  }
+};
