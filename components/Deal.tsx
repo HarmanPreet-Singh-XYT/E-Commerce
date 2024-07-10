@@ -45,7 +45,7 @@ const Deal = () => {
         {loading && <div className='w-screen h-[350px]'>{loading && <div className='absolute left-0 right-0 top-16 z-50'><Loading/></div>}</div> }
             {data.current.map((each,index)=><div key={index} className='flex flex-col rounded-xl min-w-full gap-5 h-auto items-center lg:pl-10 snap-center lg:flex-row'>
                 <a href={`/product/${each.productid}`}><img className='max-w-[450px] min-w-[200px] rounded-md' alt={each.imgalt} src={each.imglink}/></a>
-                <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-4 w-full'>
                     <div className='flex items-center gap-2'>
                         <Stars stars={each.stars}/>
                         {each.rating > 0 && <p className='text-sm text-silver'>{each.rating}</p>}

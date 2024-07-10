@@ -1,13 +1,43 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { bestSell, leftStatus } from '@/app/data';
 import Stars from '../ProductUi/Stars';
 import Link from 'next/link';
+import { sidebarDataHandler } from '@/app/api/homeData';
+import Loading from '../Loading';
+interface Product {
+    productid: number;
+    title: string;
+    price: number;
+    discount: number;
+    imglink: string;
+    imgalt: string;
+    category_name: string;
+    stars: number;
+    rating: number;
+}
 const SidebarS = () => {
+    const data = useRef<Product[]>([]);
+    const [loading, setloading] = useState(true)
     const [collapsedIndex, setCollapsedIndex] = useState<number | null>(null);
     const handleToggle = (index: number) => {
         setCollapsedIndex((prevIndex) => (prevIndex === index ? null : index));
     };
+    async function sync(){
+        const res = await sidebarDataHandler();
+        switch (res.status) {
+          case 200:
+            data.current = res.data.data;
+            setloading(false);
+            break;
+          default:
+    
+            break;
+        }
+    }
+    useLayoutEffect(() => {
+      sync();
+    }, [])
     return (
         <>
             <div className='hidden lg:flex-col lg:flex ml-auto'>
@@ -46,25 +76,26 @@ const SidebarS = () => {
                         </div>
                     )}
                 </div>
-                <div className='h-[500px] mt-10'>
+                <div className='h-[500px] mt-10 relative'>
                     <p className='font-semibold text-gray-700 tracking-wider text-[17px]'>BEST SELLERS</p>
+                    {loading && <div className='w-[100px] h-[350px]'>{loading && <div className='absolute left-0 right-8 top-0 z-50'><Loading/></div>}</div> }
                     <div className='flex flex-col'>
-                        {bestSell.map((each, index) =>
+                        {data.current.map((each, index) =>
                             <div key={index} className='flex mt-5'>
-                                <Link href={`/best-sales/${each.productID}`}>
-                                    <img className='w-[80px] h-[80px] rounded-md' src={each.imgLink} alt={each.title} />
+                                <Link href={`/product/${each.productid}`}>
+                                    <img className='w-[80px] h-[80px] rounded-md' src={each.imglink} alt={each.title} />
                                 </Link>
-                                <div className='ml-5'>
-                                    <Link href={`/product/${each.productID}`} className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>
+                                <div className='ml-5 max-w-[250px]'>
+                                    <Link href={`/product/${each.productid}`} className='tracking-[1px] text-[16px] text-davysilver hover:text-black'>
                                         {each.title}
                                     </Link>
                                     <div className='flex items-center gap-2'>
                                         <Stars stars={each.stars}/>
-                                        {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
+                                        {each.rating > 0 && <p className='text-sm text-silver'>{each.rating}</p>}
                                     </div>
                                     <div className='flex items-center'>
-                                        <p className='text-sm line-through text-silver'>${each.basePrice.toFixed(2)}</p>
-                                        <p className='text-base font-semibold ml-4 text-davysilver'>${each.discountPrice.toFixed(2)}</p>
+                                        <p className='text-sm line-through text-silver'>${each.price}</p>
+                                        <p className='text-base font-semibold ml-4 text-davysilver'>${each.discount}</p>
                                     </div>
                                 </div>
                             </div>

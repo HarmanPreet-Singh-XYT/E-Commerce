@@ -11,6 +11,7 @@ interface Review {
     comment: string;
     username: string;
     createdat:string;
+    productstars:number;
 }
 interface star{
     one:number;
@@ -199,18 +200,18 @@ const ReviewSection = ({data,reviewCount,setloading,setdialogType,setselectedRev
                                 <div className="flex flex-col sm:flex-row items-center max-lg:justify-center w-full h-full">
                                     <div
                                         className="sm:pr-3 sm:border-r border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-4xl text-black text-center mb-4">{reviewCount}</h2>
+                                        <h2 className="font-manrope font-bold text-4xl text-black text-center mb-4">{data.length > 0 ? data[0].productstars : 0}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <Stars size={40} stars={reviewCount}/>
+                                            <Stars size={40} stars={data.length > 0 ? data[0].productstars : 0}/>
                                         </div>
                                         <p className="font-normal leading-8 text-gray-400">{reviewCount} Ratings</p>
                                     </div>
 
                                     <div
                                         className="sm:pl-3 sm:border-l border-gray-200 flex items-center justify-center flex-col">
-                                        <h2 className="font-manrope font-bold text-4xl text-black text-center mb-4">{data.length > 1 ? data[0].rating : 0}</h2>
+                                        <h2 className="font-manrope font-bold text-4xl text-black text-center mb-4">{data.length > 0 ? data[0].rating : 0}</h2>
                                         <div className="flex items-center gap-3 mb-4">
-                                            <Stars size={40} stars={data.length > 1 ? data[0].rating : 0}/>
+                                            <Stars size={40} stars={data.length > 0 ? data[0].rating : 0}/>
                                         </div>
                                         <p className="font-normal leading-8 text-gray-400">Last Review</p>
                                     </div>

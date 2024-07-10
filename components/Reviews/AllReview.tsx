@@ -13,6 +13,7 @@ interface Review {
     comment: string;
     username: string;
     createdat: string;
+    productstars:number;
 }
 const AllReview = () => {
     const found = useRef<boolean>(true);
