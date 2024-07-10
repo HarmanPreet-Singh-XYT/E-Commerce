@@ -21,6 +21,7 @@ interface Review {
   comment: string;
   username: string;
   createdat: string;
+  productstars:number;
 }
 
 // Interface for images in imgcollection
