@@ -12,6 +12,7 @@ import Options from './Product/Options'
 import { cartAddHandler,wishlistAddHandler } from '@/app/api/itemLists'
 import { useApp } from '@/Helpers/AccountDialog'
 import ProductDialogs from './ProductDialogs'
+import Link from 'next/link'
 // Interface for individual reviews
 interface Review {
   reviewid: number;
@@ -96,6 +97,7 @@ const ProductPage = () => {
   const { appState } = useApp();
   const router = useRouter();
   const isLogged = appState.loggedIn;
+    const [btnLoading, setbtnLoading] = useState(false);
     const ref = useRef<any>(null);
     const colRef = useRef<string>('Default');
     const sizeRef = useRef<string>('Default');
@@ -189,17 +191,23 @@ const ProductPage = () => {
       return Math.round(percentageDiff);
     }
     async function itemStateUpdate(key:string){
+      setbtnLoading(true);
       switch (key) {
         case 'cart':
-        
         isLogged && await cartAddHandler({cartItemID:listID.cartItemID,userID:defaultAccount.userID,productID:data.productid,productPrice:parseInt(data.discountedprice),colorID:selectedColor.colorid,sizeID:selectedSize.sizeid,quantity})
         dispatch(addItemToCart(cartItemData));
+        setbtnLoading(false)
           break;
         case 'wishlist':
         isLogged && await wishlistAddHandler({wishlistItemID:listID.wishlistItemID,userID:defaultAccount.userID,productID:data.productid})
         dispatch(addItemToWishlist(wishlistItem));
+        setbtnLoading(false);
           break;
       }
+    }
+    function categoryLink(maincategory:string,category:string){
+      const splitCat = category.split(' ').join('-');
+      return `/sub-category/${maincategory}/${splitCat}`
     }
     return (
       <>
@@ -214,7 +222,7 @@ const ProductPage = () => {
             </div>
         </div>
         <div className='flex justify-center gap-10 flex-col items-center lg:flex-row'>
-            <div className='flex img-wrapper flex-col gap-5 w-[90%] md:w-[60%] px-2 lg:w-[600px] lg:h-[600px] items-center'>
+            <div className='flex img-wrapper flex-col gap-5 w-[90%] md:w-[60%] px-2 lg:w-[600px] lg:h-[600px] rounded-xl items-center'>
                 <img className='border-[1px] rounded-xl w-[100%] lg:w-[600px] lg:h-[600px] hover-zoom' src={selectedImage.imgLink} alt={selectedImage.imgAlt}/>
                 <div className='flex gap-5 justify-center'>
                 {data.imgcollection.map((each, index) => (
@@ -264,18 +272,30 @@ const ProductPage = () => {
                   <Options sizes={data.sizes} colors={data.colors} selectedColor={selectedColor} setSelectedColor={setSelectedColor} selectedSize={selectedSize} setSelectedSize={setSelectedSize} colRef={colRef} sizeRef={sizeRef} cartItemData={cartItemData}/>
                 {/*  */}
                 <div className='flex gap-5'>
-                    <button onClick={()=>itemStateUpdate('cart')} className='w-[200px] h-[50px] bg-yellow-400 rounded-lg hover:border-yellow-400 hover:border-2 hover:bg-white transition-colors duration-300 font-semibold'>ADD TO CART</button>
+                    <button disabled={btnLoading} onClick={()=>itemStateUpdate('cart')} className='w-[200px] h-[50px] bg-yellow-400 rounded-lg hover:border-yellow-400 hover:border-2 hover:bg-white transition-colors duration-300 font-semibold'>
+                    {btnLoading ? <div className="relative"><div className=''>
+        <div className='drop-shadow-custom-xl rounded-xl w-[120px] mx-auto'>
+            <div className="border-gray-300 my-auto mx-auto h-8 w-8 animate-spin rounded-full border-8 border-t-blue-600" />
+        </div>
+        
+    </div></div> : "ADD TO CART"}
+                      </button>
                     <button onClick={()=>router.push(`/checkout/${data.productid}/${selectedSize.sizeid}/${selectedColor.colorid}`)} className='w-[200px] h-[50px] rounded-lg font-semibold border-yellow-400 hover:bg-yellow-400 transition-colors duration-300 border-[2px]'>BUY NOW</button>
                 </div>
                 <div className='flex gap-10 text-silver text-sm border-b-[1px] pb-10'>
-                    <div onClick={()=>itemStateUpdate('wishlist')} className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>
+                    <button disabled={btnLoading} onClick={()=>itemStateUpdate('wishlist')} className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>
                         <HeartIcon width={25}/>
-                        <p>Add to wishlist</p>
-                    </div>
-                    <div className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>
+                        <div>{btnLoading ? <div className="relative"><div className=''>
+                        <div className='drop-shadow-custom-xl rounded-xl w-[120px] mx-auto'>
+                            <div className="border-gray-300 my-auto mx-auto h-8 w-8 animate-spin rounded-full border-8 border-t-blue-600" />
+                        </div>
+                        
+                      </div></div> : "Add to wishlist"}</div>
+                    </button>
+                    <Link href={categoryLink(data.categories.maincategory,data.categories.subcategory)} className='flex hover:text-yellow-400 transition-colors duration-300 items-center gap-1 cursor-pointer'>
                         <GlobeAltIcon width={25}/>
                         <p>Find alternate products</p>
-                    </div>
+                    </Link>
                 </div>
                 {/* <p className='font-semibold mt-5'>Eligible for Delivery?</p>
                 <div className='flex items-center gap-10 text-sm'>

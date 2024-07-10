@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Dialog, DialogPanel, Radio, RadioGroup, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useAppDispatch,useAppSelector } from '@/app/hooks'
@@ -54,10 +54,11 @@ const IDGenerator = ()=>{
   const ID = Math.round(Math.random() * 1000 * 1000 * 100);
   return ID;
 }
-export default function CategoryQuickview({ product, open, setOpen }: ProductCardProps) {
+export default function Quickview({ product, open, setOpen }: ProductCardProps) {
   // const [open, setOpen] = useState(false)
   const colRef = useRef<string>('Default');
   const sizeRef = useRef<string>('Default');
+  const [btnLoading, setbtnLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState(product.colors.length===0 ? {colorid:0,name:'Default',colorname:'Default',colorclass:''} : product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes.length===0 ? {sizeid:0,name:'Default',sizename:'Default',instock:true} : product.sizes[0]);
   const { appState } = useApp();
@@ -77,9 +78,16 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
   };
   const isLogged = appState.loggedIn;
   async function addCart(){
+    setbtnLoading(true);
     isLogged && await cartAddHandler({cartItemID:listID.cartItemID,userID:defaultAccount.userID,productID:product.productid,productPrice:parseInt(product.discount),colorID:selectedColor.colorid,sizeID:selectedSize.sizeid,quantity:1})
     dispatch(addItemToCart(cartItemData));
+    setbtnLoading(false);
   }
+  useEffect(() => {
+    setSelectedColor(product.colors[0]);
+    setSelectedSize(product.sizes[0]);
+  }, [open])
+  
   return (
     <Transition show={open}>
       <Dialog className="relative z-50" onClose={setOpen}>
@@ -135,9 +143,9 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                           <div className="flex items-center">
                             <Stars stars={product.stars}/>
                             <p className="sr-only">{product.stars} out of 5 stars</p>
-                            <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            <Link href={`/all-reviews/${product.productid}`} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                               {product.reviewCount} reviews
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </section>
@@ -157,9 +165,9 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                               onChange={setSelectedColor}
                               className="mt-4 flex items-center space-x-3"
                             >
-                              {product.colors.map((color) => (
+                              {product.colors.map((color,index) => (
                                 <Radio
-                                  key={color.name}
+                                  key={index}
                                   value={color}
                                   aria-label={color.name}
                                   className={({ focus, checked }) =>
@@ -197,9 +205,9 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                               onChange={setSelectedSize}
                               className="mt-4 grid grid-cols-4 gap-4"
                             >
-                              {product.sizes.map((size) => (
+                              {product.sizes.map((size,index) => (
                                 <Radio
-                                  key={size.sizename}
+                                  key={index}
                                   value={size}
                                   disabled={!size.instock}
                                   className={({ focus }) =>
@@ -250,7 +258,12 @@ export default function CategoryQuickview({ product, open, setOpen }: ProductCar
                             onClick={addCart}
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
-                            Add to bag
+                            {btnLoading ? <div className="relative"><div className=''>
+                            <div className='drop-shadow-custom-xl rounded-xl w-[120px] mx-auto'>
+                                <div className="border-gray-300 my-auto mx-auto h-8 w-8 animate-spin rounded-full border-8 border-t-blue-600" />
+                            </div>
+                            
+                        </div></div> : "Add to bag"}
                           </button>
                           <div className='w-full flex justify-center mt-2'>
                           <Link href={`/product/${product.productid}`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">

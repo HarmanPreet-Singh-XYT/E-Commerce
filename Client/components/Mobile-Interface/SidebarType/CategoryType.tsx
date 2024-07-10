@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
-import { allCategories, bestSell, leftStatus } from '@/app/data'
+import { allCategories, leftStatus } from '@/app/data'
 import { useMenu } from '@/Helpers/MenuContext';
-import Stars from '@/components/ProductUi/Stars';
 import Link from 'next/link';
 const CategoryType = () => {
     const { toggleSidebar } = useMenu();
@@ -49,26 +48,6 @@ const CategoryType = () => {
 
                 </div>
                 <div className='h-[500px] border-t-[1px] w-[80%] pt-2'>
-                {/* <p className='font-bold tracking-[2px] text-md'>BEST SELLERS</p>
-                <div className='flex flex-col'>
-                    {bestSell.map((each,index)=>
-                        <div key={index} className='flex mt-5'>
-                            <Link href={`/best-sales/${each.productID}`}><img className='w-[75px] h-[75px] rounded-md' src={each.imgLink}/></Link>
-                            <div className='ml-5'>
-                                <Link href={`/best-sales/${each.productID}`} className='tracking-[1px]'>{each.title}</Link>
-                                <div className='flex items-center gap-2'>
-                                        <Stars stars={each.stars}/>
-                                        {each.ratingCount > 0 && <p className='text-sm text-silver'>{each.ratingCount}</p>}
-                                </div>
-                                <div className='flex items-center'>
-                                    <p className='text-sm line-through'>${each.basePrice}</p>
-                                    <p className='text-lg font-bold ml-4'>${each.discountPrice}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    </div> */}
-
                     <p className='text-salmon font-bold text-lg tracking-[2px]'>Categories</p>
                     {allCategories.map((each,index)=>
                     <div key={index}>

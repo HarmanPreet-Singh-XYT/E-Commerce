@@ -1,6 +1,32 @@
-import React from 'react'
+import contactHandler from '@/app/api/contact';
+import React, { useState } from 'react'
 
 const ContactForm = () => {
+    const [loading, setloading] = useState(false);
+    const [message, setmessage] = useState<null | string>(null);
+    async function formSubmit(e:any){
+        e.preventDefault();
+        setloading(true);
+        const data = {
+            name:e.target.name.value,
+            email:e.target.email.value,
+            phone:e.target.phone.value,
+            method:e.target.radiogroup.value,
+            message:e.target.message.value
+        }
+        const response = await contactHandler(data);
+        switch (response.status) {
+            case 200:
+                setmessage(`#${response.data.id} - Successfully sent your message, we will contact you under 24 hours. Thank you.`)
+                setloading(false);
+                break;
+        
+            default:
+                setmessage('We faced an error while processing your request. Please try again later.')
+                setloading(false);
+                break;
+        }
+    }
   return (
     <section className="py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -37,31 +63,39 @@ const ContactForm = () => {
               </div>
           </div>
 
-          <div className="bg-gray-50 p-5 lg:p-11 lg:rounded-r-2xl rounded-2xl">
+          <form action={'/'} onSubmit={formSubmit} className="bg-gray-50 p-5 lg:p-11 lg:rounded-r-2xl rounded-2xl">
               <h2 className="text-indigo-600 font-manrope text-4xl font-semibold leading-10 mb-11">Send Us A Message</h2>
-              <input type="text" className="w-full h-12 text-gray-600 placeholder-gray-400  shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Name"/>
-              <input type="text" className="w-full h-12 text-gray-600 placeholder-gray-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Email"/>
-              <input type="text" className="w-full h-12 text-gray-600 placeholder-gray-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Phone"/>
+              <input required type="text" name='name' id='name' className="w-full h-12 text-gray-600 placeholder-gray-400  shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Name"/>
+              <input required type="text" name='email' id='email' className="w-full h-12 text-gray-600 placeholder-gray-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Email"/>
+              <input required type="text" minLength={10} maxLength={10} name='phone' id='phone' className="w-full h-12 text-gray-600 placeholder-gray-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Phone"/>
               <div className="mb-10">
                   <h4 className="text-gray-500 text-lg font-normal leading-7 mb-4">Preferred method  of communication</h4>
                   <div className="flex">
-                      <div className="flex items-center mr-11">
-                          <input id="radio-group-1" type="radio" name="radio-group" className="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100"/>
-                          <label  className="flex items-center cursor-pointer text-gray-500 text-base font-normal leading-6">
-                              <span className="border border-gray-300 rounded-full mr-2 w-4 h-4  ml-2 "></span> Email 
+                      <div className="flex items-center mr-11 gap-2">
+                          <input defaultChecked value={'email'} id="radiogroup" type="radio" name="radiogroup" className="checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100"/>
+                          <label className="flex items-center cursor-pointer text-gray-500 text-base font-normal leading-6">
+                            Email 
                           </label>
                       </div>
-                      <div className="flex items-center">
-                          <input id="radio-group-2" type="radio" name="radio-group" className="hidden checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100"/>
+                      <div className="flex items-center gap-2">
+                          <input value={'phone'} id="radiogroup" type="radio" name="radiogroup" className="checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100"/>
                           <label  className="flex items-center cursor-pointer text-gray-500 text-base font-normal leading-6">
-                              <span className="border border-gray-300  rounded-full mr-2 w-4 h-4  ml-2 "></span> Phone 
+                            Phone 
                           </label>
                       </div>
                   </div>
               </div>
-              <textarea className="w-full h-32 text-gray-600 placeholder-gray-400 bg-transparent text-lg shadow-sm font-normal leading-7 rounded-lg border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Message"></textarea>
-              <button className="w-full h-12 text-white text-base font-semibold leading-6 rounded-full transition-all duration-700 hover:bg-indigo-800 bg-indigo-600 shadow-sm">Send</button>
-      </div>
+              <textarea required name='message' id='message' className="w-full h-32 text-gray-600 placeholder-gray-400 bg-transparent text-lg shadow-sm font-normal leading-7 rounded-lg border border-gray-200 focus:outline-none pl-4 mb-10" placeholder="Message"></textarea>
+              <button type='submit' disabled={loading} className="w-full h-12 text-white text-base font-semibold leading-6 rounded-full transition-all duration-700 hover:bg-indigo-800 bg-indigo-600 shadow-sm">
+              {loading ? <div className="relative"><div className=''>
+                <div className='drop-shadow-custom-xl rounded-xl w-[120px] mx-auto'>
+                    <div className="border-gray-300 my-auto mx-auto h-8 w-8 animate-spin rounded-full border-8 border-t-blue-600" />
+                </div>
+                
+            </div></div> : "Send"}
+              </button>
+              {message!=null && <p className='text-xl font-medium'>{message}</p>}
+        </form>
     </div>
     </div>
   </section>

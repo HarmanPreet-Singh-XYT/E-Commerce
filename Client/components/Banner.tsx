@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { banners } from '@/app/data';
 import { bannerDataHandler } from '@/app/api/homeData';
 import Loading from './Loading';
 interface Banner {
@@ -20,11 +19,11 @@ const Banner = () => {
   const [loading, setloading] = useState(true);
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.current.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + data.current.length) % data.current.length);
   };
   async function sync(){
     const res = await bannerDataHandler();

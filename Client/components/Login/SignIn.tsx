@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Checkbox } from '@headlessui/react'
 import useAuth from '@/controllers/Authentication';
 import { useGoogleLogin } from '@react-oauth/google';
-import authDataHandler from '@/app/api/googleAuth';
 import Loading from '../Loading';
 const SignIn = () => {
     const [enabled, setEnabled] = useState(false)

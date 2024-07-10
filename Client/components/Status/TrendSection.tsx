@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { trendings } from '@/app/data'
 import TrendingPrimary from './TrendingSec'
 import { topDataHandler } from '@/app/api/homeData';
 import Loading from '../Loading';

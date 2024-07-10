@@ -108,7 +108,7 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
             case 'newaddress':
                 await userAddressAddHandler(data,userID).then((res)=>{
                     if(res.status===200){
-                        const newAddress = { ...data, addressID: res.addressID, is_default:false };
+                        const newAddress = addresses.length===0 ? { ...data, addressID: res.addressID, is_default:true } : { ...data, addressID: res.addressID, is_default:false };
                         dispatch(addAddress(newAddress));
                     }
                 })

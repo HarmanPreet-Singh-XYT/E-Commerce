@@ -31,7 +31,7 @@ const Navbar = () => {
                     <p className='text-sm text-silver'>FREE SHIPPING THIS WEEK ORDER OVER - $55</p>
                 </div>
                 <div>
-                    <Link href={'/seller-sign-in'} className='text-[18px] hidden sm:block text-sm font-medium'>Become a Seller</Link>
+                    <p className='text-[18px] hidden sm:block text-sm font-medium'>Shop Now</p>
                 </div>
             </div>
         </div>

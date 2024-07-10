@@ -1,6 +1,6 @@
 "use client"
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { bestSell, leftStatus } from '@/app/data';
+import { leftStatus } from '@/app/data';
 import Stars from '../ProductUi/Stars';
 import Link from 'next/link';
 import { sidebarDataHandler } from '@/app/api/homeData';

@@ -1,6 +1,5 @@
 
 import React from 'react'
-import { giftCards } from '@/app/data'
 import formatDate from '@/app/api/dateConvert'
 interface GiftCard {
   cardid: number;
@@ -23,7 +22,7 @@ const GiftCards = ({Component}:{Component:GiftCard[]}) => {
           {/* <button className='bg-primary-600 text-white px-4 py-2 rounded-xl'>Add Gift Card</button> */}
         </div>
         <div className='flex flex-col gap-4 py-2 px-2'>
-            {giftCards.length===0 && 
+            {Component.length===0 && 
                 <div className='flex font-medium flex-col items-center'>
                     <p>No Gift Cards Available</p>
                     {/* <p>Add Gift Card from Above Option</p> */}
