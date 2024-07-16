@@ -24,9 +24,9 @@ interface Address {
     postalCode:string;
     userName:string;
 }
+const url = process.env.BACKEND_URL;
+const authKey = process.env.AUTH_KEY as string;
 export async function userUpdateHandler({ userID,userName, email, mobile_number, dob,password }:propForm) {
-  const url = process.env.BACKEND_URL;
-  const authKey = process.env.AUTH_KEY as string;
   const sendingKey = await encrypt(authKey);
     
   try {
@@ -40,8 +40,6 @@ export async function userUpdateHandler({ userID,userName, email, mobile_number,
   }
 };
 export async function userAddressUpdateHandler({ addressType,contactNumber,addressLine1,addressLine2,city,state,country,postalCode,userName }:Address,userID:number,addressID:number) {
-    const url = process.env.BACKEND_URL;
-    const authKey = process.env.AUTH_KEY as string;
     const sendingKey = await encrypt(authKey);
     try {
       const response = await axios.put(`${url}/api/update/user/update/address`, { userID,addressID,addressType,contactNumber,addressLine1,addressLine2,city,state,country,postalCode,userName }, {
@@ -54,8 +52,6 @@ export async function userAddressUpdateHandler({ addressType,contactNumber,addre
     }
 };
 export async function userAddressAddHandler({ addressType,contactNumber,addressLine1,addressLine2,city,state,country,postalCode,userName }:Address,userID:number) {
-    const url = process.env.BACKEND_URL;
-    const authKey = process.env.AUTH_KEY as string;
     const sendingKey = await encrypt(authKey);
       
     try {
@@ -69,8 +65,6 @@ export async function userAddressAddHandler({ addressType,contactNumber,addressL
     }
 };
 export async function userAddressDeleteHandler(addressID:number,userID:number) {
-  const url = process.env.BACKEND_URL;
-  const authKey = process.env.AUTH_KEY as string;
   const sendingKey = await encrypt(authKey);
     
   try {
@@ -85,8 +79,6 @@ export async function userAddressDeleteHandler(addressID:number,userID:number) {
   }
 };
 export async function userAddressDefaultHandler(addressID:number,userID:number) {
-  const url = process.env.BACKEND_URL;
-  const authKey = process.env.AUTH_KEY as string;
   const sendingKey = await encrypt(authKey);
     
   try {
@@ -96,6 +88,17 @@ export async function userAddressDefaultHandler(addressID:number,userID:number) 
     return {status:response.status}
   } catch (error) {
     
+    return {status:500,error: 'Internal Server Error' }
+  }
+};
+export async function cartQuantityHandler(cartItemID:number,productID:number,userID:number,action:string) {
+  const sendingKey = await encrypt(authKey);
+  try {
+    const response = await axios.post(`${url}/api/update/user/cart-quantity`,{ cartItemID,productID,userID,action }, {
+      headers: { authorization:`Bearer ${sendingKey}` },
+    });
+    return {status:response.status}
+  } catch (error) {
     return {status:500,error: 'Internal Server Error' }
   }
 };

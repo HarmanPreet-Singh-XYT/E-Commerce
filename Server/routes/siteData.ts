@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import { client } from '../data/DB';
+import { categorySchema, getProductNameSchema } from '../validators/siteDataValidation';
+import { matchedData, validationResult } from 'express-validator';
 const router = express.Router();
 const articleTable = 'articles';
 const categoryTable = 'categories';
@@ -104,26 +106,28 @@ const getImage = async (productID:number) => {
         return {imageid:0,imglink:'',imgalt:''};
     }
 };
-router.get('/category/:category',async (req:Request, res:Response) => {
-    const { category } = req.params;
-    const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
-    const value = [category.toUpperCase()];
-
-    try {
-        const response = await client.query(query, value);
-        const productsPromises = response.rows.map(each => fetchProducts(each.categoryid));
-        const products = await Promise.all(productsPromises);
-
-        const data = {
-            categories: response.rows,
-            products: products.flat() // Flatten the array of products
-        };
-
-        res.status(200).json({ data });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server Error' });
-    }
+router.get('/category/:category',categorySchema,async (req:Request, res:Response) => {
+    if(validationResult(req).isEmpty()){
+        const { category } = req.params;
+        const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
+        const value = [category.toUpperCase()];
+    
+        try {
+            const response = await client.query(query, value);
+            const productsPromises = response.rows.map(each => fetchProducts(each.categoryid));
+            const products = await Promise.all(productsPromises);
+    
+            const data = {
+                categories: response.rows,
+                products: products.flat() // Flatten the array of products
+            };
+    
+            res.status(200).json({ data });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Server Error' });
+        }
+    }else res.status(500).json({error:'Validation Error'})
 });
 const fetchFilteredProducts = async (minPrice:string,maxPrice:string,categoryID:number,minRating:string) => {
     const query = `SELECT products.productid,products.title,categories.name AS category,products.price,products.discount,productparams.stars,productparams.isnew,productparams.issale,productparams.isdiscount FROM products 
@@ -161,92 +165,98 @@ const fetchFilteredProducts = async (minPrice:string,maxPrice:string,categoryID:
     }
 };
 router.get('/filter/category/:minPrice/:maxPrice/:categoryID/:minRating/:categoryName',async (req:Request,res:Response)=>{
-    const {minPrice,maxPrice,categoryID,minRating,categoryName} = req.params;
-    try {
-        const query = `SELECT products.productid,products.title,categories.name AS category,products.price,products.discount,productparams.stars,productparams.isnew,productparams.issale,productparams.isdiscount FROM products 
-        INNER JOIN categories ON products.categoryid = categories.categoryid 
-        INNER JOIN productparams ON products.productid = productparams.productid
-        WHERE products.categoryid = $1 AND products.price >= $2 AND products.price <= $3 AND productparams.stars >= $4`;
-        if(categoryID!='0'){
-            const response = await client.query(query, [categoryID,minPrice,maxPrice,minRating])
-            if (response.rows.length === 0) res.status(200).json({data:[]});
-
-            const products = await Promise.all(
-            response.rows.map(async (product) => {
-                const productID = product.productid;
-
-                const [colors, sizes, reviewCount,images] = await Promise.all([
-                    getColors(productID),
-                    getSizes(productID),
-                    review(productID),
-                    getImage(productID)
-                ]);
-
-                return {
-                    ...product,
-                    colors,
-                    sizes,
-                    reviewCount,
-                    images
-                };
-                
-            }));
-            return res.status(200).json({data:products});
-        } else {
-            const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
-            const value = [categoryName.toUpperCase()];
-            const response = await client.query(query, value);
-            const productsPromises = response.rows.map(each => fetchFilteredProducts(minPrice,maxPrice,each.categoryid,minRating));
-            const products = await Promise.all(productsPromises);
-            return res.status(200).json({data:products.flat()});
-        } 
-    } catch (error) {
-        return res.status(500);
-    }
+    if(validationResult(req).isEmpty()){
+        const {minPrice,maxPrice,categoryID,minRating,categoryName} = matchedData(req);
+        try {
+            const query = `SELECT products.productid,products.title,categories.name AS category,products.price,products.discount,productparams.stars,productparams.isnew,productparams.issale,productparams.isdiscount FROM products 
+            INNER JOIN categories ON products.categoryid = categories.categoryid 
+            INNER JOIN productparams ON products.productid = productparams.productid
+            WHERE products.categoryid = $1 AND products.price >= $2 AND products.price <= $3 AND productparams.stars >= $4`;
+            if(categoryID!='0'){
+                const response = await client.query(query, [categoryID,minPrice,maxPrice,minRating])
+                if (response.rows.length === 0) res.status(200).json({data:[]});
+    
+                const products = await Promise.all(
+                response.rows.map(async (product) => {
+                    const productID = product.productid;
+    
+                    const [colors, sizes, reviewCount,images] = await Promise.all([
+                        getColors(productID),
+                        getSizes(productID),
+                        review(productID),
+                        getImage(productID)
+                    ]);
+    
+                    return {
+                        ...product,
+                        colors,
+                        sizes,
+                        reviewCount,
+                        images
+                    };
+                    
+                }));
+                return res.status(200).json({data:products});
+            } else {
+                const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
+                const value = [categoryName.toUpperCase()];
+                const response = await client.query(query, value);
+                const productsPromises = response.rows.map(each => fetchFilteredProducts(minPrice,maxPrice,each.categoryid,minRating));
+                const products = await Promise.all(productsPromises);
+                return res.status(200).json({data:products.flat()});
+            } 
+        } catch (error) {
+            return res.sendStatus(500);
+        }
+    }else res.status(500).json({error:'Validation Error'})
+    
 });
 router.get('/filter/category-only/:categoryID/:categoryName',async (req:Request,res:Response)=>{
-    const {categoryID,categoryName} = req.params;
-    try {
-        const query = `SELECT products.productid,products.title,categories.name AS category,products.price,products.discount,productparams.stars,productparams.isnew,productparams.issale,productparams.isdiscount FROM products 
-        INNER JOIN categories ON products.categoryid = categories.categoryid 
-        INNER JOIN productparams ON products.productid = productparams.productid
-        WHERE products.categoryid = $1`;
-        if(categoryID!='0'){
-            const response = await client.query(query, [categoryID])
-            if (response.rows.length === 0) res.status(200).json({data:[]});
-
-            const products = await Promise.all(
-            response.rows.map(async (product) => {
-                const productID = product.productid;
-
-                const [colors, sizes, reviewCount,images] = await Promise.all([
-                    getColors(productID),
-                    getSizes(productID),
-                    review(productID),
-                    getImage(productID)
-                ]);
-
-                return {
-                    ...product,
-                    colors,
-                    sizes,
-                    reviewCount,
-                    images
-                };
-                
-            }));
-            return res.status(200).json({data:products});
-        } else {
-            const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
-            const value = [categoryName.toUpperCase()];
-            const response = await client.query(query, value);
-            const productsPromises = response.rows.map(each => fetchProducts(each.categoryid));
-            const products = await Promise.all(productsPromises);
-            return res.status(200).json({data:products.flat()});
-        } 
-    } catch (error) {
-        return res.status(500)
-    }
+    if(validationResult(req).isEmpty()){
+        const {categoryID,categoryName} = matchedData(req);
+        try {
+            const query = `SELECT products.productid,products.title,categories.name AS category,products.price,products.discount,productparams.stars,productparams.isnew,productparams.issale,productparams.isdiscount FROM products 
+            INNER JOIN categories ON products.categoryid = categories.categoryid 
+            INNER JOIN productparams ON products.productid = productparams.productid
+            WHERE products.categoryid = $1`;
+            if(categoryID!='0'){
+                const response = await client.query(query, [categoryID])
+                if (response.rows.length === 0) res.status(200).json({data:[]});
+    
+                const products = await Promise.all(
+                response.rows.map(async (product) => {
+                    const productID = product.productid;
+    
+                    const [colors, sizes, reviewCount,images] = await Promise.all([
+                        getColors(productID),
+                        getSizes(productID),
+                        review(productID),
+                        getImage(productID)
+                    ]);
+    
+                    return {
+                        ...product,
+                        colors,
+                        sizes,
+                        reviewCount,
+                        images
+                    };
+                    
+                }));
+                return res.status(200).json({data:products});
+            } else {
+                const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
+                const value = [categoryName.toUpperCase()];
+                const response = await client.query(query, value);
+                const productsPromises = response.rows.map(each => fetchProducts(each.categoryid));
+                const products = await Promise.all(productsPromises);
+                return res.status(200).json({data:products.flat()});
+            } 
+        } catch (error) {
+            return res.sendStatus(500);
+        }
+    }else res.status(500).json({error:'Validation Error'})
+    
 });
 async function searchProducts(productName:string){
     const query = `SELECT products.productid, products.title, categories.name AS category, 
@@ -340,31 +350,36 @@ const removeDuplicates = (products: any[]) => {
       return !duplicate;
     });
 };
-router.get('/search/product/:productName',async(req:Request,res:Response)=>{
-    const {productName} = req.params;
-    const filteredProductName = productName.split('-');
-    try {
-        const productsPromises = filteredProductName.map(each => searchProducts(each));
-        const products = await Promise.all(productsPromises);
-        const flatProducts = products.flat();
-        const uniqueProducts = removeDuplicates(flatProducts);
-        return res.status(200).json({data:uniqueProducts});
-    } catch (error) {
-        return res.status(500)
-    }
+router.get('/search/product/:productName',getProductNameSchema, async(req:Request,res:Response)=>{
+    if(validationResult(req).isEmpty()){
+        const {productName} = req.params;
+        const filteredProductName = productName.split('-');
+        try {
+            const productsPromises = filteredProductName.map(each => searchProducts(each));
+            const products = await Promise.all(productsPromises);
+            const flatProducts = products.flat();
+            const uniqueProducts = removeDuplicates(flatProducts);
+            return res.status(200).json({data:uniqueProducts});
+        } catch (error) {
+            return res.status(500)
+        }
+    }else res.status(500).json({error:'Validation Error'})
 });
 router.get('/search/filtered-product/:productName/:minPrice/:maxPrice/:rating',async(req:Request,res:Response)=>{
-    const {productName,minPrice,maxPrice,rating} = req.params;
-    const filteredProductName = productName.split('-');
-    try {
-        const productsPromises = filteredProductName.map(each => searchFilteredProducts(each,minPrice,maxPrice,rating));
-        const products = await Promise.all(productsPromises);
-        const flatProducts = products.flat();
-        const uniqueProducts = removeDuplicates(flatProducts);
-        return res.status(200).json({data:uniqueProducts});
-    } catch (error) {
-        return res.status(500)
-    }
+    if(validationResult(req).isEmpty()){
+        const {productName,minPrice,maxPrice,rating} = req.params;
+        const filteredProductName = productName.split('-');
+        try {
+            const productsPromises = filteredProductName.map(each => searchFilteredProducts(each,minPrice,maxPrice,rating));
+            const products = await Promise.all(productsPromises);
+            const flatProducts = products.flat();
+            const uniqueProducts = removeDuplicates(flatProducts);
+            return res.status(200).json({data:uniqueProducts});
+        } catch (error) {
+            return res.sendStatus(500);
+        }
+    }else res.status(500).json({error:'Validation Error'})
+    
 });
 // Helper function to capitalize the first letter of a string
 const capitalizeFirstLetter = (string: string) => {
@@ -379,35 +394,39 @@ const formatSubCategory = (string: string) => {
     .join(' ');
 };
 router.get('/sub-category/:mainCategory/:subCategory', async (req: Request, res: Response) => {
-    const { mainCategory, subCategory } = req.params;
+    if(validationResult(req).isEmpty()){
+        const { mainCategory, subCategory } = req.params;
   
-    // Capitalize mainCategory
-    const formattedMainCategory = mainCategory.toUpperCase();
-  
-    // Format subCategory
-    const formattedSubCategory = formatSubCategory(subCategory);
-    const query = `SELECT categoryid FROM categories WHERE maincategory = $1 AND name = $2`;
-    try {
-      // Assuming you have a function to query the database
-      const queryCategory = await client.query(query,[formattedMainCategory,formattedSubCategory]);
-      if(queryCategory.rows.length > 0) {
-        const categoryID = queryCategory.rows[0].categoryid;
-        const products = await fetchProducts(categoryID);
-        return res.status(200).json({data:products,categoryid:categoryID});
-      }
-      return res.status(200).json({data:[],categoryid:0});
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return res.status(500).json({ error: 'Failed to fetch data' });
-    }
+        // Capitalize mainCategory
+        const formattedMainCategory = mainCategory.toUpperCase();
+      
+        // Format subCategory
+        const formattedSubCategory = formatSubCategory(subCategory);
+        const query = `SELECT categoryid FROM categories WHERE maincategory = $1 AND name = $2`;
+        try {
+          // Assuming you have a function to query the database
+          const queryCategory = await client.query(query,[formattedMainCategory,formattedSubCategory]);
+          if(queryCategory.rows.length > 0) {
+            const categoryID = queryCategory.rows[0].categoryid;
+            const products = await fetchProducts(categoryID);
+            return res.status(200).json({data:products,categoryid:categoryID});
+          }
+          return res.status(200).json({data:[],categoryid:0});
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          return res.status(500).json({ error: 'Failed to fetch data' });
+        }
+    }else res.status(500).json({error:'Validation Error'})
 });
 router.get('/sub-category/filtered-product/:categoryID/:minPrice/:maxPrice/:rating',async(req:Request,res:Response)=>{
-    const {categoryID,minPrice,maxPrice,rating} = req.params;
-    try {
-        const products = await Promise.all(await fetchFilteredProducts(minPrice,maxPrice,parseInt(categoryID),rating));
-        return res.status(200).json({data:products});
-    } catch (error) {
-        return res.status(500)
-    }
+    if(validationResult(req).isEmpty()){
+        const {categoryID,minPrice,maxPrice,rating} = matchedData(req);
+        try {
+            const products = await Promise.all(await fetchFilteredProducts(minPrice,maxPrice,parseInt(categoryID),rating));
+            return res.status(200).json({data:products});
+        } catch (error) {
+            return res.status(500)
+        }
+    }else res.status(500).json({error:'Validation Error'})
 });
 export default router;

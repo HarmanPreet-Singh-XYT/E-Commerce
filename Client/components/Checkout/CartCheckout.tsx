@@ -18,6 +18,7 @@ interface ProductDetails {
   imglink: string;
   imgalt: string;
   shippingcost: number;
+  quantity:number;
 }
 interface Address {
     addressID:number;
@@ -72,11 +73,11 @@ const CartCheckout = () => {
         userName:'',
         is_default:true
     });
-    const shipping = data.reduce((sum, item) => sum + item.shippingcost, 0);
-    const taxes = data.reduce((sum, item) => sum + (parseFloat(item.price) * (18 / 100)), 0);
-    const subTotal = data.reduce((sum, item) => sum + parseFloat(item.price), 0);
-    const subTotalWithoutTax = data.reduce((sum, item) => sum + (parseFloat(item.price)-(parseFloat(item.price)*18/100)), 0);
-    const discount = data.reduce((sum, item) => sum + (parseFloat(item.price) - parseFloat(item.discount)), 0);
+    const shipping = data.reduce((sum, item) => (sum + item.shippingcost)*item.quantity, 0);
+    const taxes = data.reduce((sum, item) => sum + (parseFloat(item.price) * (18 / 100))*item.quantity, 0);
+    const subTotal = data.reduce((sum, item) => sum + parseFloat(item.price)*item.quantity, 0);
+    const subTotalWithoutTax = data.reduce((sum, item) => sum + (parseFloat(item.price)-(parseFloat(item.price)*18/100))*item.quantity, 0);
+    const discount = data.reduce((sum, item) => sum + (parseFloat(item.price) - parseFloat(item.discount))*item.quantity, 0);
     const totalAmount = subTotal + paymentCharge - discount + shipping;
 
     const formattedSubTotal = subTotalWithoutTax.toFixed(2);
@@ -361,7 +362,7 @@ const CartCheckout = () => {
                         <h4 className="font-medium text-xl">{each.title}</h4>
                         {each.sizename != null && <p className='text-sm font-medium'>Size: <span className='font-semibold'>{each.sizename}</span></p>}
                         {each.colorname != null && <p className='text-sm font-medium'>Color: <span className='font-semibold'>{each.colorname}</span></p>}
-                        <p className='text-sm text-silver'>Quantity: <span className='text-black font-semibold'>{1}</span></p>
+                        <p className='text-sm text-silver'>Quantity: <span className='text-black font-semibold'>{each.quantity}</span></p>
                     </div>
                     <div>
                         <p className='font-medium text-3xl'>${each.discount}</p>

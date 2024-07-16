@@ -50,7 +50,7 @@ const MenuType = () => {
             <div className='w-[90%]'>
                 {navBtns.map((each,index)=> each.name != 'Categories' &&
                 <div key={index}>
-                    <div onClick={()=>handleToggle(index)} className='flex mt-3 border-b-[1px] pb-3 tracking-wider justify-between hover:cursor-pointer'>
+                    <div onClick={()=>{each.name!='Blog' ? handleToggle(index) : router.push('/blog')}} className='flex mt-3 border-b-[1px] pb-3 tracking-wider justify-between hover:cursor-pointer'>
                         <p className='text-gray-700'>{each.name}</p>
                         {each.isExtendable && <p className='text-silver font-bold'>{collapsedIndex === index ? '-' : '+'}</p>}
                     </div>

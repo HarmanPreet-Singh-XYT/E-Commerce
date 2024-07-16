@@ -7,6 +7,7 @@ import OtpInput from 'react-otp-input';
 import resetPassHandler from '@/app/api/resetPass';
 import Countdown from './otpTimer';
 import { useRouter } from 'next/navigation';
+import Loading from '../Loading';
 interface userData{
     email:string;
     password:string;
@@ -21,27 +22,34 @@ const ForgotPass = () => {
     const [expiredOTP, setExpiredOTP] = useState(false);
     const [incorrectOTP, setIncorrectOTP] = useState(false);
     const [form, setForm] = useState<userData>({email:'',password:''});
+    const [loading, setloading] = useState(false);
     const {toggleIsPassword,appState,toggleServerError,toggleIsIncorrect} = useApp();
     async function resetPassProceed(data:userData,otp:string){
+        setloading(true);
         const dataStructure = {email:data.email,password:data.password,otp}
         const resetPassword = await resetPassHandler(dataStructure);
         switch (resetPassword.status) {
             case 200:
                 setSuccess(true);
+                setloading(false);
                 break;
             case 205:
                 setIncorrectOTP(true);
+                setloading(false);
                 break;
             case 210:
                 setExpiredOTP(true);
+                setloading(false);
                 break;
             default:
                 toggleServerError();
+                setloading(false);
                 break;
         }
     }
     async function resetPass(e:any) {
         e.preventDefault();
+        setloading(true);
         const data = {
             email:e.target.email.value,
             password:e.target.password.value,
@@ -52,24 +60,30 @@ const ForgotPass = () => {
             switch (sendMail.status) {
                 case 200:
                     setotpPopup(true);
+                    setloading(false);
                     break;
                 case 205:
                     toggleIsIncorrect();
+                    setloading(false);
                     break;
                 default:
                     toggleServerError;
+                    setloading(false);
                     break;
             }
         }else toggleIsPassword();
     };
     async function resendOTP(form:userData){
+        setloading(true);
         const sendMail = await forgotOTPHandler(form.email);
             switch (sendMail.status) {
                 case 200:
                     setResent(true);
+                    setloading(false);
                     break;
                 default:
                     toggleServerError;
+                    setloading(false);
                     break;
         }
     }
@@ -78,6 +92,7 @@ const ForgotPass = () => {
     }
     return (
         <section className={`bg-gray-50 h-screen w-screen flex items-start lg:items-center overflow-x-hidden ${(appState.isIncorrect || otpPopup || appState.isPassword) && 'blurbg'}`}>
+            {loading && <div className='w-full h-full absolute'>{loading && <div className='absolute left-0 right-0 top-[30%] z-50'><Loading/></div>}</div> }
             <Dialog open={otpPopup} onClose={() => setotpPopup(false)} className="relative z-40">
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
             <DialogPanel className="max-w-lg space-y-4 border bg-white p-12 rounded-xl text-center font-medium">
@@ -172,15 +187,15 @@ const ForgotPass = () => {
                                 <form onSubmit={(e)=>resetPass(e)} method='post' className="space-y-4 md:space-y-6 flex flex-col gap-4 lg:gap-0" action="/">
                                     <div data-validate = "Enter Email">
                                         <label className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                        <input required type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your email"/>
+                                        <input minLength={5} maxLength={128} required type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your email"/>
                                     </div>
                                     <div data-validate = "Enter Password">
                                         <label className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                        <input required type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
+                                        <input minLength={8} maxLength={32} required type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
                                     </div>
                                     <div>
                                         <label className="block mb-2 text-sm font-medium text-gray-900">Re-Enter Password</label>
-                                        <input required type="password" name="repassword" id="repassword" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
+                                        <input minLength={8} maxLength={32} required type="password" name="repassword" id="repassword" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
                                     </div>
                                     <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Get OTP & Reset Password</button>
                                 </form>

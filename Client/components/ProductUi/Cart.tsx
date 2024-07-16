@@ -2,12 +2,13 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useMenu } from '@/Helpers/MenuContext';
 import { useAppSelector,useAppDispatch } from '@/app/hooks';
-import { removeItemFromCart } from '@/features/UIUpdates/CartWishlist';
+import { removeItemFromCart, setCart } from '@/features/UIUpdates/CartWishlist';
 import { cartDeleteHandler } from '@/app/api/itemLists';
 import { useApp } from '@/Helpers/AccountDialog';
 import { useState } from 'react';
 import Loading from '../Loading';
 import Link from 'next/link';
+import { cartQuantityHandler } from '@/app/api/userUpdate';
 export default function Cart() {
   const { appState } = useApp();
   const [loading, setloading] = useState(false);
@@ -24,6 +25,26 @@ export default function Cart() {
     isLogged && await cartDeleteHandler({userID:defaultAccount.userID,cartItemID});
     dispatch(removeItemFromCart(productID));
     setloading(false);
+  }
+  const changeValue = async (action:string,cartitemID:number,selectedQuantity:number,productID:number)=>{
+    switch (action) {
+      case 'increase':
+        if(10 > selectedQuantity && 9 > selectedQuantity) {
+          setloading(true);
+          isLogged && await cartQuantityHandler(cartitemID,productID,defaultAccount.userID,'increment');
+          dispatch(setCart((cartlist.map((each)=>each.cartItemID===cartitemID ? {...each,quantity:each.quantity+1} : each))));
+          setloading(false);
+        };
+        break;
+      case 'decrease':
+        if(selectedQuantity > 1){
+          setloading(true);
+          isLogged && await cartQuantityHandler(cartitemID,productID,defaultAccount.userID,'decrement');
+          dispatch(setCart((cartlist.map((each)=>each.cartItemID===cartitemID ? {...each,quantity:each.quantity-1} : each))));
+          setloading(false);
+        };
+        break;
+    }
   }
   return (
     <Transition show={menu.cart}>
@@ -93,7 +114,15 @@ export default function Cart() {
                                     <p className="mt-1 text-sm text-gray-500">{product.productColor}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
+                                  <div className='flex gap-10 items-center'>
+                                  <p>Qty</p>
+                                  <div className='flex items-center justify-center rounded-xl bg-gray-100'>
+                                      <button onClick={()=>changeValue('decrease',product.cartItemID,product.quantity,product.productID)} className='w-[50px] text-4xl bg-gray-100 rounded-l-lg'>-</button>
+                                      <p className='bg-gray-100 w-[20px]'>{product.quantity}</p>
+                                      <button onClick={()=>changeValue('increase',product.cartItemID,product.quantity,product.productID)} className='w-[40px] text-4xl bg-gray-100 rounded-r-lg'>+</button>
+                                  </div>
+                                
+                            </div>
 
                                     <div className="flex">
                                       <button

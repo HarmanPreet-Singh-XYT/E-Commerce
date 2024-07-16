@@ -93,19 +93,19 @@ const Signup = () => {
                                 </div> */}
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
-                                    <input required type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your name"/>
+                                    <input minLength={4} maxLength={64} required type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your name"/>
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                    <input required type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your email"/>
+                                    <input minLength={5} maxLength={128} required type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Enter your email"/>
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                    <input required type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
+                                    <input minLength={8} maxLength={32} required type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Re-Enter Password</label>
-                                    <input required type="password" name="repassword" id="repassword" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
+                                    <input minLength={8} maxLength={32} required type="password" name="repassword" id="repassword" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Mobile Number</label>
@@ -113,7 +113,7 @@ const Signup = () => {
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900">Date of Birth</label>
-                                    <input required type="date" name="dob" id="dob" placeholder="Enter your mobile number" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
+                                    <input required type="date" name="dob" id="dob" placeholder="Enter your DOB" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"/>
                                 </div>
                                 <div className="flex flex-col gap-4 justify-between">
                                     <div className="flex items-start">

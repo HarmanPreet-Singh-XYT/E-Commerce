@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import { client } from '../data/DB';
+import { paymentCreationSchema, userIDSchema } from '../validators/cartCheckoutValidation';
 import Stripe from 'stripe';
+import { validationResult,matchedData } from 'express-validator';
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_PUBLISHABLE_KEY as string);
 const IDGenerator = () => {
@@ -32,27 +34,35 @@ const calculateCartAmount = async (userID:any) => {
   // people from directly manipulating the amount on the client
   return price;
 };
-router.post("/create/cart-payment/create-payment-intent", async (req, res) => {
-  const { userID } = req.body;
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent =  await stripe.paymentIntents.create({
-    amount: await calculateCartAmount(userID),
-    currency: "usd",
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true,
-    },
-    metadata:{
-      userID,
-      orderType:'cart'
-    }
-  });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+router.post("/create/cart-payment/create-payment-intent",userIDSchema, async (req:Request, res:Response) => {
+  const result = validationResult(req);
+  if(result.isEmpty()){
+    const data = matchedData(req);
+    const userID = data.userID;
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent =  await stripe.paymentIntents.create({
+      amount: await calculateCartAmount(userID),
+      currency: "usd",
+      // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+      automatic_payment_methods: {
+        enabled: true,
+      },
+      metadata:{
+        userID,
+        orderType:'cart'
+      }
+    });
+  
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  }else
+  {
+      console.log(result);
+      res.status(500).json({ message: 'Validation error' });
+  }
 });
-async function fetchProductData(productid:string,colorid:string,sizeid:string){
+async function fetchProductData(productid:string,colorid:string,sizeid:string,quantity:number){
   try {
     // Fetch product details
     const productQuery = `
@@ -86,35 +96,44 @@ async function fetchProductData(productid:string,colorid:string,sizeid:string){
       colorname: productDetails.colorname,
       imglink: productDetails.imglink,
       imgalt: productDetails.imgalt,
-      shippingcost:10
+      shippingcost:10,
+      quantity
     };
   } catch (error) {
     return error;
   }
 }
-router.get('/checkout-cart/product-details/:userID', async (req, res) => {
-  const { userID } = req.params;
-  try {
-    // Fetch product details
-    const cartlistQuery = `SELECT productid,sizeid,colorid FROM cartitems WHERE userid = $1`;
-    const cartItems = await client.query(cartlistQuery,[userID]);
-    if(cartItems.rows.length===0){
-      return res.status(404).json({ error: 'cart items not found' });
+router.get('/checkout-cart/product-details/:userID',userIDSchema, async (req:Request, res:Response) => {
+  const result = validationResult(req);
+  if(result.isEmpty()){
+    const data = matchedData(req);
+    const userID = data.userID;
+    try {
+      // Fetch product details
+      const cartlistQuery = `SELECT productid,sizeid,colorid,quantity FROM cartitems WHERE userid = $1`;
+      const cartItems = await client.query(cartlistQuery,[userID]);
+      if(cartItems.rows.length===0){
+        return res.status(404).json({ error: 'cart items not found' });
+      }
+      const productResult = await Promise.all(
+          cartItems.rows.map(each => fetchProductData(each.productid, each.colorid, each.sizeid,each.quantity))
+      );
+  
+      if (productResult.length === 0) {
+        return res.status(404).json({ error: 'Product details not found' });
+      }
+      res.status(200).json({products:productResult});
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-    const productResult = await Promise.all(
-        cartItems.rows.map(each => fetchProductData(each.productid, each.colorid, each.sizeid))
-    );
-
-    if (productResult.length === 0) {
-      return res.status(404).json({ error: 'Product details not found' });
-    }
-    res.status(200).json({products:productResult});
-  } catch (error) {
-    console.error('Error fetching product details:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+  }else
+  {
+      console.log(result);
+      res.status(500).json({ message: 'Validation error' });
   }
 });
-async function createCashOrder(userid:string,productid:string, colorid:string, sizeid:string){
+async function createCashOrder(userid:string,productid:string, colorid:string, sizeid:string,quantity:number){
   const orderid = IDGenerator();
   const shippingid = IDGenerator();
   const paymentid = IDGenerator();
@@ -147,7 +166,7 @@ async function createCashOrder(userid:string,productid:string, colorid:string, s
     }
     const addressid = addressResult.rows[0].addressid;
     const amount = productResult.rows[0].discount;
-    const shippingcharge = 10;
+    const shippingcharge = 10*quantity;
     
     // Insert into orders table
     const orderQuery = `
@@ -155,7 +174,7 @@ async function createCashOrder(userid:string,productid:string, colorid:string, s
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *
     `;
-    const totalAmount = (shippingcharge+paymentCharge+parseFloat(amount)).toFixed(2);
+    const totalAmount = (shippingcharge+paymentCharge+parseFloat(amount)*quantity).toFixed(2);
     await client.query(orderQuery, [orderid, userid, totalAmount, 'Confirmed', 'IN']);
 
     // Insert into shipping table
@@ -172,13 +191,13 @@ async function createCashOrder(userid:string,productid:string, colorid:string, s
       VALUES ($1, $2, $3, $4, $5, $6,$7)
       RETURNING *
     `;
-    await client.query(paymentQuery, [paymentid, orderid, 'Payment on Delivery', 'Pending', amount, transactionid,addressid]);
+    await client.query(paymentQuery, [paymentid, orderid, 'Payment on Delivery', 'Pending', parseFloat(amount)*quantity, transactionid,addressid]);
 
     // Insert into orderitems table
     await client.query(`
         INSERT INTO orderitems (orderitemid, orderid, productid, quantity, shippingid, paymentid, colorid, sizeid)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      `, [orderitemid, orderid, productid, 1, shippingid, paymentid, colorid, sizeid]);
+      `, [orderitemid, orderid, productid, quantity, shippingid, paymentid, colorid, sizeid]);
 
     const updateViewQuery = `UPDATE productparams SET sold = sold + 1 WHERE productid = $1`
     await client.query(updateViewQuery,[productid])
@@ -187,32 +206,40 @@ async function createCashOrder(userid:string,productid:string, colorid:string, s
     return 500;
   }
 }
-router.post('/cart-payment-on-delivery/create-order', async (req, res) => {
-  const { userID } = req.body;
-  try {
-    const cartlistQuery = `SELECT productid,sizeid,colorid FROM cartitems WHERE userid = $1`;
-    const cartItems = await client.query(cartlistQuery,[userID]);
-    if(cartItems.rows.length===0){
-      return res.status(404).json({ error: 'cart items not found' });
+router.post('/cart-payment-on-delivery/create-order',userIDSchema, async (req:Request, res:Response) => {
+  const result = validationResult(req);
+  if(result.isEmpty()){
+    const data = matchedData(req);
+    const userID = data.userID;
+    try {
+      const cartlistQuery = `SELECT productid,sizeid,colorid,quantity FROM cartitems WHERE userid = $1`;
+      const cartItems = await client.query(cartlistQuery,[userID]);
+      if(cartItems.rows.length===0){
+        return res.status(404).json({ error: 'cart items not found' });
+      }
+      
+      cartItems.rows.map(async each=>await createCashOrder(userID,each.productid,each.colorid,each.sizeid,each.quantity))
+  
+      res.status(200).json({message:'Successfully created orders'});
+    } catch (error) {
+      res.status(500).json({error:'Server Internal Server'});
     }
-    
-    const productResult = cartItems.rows.map(async each=>await createCashOrder(userID,each.productid,each.colorid,each.sizeid))
-
-    res.status(200).json({message:'Successfully created orders'});
-  } catch (error) {
-    res.status(500).json({error:'Server Internal Server'});
+  }else
+  {
+      console.log(result);
+      res.status(500).json({ message: 'Validation error' });
   }
 });
-async function createCardOrder(userid:string, productid:string, colorid:string, sizeid:string, paymentid:string , paymentStatus:string){
-    const paymentState = paymentStatus==='Succeeded' ? 'Confirmed' : 'Pending';
+async function createCardOrder(userid:string, productid:string, colorid:string, sizeid:string, paymentid:string , paymentStatus:string,quantity:number){
+  const paymentState = paymentStatus==='Succeeded' ? 'Confirmed' : 'Pending';
   const orderid = IDGenerator();
   const paymentID = IDGenerator();
   const shippingid = IDGenerator();
   const transactionid = `TS-${IDGenerator()}-${paymentID}-${orderid}`;
   const orderitemid = IDGenerator();
-  const trackingnumber = `IN${orderid}-${paymentID}-${transactionid}`
+  const trackingnumber = `IN${orderid}-${paymentID}-${transactionid}`;
   const deliveryDate = getDateTimeFiveDaysFromNow();
-  const paymentCharge = 15;
+  const paymentCharge = 0;
   try {
     // Check if product with given productid, colorid, and sizeid exists
     const productQuery = `
@@ -237,7 +264,7 @@ async function createCardOrder(userid:string, productid:string, colorid:string, 
     }
     const addressid = addressResult.rows[0].addressid;
     const amount = productResult.rows[0].discount;
-    const shippingcharge = 10;
+    const shippingcharge = 10*quantity;
     
     // Insert into orders table
     const orderQuery = `
@@ -245,7 +272,7 @@ async function createCardOrder(userid:string, productid:string, colorid:string, 
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *
     `;
-    const totalAmount = (shippingcharge+paymentCharge+parseFloat(amount)).toFixed(2);
+    const totalAmount = (shippingcharge+paymentCharge+parseFloat(amount)*quantity).toFixed(2);
     await client.query(orderQuery, [orderid, userid, totalAmount, 'Confirmed', 'IN']);
 
     // Insert into shipping table
@@ -262,13 +289,13 @@ async function createCardOrder(userid:string, productid:string, colorid:string, 
       VALUES ($1, $2, $3, $4, $5, $6,$7,$8)
       RETURNING *
     `;
-    await client.query(paymentQuery, [paymentID, orderid, 'Card', paymentState, amount, transactionid,addressid,paymentid]);
+    await client.query(paymentQuery, [paymentID, orderid, 'Card', paymentState, parseFloat(amount)*quantity, transactionid,addressid,paymentid]);
 
     // Insert into orderitems table
     await client.query(`
         INSERT INTO orderitems (orderitemid, orderid, productid, quantity, shippingid, paymentid, colorid, sizeid)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      `, [orderitemid, orderid, productid, 1, shippingid, paymentID, colorid, sizeid]);
+      `, [orderitemid, orderid, productid, quantity, shippingid, paymentID, colorid, sizeid]);
 
     const updateViewQuery = `UPDATE productparams SET sold = sold + 1 WHERE productid = $1`
     await client.query(updateViewQuery,[productid])
@@ -278,22 +305,29 @@ async function createCardOrder(userid:string, productid:string, colorid:string, 
     return 500;
   }
 }
-router.post('/cart-card/create-order', async (req, res) => {
-  const { userID,paymentid,paymentstatus } = req.body;
-  try {
-    const cartlistQuery = `SELECT productid,sizeid,colorid FROM cartitems WHERE userid = $1`;
-    const cartItems = await client.query(cartlistQuery,[userID]);
-    if(cartItems.rows.length===0){
-      return res.status(404).json({ error: 'cart items not found' });
-    }
-    
-    const productResult = cartItems.rows.map(async each=>await createCardOrder(userID,each.productid,each.colorid,each.sizeid,paymentid,paymentstatus))
-
-    res.status(200).json({message:'Successfully created orders'});
-  } catch (error) {
-    res.status(500).json({error:'Server Internal Server'});
-  }
+router.post('/cart-card/create-order',paymentCreationSchema, async (req:Request, res:Response) => {
+  const result = validationResult(req);
+  if(result.isEmpty()){
+    const data = matchedData(req);
+    const { userID,paymentid,paymentstatus } = data;
+    try {
+      const cartlistQuery = `SELECT productid,sizeid,colorid,quantity FROM cartitems WHERE userid = $1`;
+      const cartItems = await client.query(cartlistQuery,[userID]);
+      if(cartItems.rows.length===0){
+        return res.status(404).json({ error: 'cart items not found' });
+      }
+      
+      cartItems.rows.map(async each=>await createCardOrder(userID,each.productid,each.colorid,each.sizeid,paymentid,paymentstatus,each.quantity))
   
+      res.status(200).json({message:'Successfully created orders'});
+    } catch (error) {
+      res.status(500).json({error:'Server Internal Server'});
+    }
+  }else
+  {
+      console.log(result);
+      res.status(500).json({ message: 'Validation error' });
+  }
 });
 
 export default router;

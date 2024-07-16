@@ -134,9 +134,9 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                 <Description>Note: updating Profile will not affect current orders.</Description>
                 <form onSubmit={(e)=>formSubmitProfile(e,dialogType,userID)} className='flex flex-col gap-2'>
                     <label>Please Enter New {dialogType != null && capitalizeFirstLetter(dialogType)}</label>
-                    {dialogType==='name' && <input required id='updateValue' type='text' minLength={4} maxLength={254} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>}
+                    {dialogType==='name' && <input required id='updateValue' type='text' minLength={4} maxLength={64} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>}
                     {dialogType==='date of birth' && <input required id='updateValue' type='date' className='border-[1px] px-2 w-[150px] rounded-md py-1 mx-auto'/>}
-                    {dialogType==='email' && <input id='updateValue' required type='email' minLength={4} maxLength={254} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>}
+                    {dialogType==='email' && <input id='updateValue' required type='email' minLength={5} maxLength={128} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>}
                     {dialogType==='number' && <input id='updateValue' type='tel' required minLength={10} maxLength={10} className='border-[1px] w-[150px] rounded-md py-1 mx-auto'/>}
                     {dialogType==='password' && <input id='updateValue' type='password' required minLength={8} maxLength={32} className='border-[1px] w-[150px] rounded-md py-1 mx-auto'/>}
                     <div className="flex justify-center gap-4">
@@ -165,21 +165,21 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                         </div>
                         
                         <label>Name</label>
-                        <input defaultValue={selectedAddress.userName} required id='name' type='text' minLength={4} maxLength={32} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.userName} required id='name' type='text' minLength={4} maxLength={64} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Contact Number</label>
                         <input defaultValue={selectedAddress.contactNumber} required id='contactnumber' type='text' minLength={10} maxLength={10} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Address Line 1</label>
-                        <input defaultValue={selectedAddress.addressLine1} required id='addressline1' type='text' minLength={4} maxLength={254} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.addressLine1} required id='addressline1' type='text' minLength={2} maxLength={128} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
                         <label>Address Line 2</label>
-                        <input defaultValue={selectedAddress.addressLine2} required id='addressline2' type='text' minLength={4} maxLength={254} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.addressLine2} required id='addressline2' type='text' minLength={2} maxLength={128} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
                         <label>City</label>
-                        <input defaultValue={selectedAddress.city}  required id='city' type='text' minLength={4} maxLength={100} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.city}  required id='city' type='text' minLength={2} maxLength={60} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>State</label>
-                        <input defaultValue={selectedAddress.state}  required id='state' type='text' minLength={4} maxLength={100} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.state}  required id='state' type='text' minLength={2} maxLength={16} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Country</label>
-                        <input defaultValue={selectedAddress.country}  required id='country' type='text' minLength={4} maxLength={100} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.country}  required id='country' type='text' minLength={2} maxLength={56} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Postal Code</label>
-                        <input defaultValue={selectedAddress.postalCode}  required id='postalcode' type='number' minLength={4} maxLength={10} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input defaultValue={selectedAddress.postalCode}  required id='postalcode' type='number' minLength={6} maxLength={8} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                     </div>
                     <div className="flex justify-center gap-4">
                     <button type='button' className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => setdialogType(null)}>Cancel</button>
@@ -206,21 +206,21 @@ const SettingDialogs = ({addresses,dialogType,setdialogType,menuType,userID,setL
                         <label htmlFor="home">Home</label>
                         </div>
                         <label>Name</label>
-                        <input required id='name' type='text' minLength={4} maxLength={32} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input required id='name' type='text' minLength={4} maxLength={64} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Contact Number</label>
                         <input required id='contactnumber' type='text' minLength={10} maxLength={10} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Address Line 1</label>
-                        <input required id='addressline1' type='text' minLength={4} maxLength={254} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
+                        <input required id='addressline1' type='text' minLength={2} maxLength={128} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
                         <label>Address Line 2</label>
-                        <input required id='addressline2' type='text' minLength={4} maxLength={254} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
+                        <input required id='addressline2' type='text' minLength={2} maxLength={128} className='border-[1px] w-[300px] rounded-md py-1 mx-auto'/>
                         <label>City</label>
-                        <input  required id='city' type='text' minLength={4} maxLength={100} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input  required id='city' type='text' minLength={2} maxLength={60} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>State</label>
-                        <input  required id='state' type='text' minLength={4} maxLength={100} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input  required id='state' type='text' minLength={2} maxLength={16} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Country</label>
-                        <input required id='country' type='text' minLength={4} maxLength={100} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input required id='country' type='text' minLength={2} maxLength={56} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                         <label>Postal Code</label>
-                        <input required id='postalcode' type='number' minLength={4} maxLength={10} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
+                        <input required id='postalcode' type='number' minLength={6} maxLength={8} className='border-[1px] w-[200px] rounded-md py-1 mx-auto'/>
                     </div>
                     <div className="flex justify-center gap-4">
                     <button type='button' className='border-[1.5px] hover:bg-black transition-colors duration-300 hover:text-white py-2 px-6 rounded-xl' onClick={() => setdialogType(null)}>Cancel</button>

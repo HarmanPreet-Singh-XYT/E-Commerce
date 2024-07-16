@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import { client } from '../data/DB';
+import { createReviewSchema, deleteReviewSchema, editReviewSchema, getReviewSchema, productIDSchema } from '../validators/productsValidation';
+import { matchedData, validationResult } from 'express-validator';
 const router = express.Router();
 const IDGenerator = ()=>{
     const ID = Math.round(Math.random() * 1000 * 1000 * 100);
@@ -120,154 +122,189 @@ async function getImages(productID:string){
         return [];
     }
 }
-router.get('/product/:productID',async (req:Request,res:Response)=>{
-    const {productID} = req.params;
-    try {
-        const result = await client.query(`SELECT products.productid,products.title,products.description,products.stock,products.discount,products.price,productparams.stars,productimages.imglink,productimages.imgalt,sellers.company_name,categories.name AS categoryname,categories.maincategory
-            FROM products
-            INNER JOIN productparams ON products.productid = productparams.productid 
-            INNER JOIN productimages ON productimages.productid = products.productid 
-            INNER JOIN sellers ON sellers.seller_id = products.seller_id
-            INNER JOIN categories ON products.categoryid = categories.categoryid
-            WHERE products.productid = $1 AND productimages.isprimary = true`,[productID]
-        );
-        const [colors,sizes,images] = await Promise.all([
-            getColors(productID),
-            getSizes(productID),
-            getImages(productID)
-        ])
-        const [reviewCounts,reviews] = await review(productID);
-        const assignedData = result.rows[0];
-        const data = {
-            productid:assignedData.productid,
-            title:assignedData.title,
-            description:assignedData.description,
-            stock:assignedData.stock,
-            discountedprice:assignedData.discount,
-            price:assignedData.price,
-            stars:assignedData.stars,
-            seller:assignedData.company_name,
-            reviewcount:reviewCounts,
-            categories:{subcategory:assignedData.categoryname,maincategory:assignedData.maincategory},
-            imglink:assignedData.imglink,
-            imgalt:assignedData.imgalt,
-            imgcollection:images,
-            colors:colors,
-            sizes:sizes,
-            reviews
+router.get('/product/:productID',productIDSchema,async (req:Request,res:Response)=>{
+    const result = validationResult(req)
+    if(result.isEmpty()){
+        const {productID} = matchedData(req);
+        try {
+            const result = await client.query(`SELECT products.productid,products.title,products.description,products.stock,products.discount,products.price,productparams.stars,productimages.imglink,productimages.imgalt,sellers.company_name,categories.name AS categoryname,categories.maincategory
+                FROM products
+                INNER JOIN productparams ON products.productid = productparams.productid 
+                INNER JOIN productimages ON productimages.productid = products.productid 
+                INNER JOIN sellers ON sellers.seller_id = products.seller_id
+                INNER JOIN categories ON products.categoryid = categories.categoryid
+                WHERE products.productid = $1 AND productimages.isprimary = true`,[productID]
+            );
+            const [colors,sizes,images] = await Promise.all([
+                getColors(productID),
+                getSizes(productID),
+                getImages(productID)
+            ])
+            const [reviewCounts,reviews] = await review(productID);
+            const assignedData = result.rows[0];
+            const data = {
+                productid:assignedData.productid,
+                title:assignedData.title,
+                description:assignedData.description,
+                stock:assignedData.stock,
+                discountedprice:assignedData.discount,
+                price:assignedData.price,
+                stars:assignedData.stars,
+                seller:assignedData.company_name,
+                reviewcount:reviewCounts,
+                categories:{subcategory:assignedData.categoryname,maincategory:assignedData.maincategory},
+                imglink:assignedData.imglink,
+                imgalt:assignedData.imgalt,
+                imgcollection:images,
+                colors:colors,
+                sizes:sizes,
+                reviews
+            }
+            const updateViewQuery = `UPDATE productparams SET views = views + 1 WHERE productid = $1`
+            await client.query(updateViewQuery,[productID])
+            return res.status(200).json({data});
+        } catch (error) {
+            return res.status(404).json({message:'Not Found'});
         }
-        const updateViewQuery = `UPDATE productparams SET views = views + 1 WHERE productid = $1`
-        await client.query(updateViewQuery,[productID])
-        return res.status(200).json({data});
-    } catch (error) {
-        return res.status(404).json({message:'Not Found'});
+    }else
+    {
+        console.log(result);
+        res.status(500).json({ message: 'Validation error' });
     }
 });
-router.post('/review/create',async (req:Request,res:Response)=>{
-    const {userID,productID,rating,title,comment} = req.body;
-    const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2`;
-    const checkValue = [userID,productID];
-    try {
-        const response = await client.query(checkQuery,checkValue);
-        if(response.rows.length > 0){
-            return res.status(205).json({message:'Review Already Exists'})
+router.post('/review/create',createReviewSchema,async (req:Request,res:Response)=>{
+    const result = validationResult(req)
+    if(result.isEmpty()){
+        const {userID,productID,rating,title,comment} = req.body;
+        const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2`;
+        const checkValue = [userID,productID];
+        try {
+            const response = await client.query(checkQuery,checkValue);
+            if(response.rows.length > 0){
+                return res.status(205).json({message:'Review Already Exists'})
+            }
+        } catch (error) {
+            res.status(500).json({error:'Server Error'});
         }
-    } catch (error) {
-        res.status(500).json({error:'Server Error'});
-    }
-    const orderCheck = `SELECT orders.userid,orderitems.productid FROM orders INNER JOIN orderitems ON orders.orderid = orderitems.orderid WHERE orders.userid = $1 AND orderitems.productid = $2`;
-    const orderValue = [userID,productID];
-    try {
-        const response = await client.query(orderCheck,orderValue);
-        if(response.rows.length === 0){
-            return res.status(210).json({message:'Order does not exist'})
+        const orderCheck = `SELECT orders.userid,orderitems.productid FROM orders INNER JOIN orderitems ON orders.orderid = orderitems.orderid WHERE orders.userid = $1 AND orderitems.productid = $2`;
+        const orderValue = [userID,productID];
+        try {
+            const response = await client.query(orderCheck,orderValue);
+            if(response.rows.length === 0){
+                return res.status(210).json({message:'Order does not exist'})
+            }
+        } catch (error) {
+            res.status(500).json({error:'Server Error'});
         }
-    } catch (error) {
-        res.status(500).json({error:'Server Error'});
-    }
-    const reviewID = IDGenerator();
-    const query = `INSERT INTO reviews (reviewid,userid,productid,rating,title,comment) VALUES ($1,$2,$3,$4,$5,$6)`;
-    const value = [reviewID,userID,productID,rating,title,comment];
-    try {
-        await client.query(query,value);
-        await calculateStarAverage(productID);
-        const updateViewQuery = `UPDATE productparams SET rating = rating + 1 WHERE productid = $1`
-        await client.query(updateViewQuery,[productID])
-        return res.status(200).json({message:'Review Successfully Created'})
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({error:'Server Error'});
+        const reviewID = IDGenerator();
+        const query = `INSERT INTO reviews (reviewid,userid,productid,rating,title,comment) VALUES ($1,$2,$3,$4,$5,$6)`;
+        const value = [reviewID,userID,productID,rating,title,comment];
+        try {
+            await client.query(query,value);
+            await calculateStarAverage(productID);
+            const updateViewQuery = `UPDATE productparams SET rating = rating + 1 WHERE productid = $1`
+            await client.query(updateViewQuery,[productID])
+            return res.status(200).json({message:'Review Successfully Created'})
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({error:'Server Error'});
+        }
+    }else
+    {
+        console.log(result);
+        res.status(500).json({ message: 'Validation error' });
     }
 });
-router.patch('/review/edit',async (req:Request,res:Response)=>{
-    const {reviewID,userID,productID,rating,title,comment} = req.body;
-    const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
-    const checkValue = [userID,productID,reviewID];
-    try {
-        const response = await client.query(checkQuery,checkValue);
-        if(response.rows.length===0){
-            return res.status(205).json({message:'Review Does Not Exist'})
+router.patch('/review/edit',editReviewSchema,async (req:Request,res:Response)=>{
+    const result = validationResult(req);
+    if(result.isEmpty()){
+        const {reviewID,userID,productID,rating,title,comment} = req.body;
+        const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
+        const checkValue = [userID,productID,reviewID];
+        try {
+            const response = await client.query(checkQuery,checkValue);
+            if(response.rows.length===0){
+                return res.status(205).json({message:'Review Does Not Exist'})
+            }
+        } catch (error) {
+            res.status(500).json({error:'Server Error'});
         }
-    } catch (error) {
-        res.status(500).json({error:'Server Error'});
-    }
-    const query = `UPDATE reviews SET rating = $1, comment = $2, title = $3 WHERE productid = $4 AND userid = $5 AND reviewid = $6`;
-    const value = [rating,comment,title,productID,userID,reviewID];
-    try {
-        await client.query(query,value);
-        return res.status(200).json({message:'Review Successfully Updated'})
-    } catch (error) {
-        res.status(500).json({error:'Server Error'});
+        const query = `UPDATE reviews SET rating = $1, comment = $2, title = $3 WHERE productid = $4 AND userid = $5 AND reviewid = $6`;
+        const value = [rating,comment,title,productID,userID,reviewID];
+        try {
+            await client.query(query,value);
+            return res.status(200).json({message:'Review Successfully Updated'})
+        } catch (error) {
+            res.status(500).json({error:'Server Error'});
+        }
+    }else
+    {
+        console.log(result);
+        res.status(500).json({ message: 'Validation error' });
     }
 });
-router.delete('/review/delete',async (req:Request,res:Response)=>{
-    const {reviewID,userID,productID} = req.body;
-    const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
-    const checkValue = [userID,productID,reviewID];
-    try {
-        const response = await client.query(checkQuery,checkValue);
-        if(response.rows.length===0){
-            return res.status(205).json({message:'Review Does Not Exist'})
+router.delete('/review/delete',deleteReviewSchema,async (req:Request,res:Response)=>{
+    const result = validationResult(req);
+    if(result.isEmpty()){
+        const {reviewID,userID,productID} = matchedData(req);
+        const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
+        const checkValue = [userID,productID,reviewID];
+        try {
+            const response = await client.query(checkQuery,checkValue);
+            if(response.rows.length===0){
+                return res.status(205).json({message:'Review Does Not Exist'})
+            }
+        } catch (error) {
+            res.status(500).json({error:'Server Error'});
         }
-    } catch (error) {
-        res.status(500).json({error:'Server Error'});
-    }
-    const query = `DELETE FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
-    const value = [userID,productID,reviewID];
-    try {
-        await client.query(query,value);
-        await calculateStarAverage(productID);
-        const updateViewQuery = `UPDATE productparams SET rating = rating - 1 WHERE productid = $1`
-        await client.query(updateViewQuery,[productID])
-        return res.status(200).json({message:'Review Successfully Deleted'})
-    } catch (error) {
-        res.status(500).json({error:'Server Error'});
+        const query = `DELETE FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
+        const value = [userID,productID,reviewID];
+        try {
+            await client.query(query,value);
+            await calculateStarAverage(productID);
+            const updateViewQuery = `UPDATE productparams SET rating = rating - 1 WHERE productid = $1`
+            await client.query(updateViewQuery,[productID])
+            return res.status(200).json({message:'Review Successfully Deleted'})
+        } catch (error) {
+            res.status(500).json({error:'Server Error'});
+        }
+    }else
+    {
+        console.log(result);
+        res.status(500).json({ message: 'Validation error' });
     }
 });
-router.get('/reviews/:productID', async (req: Request, res: Response) => {
-    const { productID } = req.params;
-    try {
-        const result = await client.query(
-            `SELECT 
-                reviews.reviewid, reviews.userid, reviews.rating, 
-                reviews.title, reviews.comment, users.username, 
-                reviews.createdat, productparams.stars AS productstars 
-            FROM reviews 
-            INNER JOIN users ON users.userid = reviews.userid 
-            INNER JOIN productparams ON reviews.productid = productparams.productid 
-            WHERE reviews.productid = $1 
-            ORDER BY reviews.createdat`,
-            [productID]
-        );
-        
-        if (result.rows.length === 0) {
-            return res.status(200).json({ data: [] });
+router.get('/reviews/:productID', getReviewSchema,async (req: Request, res: Response) => {
+    const result = validationResult(req);
+    if(result.isEmpty()){
+        const { productID } = matchedData(req);
+        try {
+            const result = await client.query(
+                `SELECT 
+                    reviews.reviewid, reviews.userid, reviews.rating, 
+                    reviews.title, reviews.comment, users.username, 
+                    reviews.createdat, productparams.stars AS productstars 
+                FROM reviews 
+                INNER JOIN users ON users.userid = reviews.userid 
+                INNER JOIN productparams ON reviews.productid = productparams.productid 
+                WHERE reviews.productid = $1 
+                ORDER BY reviews.createdat`,
+                [productID]
+            );
+            
+            if (result.rows.length === 0) {
+                return res.status(200).json({ data: [] });
+            }
+    
+            res.status(200).json({ data: result.rows });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Internal Server Error' });
         }
-
-        res.status(200).json({ data: result.rows });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    }else
+    {
+        console.log(result);
+        res.status(500).json({ message: 'Validation error' });
     }
 });
 export default router;
