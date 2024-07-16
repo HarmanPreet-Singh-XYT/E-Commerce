@@ -2,6 +2,10 @@
 
 Welcome to the repository for our full stack eCommerce website built using the PERN stack (PostgreSQL, Express, React, Node.js). This project demonstrates a comprehensive online shopping experience with a variety of features and pages.
 
+![Desktop](/website-demo-image/desktop.png)
+![Mobile](/website-demo-image/mobile.png)
+![Showcase1](/website-demo-image/1.png)
+![Showcase2](/website-demo-image/2.png)
 ## Features
 
 ### eCommerce Features
@@ -50,7 +54,7 @@ Welcome to the repository for our full stack eCommerce website built using the P
 3. Install dependencies for the server:
    ```sh
    cd Server & npm install
-4. Install dependencies for the client::
+4. Install dependencies for the client:
    ```sh
    cd ../Client & npm install
 5. Set up environment variables in a .env file for both server and client.
@@ -63,6 +67,12 @@ Welcome to the repository for our full stack eCommerce website built using the P
 2. Start the client:
     ```sh
    cd Client & npm run dev
+
+## Setting Up PostgreSQL Tables
+
+1. Create a Database named 'ecommerce'.
+2. Restore the Database using ecommerce.sql Given SQL File.
+3. Make sure PostgreSQL server is Running, Setting up Environment Variables and done.
 
 ## Contributing
 
