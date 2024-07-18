@@ -58,7 +58,6 @@ router.post("/create/cart-payment/create-payment-intent",userIDSchema, async (re
     });
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
 });
@@ -129,7 +128,6 @@ router.get('/checkout-cart/product-details/:userID',userIDSchema, async (req:Req
     }
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
 });
@@ -226,7 +224,6 @@ router.post('/cart-payment-on-delivery/create-order',userIDSchema, async (req:Re
     }
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
 });

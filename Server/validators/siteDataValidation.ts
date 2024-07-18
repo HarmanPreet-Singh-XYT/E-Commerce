@@ -26,7 +26,7 @@ const filterSchema = checkSchema({
         in: ['params'],
         isInt: true,
         toInt: true,
-        isLength:{options:{min:3,max:50}},
+        isLength:{options:{min:1,max:50}},
         errorMessage: 'Category ID must be an integer'
     },
     minRating: {
@@ -72,7 +72,7 @@ const getProductNameSchema = checkSchema({
         in: ['params'],
         isString: true,
         notEmpty: true,
-        isLength:{options:{min:3,max:200}},
+        isLength:{options:{min:1,max:200}},
         errorMessage: 'Product Name must be a non-empty string',
         escape:true
     }
@@ -136,7 +136,7 @@ const categoryFilterSchema = checkSchema({
         in: ['params'],
         isInt: true,
         toInt: true,
-        isLength:{options:{min:3,max:50}},
+        isLength:{options:{min:1,max:50}},
         errorMessage: 'Category ID must be an integer',
         escape:true
     },

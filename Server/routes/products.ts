@@ -48,9 +48,9 @@ router.post('/product/create/image',async (req:Request,res:Response)=>{
     const productImagesQuery = `INSERT INTO productimages (imageid, productid, imglink, imgalt, isprimary) VALUES ($1, $2, $3, $4, $5)`;
     try {
         await client.query(productImagesQuery,[imageID,productID,imgLink,imgAlt,false]);
-        return res.status(200).json({message:'Image Added Successfully'});
+        res.status(200).json({message:'Image Added Successfully'});
     } catch (error) {
-        return res.status(500).json({message:'Internal Server Error'});
+        res.status(500).json({message:'Internal Server Error'});
     }
 });
 router.post('/product/create/size',async (req:Request,res:Response)=>{
@@ -59,9 +59,9 @@ router.post('/product/create/size',async (req:Request,res:Response)=>{
     const productSizesQuery = `INSERT INTO productparams (sizeid,productid,sizename,instock) VALUES ($1, $2, $3, $4)`;
     try {
         await client.query(productSizesQuery,[sizeID,productID,sizeName,inStock]);
-        return res.status(200).json({message:'Size Added Successfully'});
+        res.status(200).json({message:'Size Added Successfully'});
     } catch (error) {
-        return res.status(500).json({message:'Internal Server Error'});
+        res.status(500).json({message:'Internal Server Error'});
     }
 });
 router.post('/product/create/color',async (req:Request,res:Response)=>{
@@ -70,9 +70,9 @@ router.post('/product/create/color',async (req:Request,res:Response)=>{
     const productColorsQuery = `INSERT INTO productcolors (colorid, productid, colorname, colorclass) VALUES ($1, $2, $3, $4)`;
     try {
         await client.query(productColorsQuery,[colorID,productID,colorName,colorClass]);
-        return res.status(200).json({message:'Color Added Successfully'});
+        res.status(200).json({message:'Color Added Successfully'});
     } catch (error) {
-        return res.status(500).json({message:'Internal Server Error'});
+        res.status(500).json({message:'Internal Server Error'});
     }
 });
 async function review(productID:string){
@@ -162,20 +162,19 @@ router.get('/product/:productID',productIDSchema,async (req:Request,res:Response
             }
             const updateViewQuery = `UPDATE productparams SET views = views + 1 WHERE productid = $1`
             await client.query(updateViewQuery,[productID])
-            return res.status(200).json({data});
+            res.status(200).json({data});
         } catch (error) {
-            return res.status(404).json({message:'Not Found'});
+            res.status(404).json({message:'Not Found'});
         }
     }else
     {
-        console.log(result);
         res.status(500).json({ message: 'Validation error' });
     }
 });
 router.post('/review/create',createReviewSchema,async (req:Request,res:Response)=>{
     const result = validationResult(req)
     if(result.isEmpty()){
-        const {userID,productID,rating,title,comment} = req.body;
+        const {userID,productID,rating,title,comment} = matchedData(req);
         const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2`;
         const checkValue = [userID,productID];
         try {
@@ -184,7 +183,7 @@ router.post('/review/create',createReviewSchema,async (req:Request,res:Response)
                 return res.status(205).json({message:'Review Already Exists'})
             }
         } catch (error) {
-            res.status(500).json({error:'Server Error'});
+            return res.status(500).json({error:'Server Error'});
         }
         const orderCheck = `SELECT orders.userid,orderitems.productid FROM orders INNER JOIN orderitems ON orders.orderid = orderitems.orderid WHERE orders.userid = $1 AND orderitems.productid = $2`;
         const orderValue = [userID,productID];
@@ -194,7 +193,7 @@ router.post('/review/create',createReviewSchema,async (req:Request,res:Response)
                 return res.status(210).json({message:'Order does not exist'})
             }
         } catch (error) {
-            res.status(500).json({error:'Server Error'});
+            return res.status(500).json({error:'Server Error'});
         }
         const reviewID = IDGenerator();
         const query = `INSERT INTO reviews (reviewid,userid,productid,rating,title,comment) VALUES ($1,$2,$3,$4,$5,$6)`;
@@ -204,21 +203,19 @@ router.post('/review/create',createReviewSchema,async (req:Request,res:Response)
             await calculateStarAverage(productID);
             const updateViewQuery = `UPDATE productparams SET rating = rating + 1 WHERE productid = $1`
             await client.query(updateViewQuery,[productID])
-            return res.status(200).json({message:'Review Successfully Created'})
+            res.status(200).json({message:'Review Successfully Created'})
         } catch (error) {
-            console.log(error)
             res.status(500).json({error:'Server Error'});
         }
     }else
     {
-        console.log(result);
         res.status(500).json({ message: 'Validation error' });
     }
 });
 router.patch('/review/edit',editReviewSchema,async (req:Request,res:Response)=>{
     const result = validationResult(req);
     if(result.isEmpty()){
-        const {reviewID,userID,productID,rating,title,comment} = req.body;
+        const {reviewID,userID,productID,rating,title,comment} = matchedData(req);
         const checkQuery = `SELECT reviewid FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
         const checkValue = [userID,productID,reviewID];
         try {
@@ -227,7 +224,7 @@ router.patch('/review/edit',editReviewSchema,async (req:Request,res:Response)=>{
                 return res.status(205).json({message:'Review Does Not Exist'})
             }
         } catch (error) {
-            res.status(500).json({error:'Server Error'});
+            return res.status(500).json({error:'Server Error'});
         }
         const query = `UPDATE reviews SET rating = $1, comment = $2, title = $3 WHERE productid = $4 AND userid = $5 AND reviewid = $6`;
         const value = [rating,comment,title,productID,userID,reviewID];
@@ -235,11 +232,10 @@ router.patch('/review/edit',editReviewSchema,async (req:Request,res:Response)=>{
             await client.query(query,value);
             return res.status(200).json({message:'Review Successfully Updated'})
         } catch (error) {
-            res.status(500).json({error:'Server Error'});
+            return res.status(500).json({error:'Server Error'});
         }
     }else
     {
-        console.log(result);
         res.status(500).json({ message: 'Validation error' });
     }
 });
@@ -255,7 +251,7 @@ router.delete('/review/delete',deleteReviewSchema,async (req:Request,res:Respons
                 return res.status(205).json({message:'Review Does Not Exist'})
             }
         } catch (error) {
-            res.status(500).json({error:'Server Error'});
+            return res.status(500).json({error:'Server Error'});
         }
         const query = `DELETE FROM reviews WHERE userid = $1 AND productid = $2 AND reviewid = $3`;
         const value = [userID,productID,reviewID];
@@ -264,13 +260,12 @@ router.delete('/review/delete',deleteReviewSchema,async (req:Request,res:Respons
             await calculateStarAverage(productID);
             const updateViewQuery = `UPDATE productparams SET rating = rating - 1 WHERE productid = $1`
             await client.query(updateViewQuery,[productID])
-            return res.status(200).json({message:'Review Successfully Deleted'})
+            res.status(200).json({message:'Review Successfully Deleted'})
         } catch (error) {
             res.status(500).json({error:'Server Error'});
         }
     }else
     {
-        console.log(result);
         res.status(500).json({ message: 'Validation error' });
     }
 });
@@ -303,7 +298,6 @@ router.get('/reviews/:productID', getReviewSchema,async (req: Request, res: Resp
         }
     }else
     {
-        console.log(result);
         res.status(500).json({ message: 'Validation error' });
     }
 });

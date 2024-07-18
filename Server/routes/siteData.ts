@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { client } from '../data/DB';
-import { categorySchema, getProductNameSchema } from '../validators/siteDataValidation';
+import { categoryFilterSchema, categorySchema, filterSchema, getCategorySchema, getProductNameSchema, MainSubCategorySchema } from '../validators/siteDataValidation';
 import { matchedData, validationResult } from 'express-validator';
 const router = express.Router();
 const articleTable = 'articles';
@@ -124,7 +124,6 @@ router.get('/category/:category',categorySchema,async (req:Request, res:Response
     
             res.status(200).json({ data });
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: 'Server Error' });
         }
     }else res.status(500).json({error:'Validation Error'})
@@ -164,17 +163,18 @@ const fetchFilteredProducts = async (minPrice:string,maxPrice:string,categoryID:
         return [];
     }
 };
-router.get('/filter/category/:minPrice/:maxPrice/:categoryID/:minRating/:categoryName',async (req:Request,res:Response)=>{
-    if(validationResult(req).isEmpty()){
+router.get('/filter/category/:minPrice/:maxPrice/:categoryID/:minRating/:categoryName',filterSchema,async (req:Request,res:Response)=>{
+    const result = validationResult(req);
+    if(result.isEmpty()){
         const {minPrice,maxPrice,categoryID,minRating,categoryName} = matchedData(req);
         try {
             const query = `SELECT products.productid,products.title,categories.name AS category,products.price,products.discount,productparams.stars,productparams.isnew,productparams.issale,productparams.isdiscount FROM products 
             INNER JOIN categories ON products.categoryid = categories.categoryid 
             INNER JOIN productparams ON products.productid = productparams.productid
             WHERE products.categoryid = $1 AND products.price >= $2 AND products.price <= $3 AND productparams.stars >= $4`;
-            if(categoryID!='0'){
+            if(categoryID!=0){
                 const response = await client.query(query, [categoryID,minPrice,maxPrice,minRating])
-                if (response.rows.length === 0) res.status(200).json({data:[]});
+                if (response.rows.length === 0) return res.status(200).json({data:[]});
     
                 const products = await Promise.all(
                 response.rows.map(async (product) => {
@@ -196,22 +196,25 @@ router.get('/filter/category/:minPrice/:maxPrice/:categoryID/:minRating/:categor
                     };
                     
                 }));
-                return res.status(200).json({data:products});
+                res.status(200).json({data:products});
             } else {
                 const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
                 const value = [categoryName.toUpperCase()];
                 const response = await client.query(query, value);
                 const productsPromises = response.rows.map(each => fetchFilteredProducts(minPrice,maxPrice,each.categoryid,minRating));
                 const products = await Promise.all(productsPromises);
-                return res.status(200).json({data:products.flat()});
+                res.status(200).json({data:products.flat()});
             } 
         } catch (error) {
-            return res.sendStatus(500);
+            res.status(500).json({error:'failed'});
         }
-    }else res.status(500).json({error:'Validation Error'})
+    }else {
+        console.log(result)
+        res.status(500).json({error:'Validation Error'})
+    }
     
 });
-router.get('/filter/category-only/:categoryID/:categoryName',async (req:Request,res:Response)=>{
+router.get('/filter/category-only/:categoryID/:categoryName',getCategorySchema,async (req:Request,res:Response)=>{
     if(validationResult(req).isEmpty()){
         const {categoryID,categoryName} = matchedData(req);
         try {
@@ -219,9 +222,9 @@ router.get('/filter/category-only/:categoryID/:categoryName',async (req:Request,
             INNER JOIN categories ON products.categoryid = categories.categoryid 
             INNER JOIN productparams ON products.productid = productparams.productid
             WHERE products.categoryid = $1`;
-            if(categoryID!='0'){
+            if(categoryID!=0){
                 const response = await client.query(query, [categoryID])
-                if (response.rows.length === 0) res.status(200).json({data:[]});
+                if (response.rows.length === 0) return res.status(200).json({data:[]});
     
                 const products = await Promise.all(
                 response.rows.map(async (product) => {
@@ -243,17 +246,17 @@ router.get('/filter/category-only/:categoryID/:categoryName',async (req:Request,
                     };
                     
                 }));
-                return res.status(200).json({data:products});
+                res.status(200).json({data:products});
             } else {
                 const query = `SELECT categoryid, name FROM ${categoryTable} WHERE maincategory = $1`;
                 const value = [categoryName.toUpperCase()];
                 const response = await client.query(query, value);
                 const productsPromises = response.rows.map(each => fetchProducts(each.categoryid));
                 const products = await Promise.all(productsPromises);
-                return res.status(200).json({data:products.flat()});
+                res.status(200).json({data:products.flat()});
             } 
         } catch (error) {
-            return res.sendStatus(500);
+            res.status(500).json({error:'Failed'});
         }
     }else res.status(500).json({error:'Validation Error'})
     
@@ -359,9 +362,9 @@ router.get('/search/product/:productName',getProductNameSchema, async(req:Reques
             const products = await Promise.all(productsPromises);
             const flatProducts = products.flat();
             const uniqueProducts = removeDuplicates(flatProducts);
-            return res.status(200).json({data:uniqueProducts});
+            res.status(200).json({data:uniqueProducts});
         } catch (error) {
-            return res.status(500)
+            res.status(500)
         }
     }else res.status(500).json({error:'Validation Error'})
 });
@@ -393,9 +396,9 @@ const formatSubCategory = (string: string) => {
     .map(word => capitalizeFirstLetter(word))
     .join(' ');
 };
-router.get('/sub-category/:mainCategory/:subCategory', async (req: Request, res: Response) => {
+router.get('/sub-category/:mainCategory/:subCategory',MainSubCategorySchema, async (req: Request, res: Response) => {
     if(validationResult(req).isEmpty()){
-        const { mainCategory, subCategory } = req.params;
+        const { mainCategory, subCategory } = matchedData(req);
   
         // Capitalize mainCategory
         const formattedMainCategory = mainCategory.toUpperCase();
@@ -411,21 +414,21 @@ router.get('/sub-category/:mainCategory/:subCategory', async (req: Request, res:
             const products = await fetchProducts(categoryID);
             return res.status(200).json({data:products,categoryid:categoryID});
           }
-          return res.status(200).json({data:[],categoryid:0});
+          res.status(200).json({data:[],categoryid:0});
         } catch (error) {
           console.error('Error fetching data:', error);
           return res.status(500).json({ error: 'Failed to fetch data' });
         }
     }else res.status(500).json({error:'Validation Error'})
 });
-router.get('/sub-category/filtered-product/:categoryID/:minPrice/:maxPrice/:rating',async(req:Request,res:Response)=>{
+router.get('/sub-category/filtered-product/:categoryID/:minPrice/:maxPrice/:rating',categoryFilterSchema,async(req:Request,res:Response)=>{
     if(validationResult(req).isEmpty()){
         const {categoryID,minPrice,maxPrice,rating} = matchedData(req);
         try {
             const products = await Promise.all(await fetchFilteredProducts(minPrice,maxPrice,parseInt(categoryID),rating));
-            return res.status(200).json({data:products});
+            res.status(200).json({data:products});
         } catch (error) {
-            return res.status(500)
+            res.status(500)
         }
     }else res.status(500).json({error:'Validation Error'})
 });

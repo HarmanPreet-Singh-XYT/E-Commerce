@@ -1,0 +1,3 @@
+# to be ignored by docker build
+node_modules
+.env

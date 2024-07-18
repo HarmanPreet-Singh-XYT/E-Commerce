@@ -38,7 +38,7 @@ const createReviewSchema = checkSchema({
         toFloat:true,
         errorMessage: 'Rating must be an integer',
         custom: {
-            options: (value) => value >= 0.5 && value <= 5,
+            options: (value) => value >= 1 && value <= 5,
             errorMessage: 'Rating must be between 1 and 5'
         }
     },
@@ -95,7 +95,6 @@ const editReviewSchema = checkSchema({
         isFloat:true,
         toFloat:true,
         errorMessage: 'Rating must be an integer',
-        escape:true,
         custom: {
             options: (value) => value >= 1 && value <= 5,
             errorMessage: 'Rating must be between 1 and 5'

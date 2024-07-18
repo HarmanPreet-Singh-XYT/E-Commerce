@@ -1,0 +1,35 @@
+FROM node AS build
+
+#change directory
+WORKDIR /client
+#install npm modules
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+RUN npm install
+#copy everything
+COPY . .
+#typescript build
+RUN npm run build
+
+
+FROM node AS runner
+
+WORKDIR /client
+
+COPY --from=build /client /client/
+#Environment Variables --start
+ARG BACKEND_URL
+ENV BACKEND_URL=${BACKEND_URL}
+ARG AUTH_KEY
+ENV AUTH_KEY=${AUTH_KEY}
+ARG JWT_KEY
+ENV JWT_KEY=${JWT_KEY}
+ARG NEXT_PUBLIC_FRONTEND_GOOGLE_CLIENT_ID
+ENV NEXT_PUBLIC_FRONTEND_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_FRONTEND_GOOGLE_CLIENT_ID}
+ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+ARG NEXT_PUBLIC_DOMAIN
+ENV NEXT_PUBLIC_DOMAIN=${NEXT_PUBLIC_DOMAIN}
+#--end
+EXPOSE 3000
+ENTRYPOINT [ "npm","run","start" ]

@@ -64,13 +64,12 @@ router.post('/user/signup/:promotional',signUpSchema, async (req: Request, res: 
                 JWT_SECRET,
                 { expiresIn: JWT_EXPIRATION }
             );
-            res.status(200).json({ message: 'User registered successfully',token });
+            return res.status(200).json({ message: 'User registered successfully',token });
         } catch (error) {
             res.status(500).json({ error: 'Server error' });
         }
     }else
     {
-        console.log(result);
         res.status(500).json({ message: 'Validation error' });
     }
     
@@ -113,7 +112,7 @@ router.post('/user/signin/:remember',signInSchema, async (req: Request, res: Res
                     { expiresIn: JWT_EXPIRATION }
                 );
                 // Successful sign-in
-                res.status(200).json({ message: 'Sign-in successful', token, userData });
+                return res.status(200).json({ message: 'Sign-in successful', token, userData });
             }else{
                 // Successful sign-in
                 const token = jwt.sign(
@@ -121,7 +120,7 @@ router.post('/user/signin/:remember',signInSchema, async (req: Request, res: Res
                     JWT_SECRET,
                     { expiresIn: '1d' }
                 );
-                res.status(200).json({ message: 'Sign-in successful', token, userData });
+                return res.status(200).json({ message: 'Sign-in successful', token, userData });
             }
             
         } catch (error) {
@@ -194,7 +193,6 @@ router.post('/auth/google',googleAuthSchema,async (req:Request,res:Response)=>{
     }
     else
         {
-            console.log(result);
             res.status(500).json({ message: 'Validation error' });
         }
     

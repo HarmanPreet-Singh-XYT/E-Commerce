@@ -102,7 +102,6 @@ router.post('/payment-on-delivery/create-order',orderCreationSchema, async (req:
     }
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
   
@@ -187,7 +186,6 @@ router.post('/card/create-order',orderCreationSchema2, async (req:Request, res:R
     }
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
   
@@ -229,7 +227,6 @@ router.get('/orders/status/:orderID',OrderIDSchema, async (req:Request, res:Resp
     }
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
 });
@@ -279,7 +276,7 @@ router.get('/checkout/product-details/:productid/:sizeid/:colorid',checkoutSchem
     }
   }else
   {
-      console.log(result);
+
       res.status(500).json({ message: 'Validation error' });
   }
   
@@ -320,7 +317,6 @@ router.post("/create/payment/create-payment-intent",createPaymentIntent, async (
     });
   }else
   {
-      console.log(result);
       res.status(500).json({ message: 'Validation error' });
   }
 });
