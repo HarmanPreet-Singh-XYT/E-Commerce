@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "devbackend": "nodemon ./backend/index.ts"
+    "devbackend": "nodemon ../Server/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.4",
@@ -17,17 +17,10 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@types/js-cookie": "^3.0.6",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@types/react-redux": "^7.1.33",
-    "@types/react-stars": "^2.2.4",
     "axios": "^1.7.2",
-    "cookies-next": "^4.2.1",
     "framer-motion": "^11.2.10",
     "jsonwebtoken": "^9.0.2",
-    "next": "^14.2.4",
-    "prop-types": "^15.8.1",
+    "next": "^14.2.5",
     "react": "^18",
     "react-awesome-slider": "^4.1.0",
     "react-dom": "^18",
@@ -42,6 +35,12 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/react-redux": "^7.1.33",
+    "@types/react-stars": "^2.2.4",
+    "prop-types": "^15.8.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2"
   }
 }

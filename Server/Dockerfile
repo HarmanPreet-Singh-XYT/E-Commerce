@@ -17,8 +17,8 @@ COPY . .
 RUN tsc -p .
 
 
-FROM node AS runner
-
+FROM node:21-alpine AS runner
+RUN apk add --no-cache libc6-compat
 WORKDIR /backend
 
 COPY --from=build /backend /backend/

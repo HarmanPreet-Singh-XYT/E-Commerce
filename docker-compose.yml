@@ -1,0 +1,54 @@
+services:
+  frontend:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_URL: ${BACKEND_URL}
+      AUTH_KEY: ${AUTH_KEY}
+      JWT_KEY: ${JWT_KEY}
+      NEXT_PUBLIC_FRONTEND_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_FRONTEND_GOOGLE_CLIENT_ID}
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+      NEXT_PUBLIC_DOMAIN: ${NEXT_PUBLIC_DOMAIN}
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    environment:
+      FRONTEND_SERVER_ORIGIN: ${FRONTEND_SERVER_ORIGIN}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_SUPPORT: ${SMTP_SUPPORT}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_SENDERNAME: ${SMTP_SENDERNAME}
+      SMTP_PASS: ${SMTP_PASS}
+      JWT_ENCRYPTION_KEY: ${JWT_ENCRYPTION_KEY}
+      JWT_AUTH_KEY: ${JWT_AUTH_KEY}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
+    ports:
+      - "3500:3500"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data:

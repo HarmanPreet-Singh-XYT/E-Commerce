@@ -71,9 +71,35 @@ Welcome to the repository for our full stack eCommerce website built using the P
 ## Setting Up PostgreSQL Tables
 
 1. Create a Database named 'ecommerce'.
-2. Restore the Database using ecommerce.sql Given SQL File.
-3. Make sure PostgreSQL server is Running, Setting up Environment Variables and done.
+2. Restore the Database using ecommerce.sql with Given SQL File.
+3. Make sure PostgreSQL server is Running, Set up Environment Variables and done.
 
+## Getting Started With Docker
+**Dockerfiles can be found for both Client and Server in their respective directories.**
+**These docker files can be run individually or together through docker compose.**
+
+## Running Individually
+
+1. Go to any directory whether it is Client or Server.
+2. Use Terminal and execute the following command to build and Get image for the following type:
+   ```sh
+   docker build -t ecommerce-client .
+      or
+   docker build -t ecommerce-server .
+3. These images then can be run through Docker Desktop or through terminal by following command:
+   ```sh
+   docker run -p 3000:3000 --name your-container-name -e BACKEND_URL=your_backend_url -e AUTH_KEY=your_auth_key -e JWT_KEY=your_jwt_key -e NEXT_PUBLIC_FRONTEND_GOOGLE_CLIENT_ID=your_google_client_id -e NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_key -e NEXT_PUBLIC_DOMAIN=your_domain ecommerce-client
+      or
+   docker run -p 3500:3500 --name your-container-name -e FRONTEND_SERVER_ORIGIN=your_frontend_server_origin -e DB_USER=your_db_user -e DB_PASS=your_db_pass -e DB_HOST=your_db_host -e DB_PORT=your_db_port -e DB_NAME=your_db_name -e SMTP_USER=your_smtp_user -e SMTP_SUPPORT=your_smtp_support -e SMTP_HOST=your_smtp_host -e SMTP_SENDERNAME=your_smtp_sendername -e SMTP_PASS=your_smtp_pass -e JWT_ENCRYPTION_KEY=your_jwt_encryption_key -e JWT_AUTH_KEY=your_jwt_auth_key -e GOOGLE_CLIENT_ID=your_google_client_id -e GOOGLE_CLIENT_SECRET=your_google_client_secret -e STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key ecommerce-server
+## Running Together with Docker Compose
+1. Go to root directory where docker-compose.yml exists.
+2. create a .env file with All the environment Variables in it including for both Server and Client
+3. then Start docker-compose with the following command:
+   ```sh
+   docker compose up --watch
+**As the Compose also contains PostgreSQL server, you also need to connect to the PostgreSQL server and Restore the ecommerce.sql file into the ecommerce database to get all the following tables and product and site data.**
+**or**
+**Simply remove PostgreSQL service from the following docker-compose.yml file if you have your own PostgreSQL server running.**
 ## Contributing
 
 **We welcome contributions! Please fork the repository and submit a pull request.**

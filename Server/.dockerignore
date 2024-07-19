@@ -1,3 +1,7 @@
-# to be ignored by docker build
+Dockerfile
+.dockerignore
 node_modules
+npm-debug.log
+README.md
 .env
+.git
