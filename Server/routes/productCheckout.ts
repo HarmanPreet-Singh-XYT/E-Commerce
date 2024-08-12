@@ -119,7 +119,7 @@ router.post('/card/create-order',orderCreationSchema2, async (req:Request, res:R
     const orderitemid = IDGenerator();
     const trackingnumber = `IN${orderid}-${paymentID}-${transactionid}`
     const deliveryDate = getDateTimeFiveDaysFromNow();
-    const paymentCharge = 15;
+    const paymentCharge = 0;
     try {
       // Check if product with given productid, colorid, and sizeid exists
       const productQuery = `
