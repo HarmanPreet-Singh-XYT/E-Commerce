@@ -98,4 +98,14 @@ const googleAuthSchema = checkSchema({
         trim:true,
     }
 },['body']);
-export {signInSchema, signUpSchema, tokenSchema, googleAuthSchema}
+const googleAuthSchemaNative = checkSchema({
+    email:{
+        errorMessage: 'The email must be provided',
+        isString:true,
+        exists:true,
+        trim:true,
+        isEmail:true,
+        matches: { options: /[@]/ },
+    }
+},['body']);
+export {signInSchema, signUpSchema, tokenSchema, googleAuthSchema, googleAuthSchemaNative}

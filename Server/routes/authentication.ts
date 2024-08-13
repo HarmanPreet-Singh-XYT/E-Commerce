@@ -3,7 +3,7 @@ import { client } from '../data/DB';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {googleAuth} from '../controller/auth-controller'
-import { signInSchema,signUpSchema,tokenSchema,googleAuthSchema } from '../validators/authenticationValidation';
+import { signInSchema,signUpSchema,tokenSchema,googleAuthSchema, googleAuthSchemaNative } from '../validators/authenticationValidation';
 import { matchedData, validationResult } from 'express-validator';
 const saltRounds = 10;
 const router = express.Router();
@@ -196,5 +196,44 @@ router.post('/auth/google',googleAuthSchema,async (req:Request,res:Response)=>{
             res.status(500).json({ message: 'Validation error' });
         }
     
-})
+});
+router.post('/native/auth/google',googleAuthSchemaNative,async (req:Request,res:Response)=>{
+    const result = validationResult(req);
+    if(result.isEmpty()){
+        const {email} = matchedData(req);
+        try {
+            // Check if the email exists
+            const query = `
+                SELECT * FROM "${userTable}" WHERE email = $1;
+            `;
+            const values = [email];
+            const result = await client.query(query, values);
+
+            if (result.rows.length === 0) {
+                // Email does not exist
+                return res.status(205).json({ error: 'Email does not exist' });
+            }
+
+            const user = result.rows[0];
+
+            const token = jwt.sign(
+                { userID: user.userid },
+                JWT_SECRET,
+                { expiresIn: JWT_EXPIRATION }
+            );
+            const userData = {
+                userName:user.username,userID: user.userid, email: user.email, mobile_number: user.mobile_number, dob: user.dob
+            }
+            // Successful sign-in
+            res.status(200).json({ message: 'Sign-in successful', token, userData });
+        } catch (error) {
+            res.status(500).json({message:'Server Error'});
+        }
+    }
+    else
+        {
+            res.status(500).json({ message: 'Validation error' });
+        }
+    
+});
 export default router;

@@ -1,11 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-
+Client/node_modules
+Server/node_modules
 # Ignore the .env file in the root directory
-/.env
-
+Client/.env
+Server/.env
 # Ignore other env files
 /.pnp
 .pnp.js
