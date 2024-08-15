@@ -73,7 +73,7 @@ const CartCheckout = () => {
         userName:'',
         is_default:true
     });
-    const shipping = data.reduce((sum, item) => (sum + item.shippingcost)*item.quantity, 0);
+    const shipping = data.reduce((sum, item) => (sum + (item.shippingcost*item.quantity)), 0);
     const taxes = data.reduce((sum, item) => sum + (parseFloat(item.price) * (18 / 100))*item.quantity, 0);
     const subTotal = data.reduce((sum, item) => sum + parseFloat(item.price)*item.quantity, 0);
     const subTotalWithoutTax = data.reduce((sum, item) => sum + (parseFloat(item.price)-(parseFloat(item.price)*18/100))*item.quantity, 0);
