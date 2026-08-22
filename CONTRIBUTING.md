@@ -1,8 +1,8 @@
 # Contributing to eCommerce Website
 
 First off, thank you for considering contributing to this project! Your contributions are valuable and help improve the project.
+## How can Contributes
 
-## How to Contribute
 
 ### Reporting Bugs
 
